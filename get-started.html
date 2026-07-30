@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get Started — Greylock Trust</title>
+<meta name="description" content="Start with the Greylock Trust questionnaire or create an account to save your matches.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<style>
+label{font-size:13.5px;font-weight:600;color:var(--ink);display:block;}
+input,textarea,select{width:100%;margin-top:6px;padding:12px 14px;font-size:15px;font-family:var(--f);
+  border:1px solid var(--line-2);border-radius:12px;background:var(--bg);color:var(--body-c);}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--gold);background:#fff;}
+.narrow{max-width:460px;margin:0 auto;}
+.tabs{display:flex;gap:6px;background:var(--chipbg);border-radius:999px;padding:4px;margin-bottom:22px;}
+.tab{flex:1;border-radius:999px;padding:11px;font-size:13.5px;font-weight:700;color:var(--muted);}
+.tab.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(30,49,69,.09);}
+.divider{display:flex;align-items:center;gap:12px;margin:22px 0;color:var(--faint);font-size:12.5px;}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line);}
+</style>
+</head>
+<body>
+<div id="nav"></div>
+<section class="sec">
+  <div class="wrap">
+    <div class="center rv" style="max-width:620px;margin:0 auto 40px">
+      <span class="eyebrow c">Get started</span>
+      <h1 class="h2" style="margin-top:14px">Two ways in</h1>
+      <p class="lead" style="margin-top:12px">Take the questionnaire and we will rank every advisor for
+        you — or create an account first to save your matches and manage bookings.</p>
+    </div>
+    <div class="grid g2 rv" style="max-width:880px;margin:0 auto">
+      <div class="card" style="border-color:var(--gold-line);background:var(--gold-wash)">
+        <span class="chip gold">Most people start here</span>
+        <h3 class="h3" style="margin:14px 0 8px">Find my advisor</h3>
+        <p style="color:var(--body-c)">Two minutes of questions about your technology, your pace, and your
+          preferences. You will see matches with prices, availability, and reviews — no account needed.</p>
+        <a class="pill pill-gold" href="marketplace.html" style="margin-top:20px;width:100%">Start the questionnaire</a>
+      </div>
+      <div class="card">
+        <span class="chip">Optional</span>
+        <h3 class="h3" style="margin:14px 0 8px">Create an account</h3>
+        <p style="color:var(--muted)">Save your matches, keep your booking history, message your advisor,
+          and let us recognise you next time so your previous advisor appears first.</p>
+        <form id="suForm" style="margin-top:18px">
+          <label style="margin-bottom:12px">Full name<input required type="text" name="name"></label>
+          <label style="margin-bottom:12px">Email<input required type="email" name="email"></label>
+          <label>Password<input required type="password" name="pw" placeholder="At least 8 characters"></label>
+          <button class="pill pill-ink" type="submit" style="width:100%;margin-top:18px">Create account</button>
+          <p id="suMsg" style="font-size:13px;color:var(--gold-deep);margin-top:10px;text-align:center"></p>
+        </form>
+      </div>
+    </div>
+    <div class="center rv" style="margin-top:34px">
+      <p style="font-size:14px;color:var(--muted)">Are you an IT professional?
+        <a href="join.html" style="color:var(--gold-deep);font-weight:600">Apply to advise instead →</a></p>
+    </div>
+  </div>
+</section><div id="footer"></div>
+<script src="js/data.js"></script>
+<script src="js/nav.js"></script>
+<script>
+document.getElementById('suForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  document.getElementById('suMsg').textContent='Demo only — connect Supabase Auth to create real accounts.';
+});
+</script>
+</body>
+</html>

@@ -1,1 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Greylock Trust — Technology help, matched to you</title>
+<meta name="description" content="Greylock Trust matches you with a vetted technology advisor who fits how you live and work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<style>
+:root{ --serif:'Fraunces',Georgia,serif; }
+body{background:var(--bg);}
 
+.prov-img{
+  height:100%;
+  min-height:280px;
+  border-radius:22px;
+  overflow:hidden;
+}
+
+.prov-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* ================= WHY WE EXIST ================= */
+.why{
+    padding:110px 0 50px;
+    text-align:center;
+}
+
+.why .wrap{
+    max-width:900px;
+    margin:0 auto;
+}
+
+.why h2{
+    font-family:var(--serif);
+    font-weight:300;
+    font-size:clamp(36px,4.6vw,60px);
+    line-height:1.1;
+    letter-spacing:-.03em;
+    color:var(--ink);
+    margin:18px auto 24px;
+}
+
+.why h2 em{
+    color:var(--gold-deep);
+    font-style:italic;
+    font-weight:400;
+}
+
+.why p{
+    max-width:36em;
+    margin:0 auto;
+    font-size:18px;
+    line-height:1.8;
+    color:var(--muted);
+}
+/* ================= HERO — rounded image panel ================= */
+.hero-wrap{padding:calc(84px + 1.4vw) 22px 0;}
+.hero{position:relative;max-width:1340px;margin:0 auto;border-radius:28px;overflow:hidden;
+  min-height:min(74vh,620px);display:flex;align-items:center;isolation:isolate;}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;}
+
+.hero-fall::after{content:"";position:absolute;right:-6%;top:-12%;width:52%;aspect-ratio:1;
+  border-radius:50%;border:1px solid rgba(92,122,153,.22);}
+.hero-fall::before{content:"";position:absolute;right:8%;top:6%;width:30%;aspect-ratio:1;
+  border-radius:50%;border:1px solid rgba(195,144,60,.3);}
+.hero-scrim{position:absolute;inset:0;z-index:1;
+  background:linear-gradient(100deg,rgba(255,255,255,.92) 0%,rgba(255,255,255,.74) 42%,rgba(255,255,255,.18) 78%);}
+.hero-in{position:relative;z-index:2;padding:clamp(34px,5vw,68px);max-width:760px;}
+.hero-badge{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.8);
+  border:1px solid var(--line-2);border-radius:999px;padding:8px 15px;font-size:12.5px;
+  font-weight:600;color:var(--ink);margin-bottom:22px;}
+.hero-badge i{width:7px;height:7px;border-radius:50%;background:var(--gold);}
+.hero h1{font-family:var(--serif);font-weight:300;color:var(--ink);
+  font-size:clamp(40px,6.4vw,84px);line-height:.98;letter-spacing:-.035em;}
+.hero h1 .l{display:block;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em;}
+.hero h1 .l>span{display:inline-block;transform:translateY(112%);
+  animation:rise 1s cubic-bezier(.22,.86,.28,1) forwards;}
+.hero h1 .l:nth-child(2)>span{animation-delay:.13s;}
+@keyframes rise{to{transform:none}}
+.hero h1 em{font-style:italic;color:var(--gold-deep);font-weight:400;}
+.hero .sub{font-size:clamp(16px,1.6vw,19px);color:var(--body-c);max-width:42ch;margin-top:22px;
+  line-height:1.7;opacity:0;animation:fadein .9s ease .5s forwards;}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px;opacity:0;
+  animation:fadein .9s ease .7s forwards;}
+.hero .fine{margin-top:16px;font-size:13.5px;color:var(--muted);opacity:0;
+  animation:fadein .9s ease .85s forwards;}
+@keyframes fadein{to{opacity:1}}
+.btn-lg{padding:15px 30px;font-size:15.5px;border-radius:999px;font-weight:600;
+  display:inline-flex;align-items:center;gap:9px;transition:all .2s ease;}
+.btn-gold{background:var(--gold);color:#fff;}
+.btn-gold:hover{background:var(--gold-deep);transform:translateY(-2px);box-shadow:0 14px 34px rgba(156,114,38,.28);}
+.btn-line{border:1.5px solid var(--ink);color:var(--ink);background:rgba(255,255,255,.7);}
+.btn-line:hover{background:var(--ink);color:#fff;}
+@media(max-width:700px){.hero{min-height:0;} .hero-scrim{background:rgba(255,255,255,.84);}}
+
+/* ================= SECTION FURNITURE ================= */
+.s{padding:clamp(56px,6.5vw,92px) 0;}
+.s-head{max-width:54ch;margin-bottom:clamp(26px,3.6vw,42px);}
+.s-head.c{margin-inline:auto;text-align:center;}
+.s-head h2{font-family:var(--serif);font-weight:300;color:var(--ink);
+  font-size:clamp(27px,3.6vw,44px);letter-spacing:-.025em;line-height:1.1;}
+.s-head h2 em{font-style:italic;color:var(--gold-deep);font-weight:400;}
+.s-head p{font-size:16.5px;color:var(--muted);margin-top:13px;line-height:1.75;}
+.kicker{display:inline-flex;align-items:center;gap:11px;font-size:11.5px;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:15px;}
+.kicker::before{content:"";width:26px;height:1.5px;background:var(--gold);}
+.kicker::before,
+.kicker::after{
+    content:"";
+    width:26px;
+    height:1.5px;
+    background:var(--gold);
+}
+/* ================= HOW IT WORKS — vertical flow, gold line ================= */
+.hiw{background:#fff;border-block:1px solid var(--line);}
+/* ================= HOW IT WORKS — centered flow ================= */
+.hiw{
+  background:#fff;
+  border-block:1px solid var(--line);
+}
+
+/* ================= HOW IT WORKS CENTERED ================= */
+
+.flow{
+  position:relative;
+  max-width:720px;
+  margin:0 auto;
+}
+
+.flow::before{
+  content:"";
+  position:absolute;
+  left:32px;
+  top:20px;
+  bottom:20px;
+  width:2px;
+  background:linear-gradient(
+    180deg,
+    var(--gold),
+    rgba(195,144,60,.35),
+    transparent
+  );
+}
+
+.fstep{
+  position:relative;
+  display:grid;
+  grid-template-columns:64px 1fr;
+  gap:32px;
+  align-items:center;
+  padding:45px 0;
+}
+
+.fstep > div:nth-child(2){
+  max-width:520px;
+}
+
+.fstep .n{
+  width:64px;
+  height:64px;
+}
+.fstep h3{
+  font-family:var(--serif);
+  font-weight:400;
+  font-size:clamp(21px,2.4vw,27px);
+  color:var(--ink);
+  letter-spacing:-.015em;
+}
+
+.fstep p{
+  font-size:15.5px;
+  color:var(--muted);
+  line-height:1.72;
+  margin-top:9px;
+}
+
+.fstep .det{
+  margin-top:13px;
+  padding-top:12px;
+  border-top:1px solid var(--line);
+  font-size:13.5px;
+  color:var(--faint);
+  line-height:1.6;
+}
+
+
+/* mobile */
+@media(max-width:700px){
+  .flow{
+    max-width:100%;
+  }
+
+  .fstep{
+    grid-template-columns:55px 1fr;
+    gap:18px;
+  }
+
+  .flow::before{
+    left:26px;
+  }
+
+  .fstep .n{
+    width:46px;
+    height:46px;
+    font-size:18px;
+  }
+}
+/* ================= WE CAN HELP — tiles ================= */
+/* ---------- category tiles (words in front of image) ---------- */
+.tiles{padding:0 0 clamp(56px,8vw,104px);}
+.tiles-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;
+  flex-wrap:wrap;margin-bottom:30px;}
+.tiles-head h2{font-family:var(--serif);font-weight:300;font-size:clamp(27px,3.6vw,46px);
+  color:var(--teal);letter-spacing:-.02em;max-width:16ch;}
+.tgrid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;}
+.tile{position:relative;border-radius:20px;overflow:hidden;display:block;
+  min-height:250px;isolation:isolate;transition:transform .35s cubic-bezier(.2,.9,.3,1);}
+.tile:hover{transform:translateY(-5px);}
+.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  transition:transform .7s cubic-bezier(.2,.9,.3,1);}
+.tile:hover img{transform:scale(1.05);}
+.tile .paint{position:absolute;inset:0;}
+.tile .veil{position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(24,20,18,.06) 30%,rgba(24,20,18,.62) 100%);}
+.tile .txt{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;
+  justify-content:flex-end;padding:24px;}
+.tile h3{font-family:var(--serif);font-weight:400;font-size:clamp(21px,2.2vw,27px);
+  color:#fff;letter-spacing:-.01em;}
+.tile p{color:rgba(255,255,255,.82);font-size:14px;margin-top:6px;max-width:26ch;}
+.tile .cnt{position:absolute;top:18px;left:18px;z-index:2;font-size:11px;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--gold);
+  background:rgba(20,16,14,.42);backdrop-filter:blur(6px);border-radius:999px;padding:7px 13px;}
+.tile .arrow{position:absolute;top:18px;right:18px;z-index:2;width:34px;height:34px;
+  border-radius:50%;border:1px solid rgba(255,255,255,.42);display:flex;align-items:center;
+  justify-content:center;color:#fff;font-size:14px;transition:all .25s ease;}
+.tile:hover .arrow{background:var(--gold);border-color:var(--gold);}
+.t-a{grid-column:span 5;min-height:330px;} .t-b{grid-column:span 4;}
+.t-c{grid-column:span 3;} .t-d{grid-column:span 4;}
+.t-e{grid-column:span 3;} .t-f{grid-column:span 5;min-height:290px;}
+@media(max-width:960px){.tgrid{grid-template-columns:repeat(6,1fr);}
+  .t-a,.t-f{grid-column:span 6;} .t-b,.t-c,.t-d,.t-e{grid-column:span 3;}}
+@media(max-width:600px){.tgrid{grid-template-columns:1fr;}
+  .tile{grid-column:span 1!important;min-height:210px;}}
+
+/* ================= PROVIDERS BAND ================= */
+.prov{position:relative;overflow:hidden;border-radius:26px;max-width:1340px;margin:0 auto;
+  background:linear-gradient(155deg,var(--ink-deep),var(--ink));
+  padding:clamp(36px,4.6vw,58px);display:grid;grid-template-columns:1.2fr .8fr;
+  gap:clamp(24px,4vw,52px);align-items:center;}
+.prov::after{content:"";position:absolute;right:-8%;top:-46%;width:44%;aspect-ratio:1;
+  border-radius:50%;background:radial-gradient(circle,rgba(195,144,60,.3),transparent 66%);}
+.prov>*{position:relative;z-index:1;}
+.prov .k{font-size:11.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);}
+.prov h2{font-family:var(--serif);font-weight:300;font-size:clamp(25px,3.4vw,40px);color:#fff;
+  letter-spacing:-.025em;line-height:1.1;margin-top:14px;}
+.prov h2 em{font-style:italic;color:var(--gold);font-weight:400;}
+.prov p{font-size:15.5px;color:rgba(255,255,255,.74);line-height:1.75;margin-top:14px;max-width:46ch;}
+.prov .row{display:flex;gap:11px;flex-wrap:wrap;margin-top:24px;}
+.prov ul{list-style:none;display:grid;gap:12px;}
+.prov li{display:flex;gap:12px;font-size:14.5px;color:rgba(255,255,255,.84);}
+.prov li i{width:8px;height:8px;transform:rotate(45deg);background:var(--gold);flex:none;margin-top:7px;}
+@media(max-width:880px){.prov{grid-template-columns:1fr;}}
+
+/* ================= FAQ ================= */
+.faq{max-width:860px;margin:0 auto;}
+.fq{border-bottom:1px solid var(--line);}
+.fq:first-child{border-top:1px solid var(--line);}
+.fq-q{width:100%;text-align:left;display:flex;align-items:center;gap:16px;padding:20px 4px;
+  font-size:16.5px;font-weight:600;color:var(--ink);}
+.fq-q .mk{margin-left:auto;width:26px;height:26px;border-radius:50%;border:1px solid var(--line-2);
+  display:flex;align-items:center;justify-content:center;color:var(--gold-deep);font-size:15px;
+  flex:none;transition:all .24s ease;}
+.fq.open .fq-q .mk{transform:rotate(45deg);background:var(--gold);border-color:var(--gold);color:#fff;}
+.fq-a{display:none;font-size:15px;line-height:1.78;color:var(--muted);padding:0 60px 22px 4px;}
+.fq.open .fq-a{display:block;}
+.faq-foot{text-align:center;margin-top:32px;font-size:14.5px;color:var(--muted);}
+.faq-foot a{color:var(--gold-deep);font-weight:600;text-decoration:underline;text-underline-offset:3px;}
+
+/* ================= STICKY SCROLL CTA ================= */
+.scta{position:fixed;right:22px;bottom:22px;z-index:600;
+  background:#fff;border:1px solid var(--line-2);border-radius:16px;
+  box-shadow:0 18px 44px rgba(30,49,69,.16);padding:14px 16px;
+  display:flex;align-items:center;gap:14px;max-width:min(360px,calc(100vw - 44px));
+  opacity:0;transform:translateY(16px);pointer-events:none;
+  transition:opacity .35s ease,transform .35s cubic-bezier(.2,.9,.3,1);}
+.scta.on{opacity:1;transform:none;pointer-events:auto;}
+.scta .t{font-size:14.5px;font-weight:700;color:var(--ink);line-height:1.3;}
+.scta .s{font-size:12.5px;color:var(--muted);margin-top:2px;}
+.scta .go{flex:none;background:var(--gold);color:#fff;border-radius:999px;
+  padding:11px 18px;font-size:13.5px;font-weight:700;white-space:nowrap;}
+.scta .go:hover{background:var(--gold-deep);}
+.scta .x{position:absolute;top:-9px;right:-9px;width:24px;height:24px;border-radius:50%;
+  background:#fff;border:1px solid var(--line-2);color:var(--muted);font-size:13px;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(30,49,69,.12);}
+.scta .x:hover{color:var(--ink);}
+@media(max-width:560px){.scta{left:16px;right:16px;bottom:16px;max-width:none;}}
+</style>
+</head>
+<body class="nav-dark">
+<div id="nav"></div>
+
+<!-- ============================ HERO ============================ -->
+<div class="hero-wrap">
+  <header class="hero">
+    <img class="hero-img" src="img/hero.jpeg" alt="help" onerror="this.remove()">
+    <div class="hero-fall"></div>
+    <div class="hero-scrim"></div>
+    <div class="hero-in">
+      <h1>
+        <span class="l"><span>Technology help,</span></span>
+        <span class="l"><span><em>matched to you.</em></span></span>
+      </h1>
+      <p class="sub">Tell us what isn't working and how you like to be helped. We'll show you the
+        advisors who fit — with their rates, their availability, and their calendars open.</p>
+      <div class="cta">
+        <a class="btn-lg btn-gold" href="marketplace.html">Find my advisor →</a>
+        <a class="btn-lg btn-line" href="#how">How it works</a>
+      </div>
+      <p class="fine">An advisor should empower you — not overwhelm you.</p>
+    </div>
+  </header>
+</div>
+
+<section class="why" id="why">
+  <div class="wrap reveal">
+    <span class="kicker">Why we exist</span>
+
+    <h2>
+      The bridge between
+      <em>IT professionals</em>
+      and everyday people.
+    </h2>
+
+    <p>
+     Greylock Trust matches you with the right person
+     for your needs, experience level, pace, and 
+     preferences — making technology support simple and accessible.
+    </p>
+  </div>
+</section>
+
+<section class="tiles">
+  <div class="wrap">
+    <div class="tiles-head rv">
+      <h2>What needs help?</h2>
+      <a class="pill pill-soft" href="marketplace.html">Browse everything</a>
+    </div>
+    <div class="tgrid" id="tgrid"></div>
+  </div>
+</section>
+
+<!-- ============================ HOW IT WORKS ============================ -->
+<section class="s hiw" id="how" style="margin-top:clamp(56px,6.5vw,92px)">
+  <div class="wrap">
+    <div class="s-head c rv">
+      <span class="kicker">How it works</span>
+      <h2>Three steps, about <em>five minutes</em></h2>
+      <p>No calls to make, no quotes to chase, no waiting for someone to ring you back.</p>
+    </div>
+    <div class="flow">
+      <div class="fstep rv">
+        <div class="n">01</div>
+        <div>
+          <h3>Tell us what's going on</h3>
+          <p>A short questionnaire about your devices, how urgent it is, how you like to learn, and
+             the kind of person you'd rather work with.</p>
+          <div class="det">Skip anything you'd rather not answer — preferences reorder your matches,
+             they never remove anyone.</div>
+        </div>
+        
+      </div>
+      <div class="fstep rv">
+        <div class="n">02</div>
+        <div>
+          <h3>Meet your matches</h3>
+          <p>Every advisor gets a fit score built from your answers, shown beside their rate, rating,
+             specialties, and next opening.</p>
+          <div class="det">Filter by specialty, rate, personality, availability, or whether they come
+             to you.</div>
+        </div>
+      
+      </div>
+      <div class="fstep rv">
+        <div class="n">03</div>
+        <div>
+          <h3>Book on your terms</h3>
+          <p>Their real calendar opens beside their profile. Pick a day, pick a time — most advisors
+             offer a free 20-minute call first.</p>
+          <div class="det">Reschedule from your confirmation email. Follow-up on the same issue is
+             always included.</div>
+        </div>
+      
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ GREYLOCK FOR PROVIDERS ============================ -->
+<section class="s" style="padding-top:0">
+  <div style="padding:0 22px">
+    <div class="prov rv">
+  <div>
+    <span class="k">Greylock for Providers</span>
+    <h2>Do the work you like, for people who <em>value it.</em></h2>
+
+    <p>
+      Set your own rate and your own hours. We bring you clients who already fit how you work —
+      matched on specialty, personality, and availability rather than who bids lowest.
+    </p>
+
+    <div class="row">
+      <a class="btn-lg btn-gold" href="join.html">Join Greylock Trust</a>
+    </div>
+  </div>
+
+  <div class="prov-img">
+    <img src="img/image.jpeg"  alt="Technology advisor helping a client">
+  </div>
+</div>  
+</div>
+</section>
+
+<!-- ============================ FAQ ============================ -->
+<section class="s" style="background:#fff;border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="s-head c rv">
+      <span class="kicker">Frequently asked</span>
+      <h2>Questions people ask <em>before booking</em></h2>
+    </div>
+    <div class="faq" id="faq"></div>
+  </div>
+</section>
+
+
+<div id="footer"></div>
+<script src="js/data.js"></script>
+<script src="js/nav.js"></script>
+<script>
+'use strict';
+
+/* ---------------- tiles (drop your own images in img/) ---------------- */
+/* ---------------- category tiles ---------------- */
+const TILES=[
+ {k:'Wi-Fi & internet',t:'Wi-Fi & Internet',s:'Dead zones, crawling speeds, a router in the wrong room',cls:'t-a',paint:'p1',img:'img/cat-wifi.jpg'},
+ {k:'Cybersecurity',t:'Cybersecurity & Protection',s:'Scams, breaches, passwords, freezing your credit',cls:'t-b',paint:'p7',img:'img/cat-security.jpg'},
+ {k:'Computers & laptops',t:'Computers & Laptops',s:'Slow starts, setup, repairs, honest upgrade advice',cls:'t-c',paint:'p2',img:'img/cat-computer.jpg'},
+ {k:'Phones & tablets',t:'Phones & Tablets',s:'New devices, transfers, backups, syncing',cls:'t-d',paint:'p4',img:'img/cat-phone.jpg'},
+ {k:'Setup, Repairs & Troubleshooting',t:'Setup, Repairs & Troubleshooting',s:'Yes, that one. It can be fixed.',cls:'t-e',paint:'p6',img:'img/cat-printer.jpg'},
+ {k:'Email & Accounts',t:'Email & Accounts',s:'Get help setting up, organizing andsecuring email and online accounts.',cls:'t-f',paint:'p3',img:'img/cat-smart.jpg'},
+];
+document.getElementById('tgrid').innerHTML=TILES.map(x=>{
+  const n=A.filter(a=>a.specs.includes(x.k)).length;
+  return `<a class="tile ${x.cls} rv" href="marketplace.html?spec=${encodeURIComponent(x.k)}">
+    <img src="${x.img}" alt="" onerror="this.remove()">
+    <div class="paint ${x.paint}"><div class="grain"></div></div>
+    <div class="veil"></div>
+    <span class="arrow">→</span>
+    <div class="txt"><h3>${x.t}</h3><p>${x.s}</p></div>
+  </a>`;}).join('');
+
+/* ---------------- FAQ ---------------- */
+const FAQ=[
+ ['How does the matching actually work?',
+  'You answer a short questionnaire \u2014 what you need help with, how urgent it is, how you like to learn, the personality you prefer, your budget, and how you want to meet. Every advisor is scored against those answers and the best fits appear first, with a match percentage on each card. Two different people see two different orders.'],
+ ['What does it cost?',
+  'Advisors set their own hourly rate, typically between $50 and $95. The rate appears on their card, their profile, and in the booking panel before you confirm anything. There are no membership fees, no travel fees, and no minimum booking. Time is billed to the minute after the first hour.'],
+ ['What is the free intro call?',
+  'Twenty minutes with the advisor at no charge, by video or phone. Describe the problem, ask anything, and decide afterwards whether to book a full session. Most advisors offer it, and their cards say so.'],
+ ['Are advisors vetted?',
+  'Yes \u2014 reference checks, a background check we run and pay for, and an interview that includes explaining a technical fix in plain language to someone nervous. Reviews come only from clients who completed a booking, and advisors cannot edit or remove them.'],
+ ['Will an advisor know my passwords?',
+  'No. Anything set up during a session lives in a password manager only you control. When credentials are needed you type them rather than sharing them, and nothing is stored by the advisor afterwards.'],
+ ['In person or virtual \u2014 which should I choose?',
+  'Physical things are better in person: routers, printers, cabling, a machine that will not start. Accounts, security, backups, and software are usually faster over a screen share. Many advisors offer both, and the rate is the same either way.'],
+ ['What if the problem comes back?',
+  'Follow-up on anything you worked on together is part of the original visit \u2014 you should never pay twice for one problem. Advisors also keep private notes on your setup, so a second visit never starts from zero.'],
+ ['What if I do not click with the person?',
+  'Say so, to them or to us, and book someone else. Nothing is locked in and there is no contract. Advisors would far rather you find the right fit than sit through a poor one.'],
+];
+document.getElementById('faq').innerHTML=FAQ.map(([q,a],i)=>`
+  <div class="fq" id="fq${i}">
+    <button class="fq-q">${q}<span class="mk">+</span></button>
+    <div class="fq-a">${a}</div>
+  </div>`).join('');
+document.querySelectorAll('.fq-q').forEach(b=>b.addEventListener('click',()=>
+  b.parentElement.classList.toggle('open')));
+
+/* ---------------- scroll-following CTA ---------------- */
+const scta=document.getElementById('scta');
+let sctaClosed=false;
+document.getElementById('sctaX').addEventListener('click',()=>{
+  sctaClosed=true;scta.classList.remove('on');});
+addEventListener('scroll',()=>{
+  if(sctaClosed)return;
+  const past=window.scrollY>window.innerHeight*.85;
+  const atEnd=window.scrollY+window.innerHeight>document.body.scrollHeight-160;
+  scta.classList.toggle('on',past&&!atEnd);
+},{passive:true});
+
+/* ---------------- reveals ---------------- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+}),{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv:not(.in)').forEach(t=>io.observe(t));
+</script>
+</body>
+</html>

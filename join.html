@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join Greylock Trust — For technology advisors</title>
+<meta name="description" content="Advise on Greylock Trust: set your own rate and hours, get matched with clients who fit how you work, and let us handle scheduling, reminders, and payouts.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<style>
+:root{ --serif:'Fraunces',Georgia,serif; }
+
+/* ---------------- HERO ---------------- */
+.hero-wrap{padding:calc(84px + 1.4vw) 22px 0;}
+.jhero{position:relative;max-width:1340px;margin:0 auto;border-radius:28px;overflow:hidden;
+  min-height:min(66vh,560px);display:flex;align-items:center;}
+.jhero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;}
+.jhero .fall{position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(880px 540px at 76% 14%, rgba(255,255,255,.9), transparent 58%),
+    radial-gradient(720px 500px at 14% 88%, rgba(195,144,60,.18), transparent 60%),
+    linear-gradient(150deg,#DCE7F0,#EEF4F8 44%,#F7FAFC 72%,#E4EDF4);}
+.jhero .fall::after{content:"";position:absolute;right:-6%;top:-14%;width:50%;aspect-ratio:1;
+  border-radius:50%;border:1px solid rgba(92,122,153,.22);}
+.jhero .fall::before{content:"";position:absolute;right:8%;top:6%;width:28%;aspect-ratio:1;
+  border-radius:50%;border:1px solid rgba(195,144,60,.32);}
+.jhero .scrim{position:absolute;inset:0;z-index:1;
+  background:linear-gradient(100deg,rgba(255,255,255,.93) 0%,rgba(255,255,255,.76) 44%,rgba(255,255,255,.2) 80%);}
+.jhero .in{position:relative;z-index:2;padding:clamp(32px,5vw,64px);max-width:760px;}
+.badge{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.82);
+  border:1px solid var(--line-2);border-radius:999px;padding:8px 15px;font-size:12.5px;
+  font-weight:600;color:var(--ink);margin-bottom:20px;}
+.badge i{width:7px;height:7px;border-radius:50%;background:var(--gold);}
+.jhero h1{font-family:var(--serif);font-weight:300;color:var(--ink);
+  font-size:clamp(38px,6vw,78px);line-height:1;letter-spacing:-.035em;}
+.jhero h1 em{font-style:italic;color:var(--gold-deep);font-weight:400;}
+.jhero p{font-size:clamp(16px,1.6vw,19px);color:var(--body-c);max-width:44ch;margin-top:20px;line-height:1.7;}
+.jhero .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px;}
+.jhero .fine{margin-top:15px;font-size:13.5px;color:var(--muted);}
+.btn-lg{padding:15px 30px;font-size:15.5px;border-radius:999px;font-weight:600;
+  display:inline-flex;align-items:center;gap:9px;transition:all .2s ease;}
+.btn-gold{background:var(--gold);color:#fff;}
+.btn-gold:hover{background:var(--gold-deep);transform:translateY(-2px);box-shadow:0 14px 34px rgba(156,114,38,.28);}
+.btn-line{border:1.5px solid var(--ink);color:var(--ink);background:rgba(255,255,255,.72);}
+.btn-line:hover{background:var(--ink);color:#fff;}
+.btn-cream{background:#fff;color:var(--ink);}
+.btn-cream:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(0,0,0,.22);}
+.btn-ghost{border:1.5px solid rgba(255,255,255,.44);color:#fff;}
+.btn-ghost:hover{background:rgba(255,255,255,.12);}
+@media(max-width:700px){.jhero{min-height:0;}.jhero .scrim{background:rgba(255,255,255,.86);}}
+
+/* ---------------- shared furniture ---------------- */
+.s{padding:clamp(56px,6.5vw,92px) 0;}
+.s-head{max-width:54ch;margin-bottom:clamp(26px,3.6vw,42px);}
+.s-head.c{margin-inline:auto;text-align:center;}
+.s-head h2{font-family:var(--serif);font-weight:300;color:var(--ink);
+  font-size:clamp(27px,3.6vw,44px);letter-spacing:-.025em;line-height:1.1;}
+.s-head h2 em{font-style:italic;color:var(--gold-deep);font-weight:400;}
+.s-head p{font-size:16.5px;color:var(--muted);margin-top:13px;line-height:1.75;}
+.kicker{display:inline-flex;align-items:center;gap:11px;font-size:11.5px;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:15px;}
+.kicker::before{content:"";width:26px;height:1.5px;background:var(--gold);}
+.s-head.c .kicker::after{content:"";width:26px;height:1.5px;background:var(--gold);}
+
+/* ---------------- why join ---------------- */
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.wcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;
+  transition:transform .24s ease,box-shadow .24s ease,border-color .24s ease;}
+.wcard:hover{transform:translateY(-4px);box-shadow:0 20px 48px rgba(30,49,69,.09);border-color:var(--line-2);}
+.wcard .ic{width:46px;height:46px;border-radius:14px;background:var(--gold-wash);
+  border:1px solid var(--gold-line);display:flex;align-items:center;justify-content:center;margin-bottom:17px;}
+.wcard .ic svg{width:22px;height:22px;stroke:var(--gold-deep);stroke-width:1.6;fill:none;
+  stroke-linecap:round;stroke-linejoin:round;}
+.wcard h3{font-family:var(--serif);font-weight:400;font-size:20px;color:var(--ink);margin-bottom:8px;}
+.wcard p{font-size:14.5px;color:var(--muted);line-height:1.7;}
+@media(max-width:940px){.why{grid-template-columns:1fr 1fr;}}
+@media(max-width:620px){.why{grid-template-columns:1fr;}}
+
+/* ---------------- how joining works (vertical gold flow) ---------------- */
+.flow{position:relative;max-width:940px;margin:0 auto;}
+.flow::before{content:"";position:absolute;left:28px;top:18px;bottom:18px;width:2px;
+  background:linear-gradient(180deg,var(--gold),rgba(195,144,60,.35) 62%,transparent);}
+.fstep{position:relative;display:grid;grid-template-columns:88px 1fr;gap:24px;padding:20px 0;}
+.fstep .n{width:58px;height:58px;border-radius:50%;background:#fff;border:2px solid var(--gold);
+  color:var(--gold-deep);font-family:var(--serif);font-size:21px;display:flex;align-items:center;
+  justify-content:center;position:relative;z-index:2;}
+.fstep h3{font-family:var(--serif);font-weight:400;font-size:21px;color:var(--ink);}
+.fstep p{font-size:15px;color:var(--muted);line-height:1.72;margin-top:8px;max-width:52ch;}
+.fstep .when{display:inline-block;margin-top:10px;font-size:11.5px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--gold-deep);
+  background:var(--gold-wash);border-radius:999px;padding:5px 12px;}
+@media(max-width:700px){.fstep{grid-template-columns:56px 1fr;gap:16px;}
+  .flow::before{left:20px;} .fstep .n{width:42px;height:42px;font-size:17px;}}
+
+/* ---------------- earnings ---------------- */
+.earn{display:grid;grid-template-columns:1fr 340px;gap:clamp(24px,4vw,52px);align-items:start;}
+@media(max-width:880px){.earn{grid-template-columns:1fr;}}
+.erow{padding:16px 0;border-bottom:1px solid var(--line);}
+.erow:last-child{border-bottom:none;}
+.erow .lbl{font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:9px;display:flex;}
+.erow .lbl span{margin-left:auto;color:var(--gold-deep);}
+.erow input[type=range]{width:100%;accent-color:var(--gold);}
+.eopts{display:flex;gap:8px;flex-wrap:wrap;}
+.eopt{border:1px solid var(--line-2);background:#fff;border-radius:999px;padding:9px 15px;
+  font-size:13.5px;font-weight:600;color:var(--ink);}
+.eopt:hover{border-color:var(--gold);}
+.eopt.on{background:var(--gold);border-color:var(--gold);color:#fff;}
+.ebox{position:sticky;top:96px;background:linear-gradient(155deg,var(--ink-deep),var(--ink));
+  color:#fff;border-radius:20px;padding:26px;overflow:hidden;position:relative;}
+.ebox::after{content:"";position:absolute;right:-70px;top:-70px;width:240px;height:240px;
+  border-radius:50%;background:radial-gradient(circle,rgba(195,144,60,.28),transparent 66%);}
+.ebox>*{position:relative;z-index:1;}
+.ebox .k{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-line);}
+.ebox .big{font-size:44px;font-weight:700;line-height:1;margin:10px 0 3px;}
+.ebox .sub{font-size:13px;color:rgba(255,255,255,.6);}
+.ebox .brk{border-top:1px solid rgba(255,255,255,.16);margin-top:18px;padding-top:14px;}
+.ebox .br{display:flex;justify-content:space-between;font-size:13.5px;padding:5px 0;color:rgba(255,255,255,.78);}
+.ebox .br b{color:#fff;}
+.ebox .note{margin-top:14px;font-size:11.5px;color:rgba(255,255,255,.45);line-height:1.6;}
+
+/* ---------------- requirements ---------------- */
+.req{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+@media(max-width:820px){.req{grid-template-columns:1fr;}}
+.rbox{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;}
+.rbox h3{font-family:var(--serif);font-weight:400;font-size:20px;color:var(--ink);margin-bottom:14px;}
+.rbox ul{list-style:none;display:grid;gap:12px;}
+.rbox li{display:flex;gap:12px;font-size:14.5px;color:var(--body-c);line-height:1.6;}
+.rbox li i{width:8px;height:8px;transform:rotate(45deg);background:var(--gold);flex:none;margin-top:7px;}
+.rbox.soft{background:var(--frost);border-color:var(--line-2);}
+
+/* ---------------- voices ---------------- */
+.voices{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:940px){.voices{grid-template-columns:1fr;}}
+.voice{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;}
+.voice p{font-family:var(--serif);font-weight:300;font-style:italic;font-size:17.5px;
+  line-height:1.5;color:var(--ink);letter-spacing:-.01em;}
+.voice .who{display:flex;align-items:center;gap:11px;margin-top:18px;padding-top:16px;
+  border-top:1px solid var(--line);}
+.voice .av{width:36px;height:36px;border-radius:50%;background:var(--ink);color:var(--gold);
+  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex:none;}
+.voice .nm{font-size:13.5px;font-weight:700;color:var(--ink);}
+.voice .rl{font-size:12px;color:var(--faint);}
+
+/* ---------------- faq ---------------- */
+.faq{max-width:860px;margin:0 auto;}
+.fq{border-bottom:1px solid var(--line);}
+.fq:first-child{border-top:1px solid var(--line);}
+.fq-q{width:100%;text-align:left;display:flex;align-items:center;gap:16px;padding:19px 4px;
+  font-size:16px;font-weight:600;color:var(--ink);}
+.fq-q .mk{margin-left:auto;width:26px;height:26px;border-radius:50%;border:1px solid var(--line-2);
+  display:flex;align-items:center;justify-content:center;color:var(--gold-deep);font-size:15px;
+  flex:none;transition:all .24s ease;}
+.fq.open .fq-q .mk{transform:rotate(45deg);background:var(--gold);border-color:var(--gold);color:#fff;}
+.fq-a{display:none;font-size:15px;line-height:1.78;color:var(--muted);padding:0 56px 20px 4px;}
+.fq.open .fq-a{display:block;}
+
+/* ---------------- closing ---------------- */
+.close{padding:0 22px clamp(70px,8vw,108px);}
+.cbox{position:relative;overflow:hidden;max-width:1340px;margin:0 auto;border-radius:26px;
+  padding:clamp(38px,5.4vw,70px);text-align:center;
+  background:linear-gradient(155deg,var(--ink-deep),var(--ink));}
+.cbox::after{content:"";position:absolute;right:-8%;top:-42%;width:44%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,rgba(195,144,60,.3),transparent 66%);}
+.cbox::before{content:"";position:absolute;left:-10%;bottom:-48%;width:44%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,rgba(92,122,153,.34),transparent 66%);}
+.cbox>*{position:relative;z-index:1;}
+.cbox h2{font-family:var(--serif);font-weight:300;font-size:clamp(28px,4.2vw,52px);color:#fff;
+  letter-spacing:-.03em;line-height:1.06;max-width:20ch;margin:0 auto;}
+.cbox h2 em{font-style:italic;color:var(--gold);font-weight:400;}
+.cbox p{font-size:16.5px;color:rgba(255,255,255,.74);margin:18px auto 30px;max-width:46ch;line-height:1.7;}
+.cbox .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.cbox .fine{margin-top:20px;font-size:13.5px;color:rgba(255,255,255,.5);}
+
+/* sticky CTA */
+.scta{position:fixed;right:22px;bottom:22px;z-index:600;background:#fff;
+  border:1px solid var(--line-2);border-radius:16px;box-shadow:0 18px 44px rgba(30,49,69,.16);
+  padding:14px 16px;display:flex;align-items:center;gap:14px;max-width:min(370px,calc(100vw - 44px));
+  opacity:0;transform:translateY(16px);pointer-events:none;
+  transition:opacity .35s ease,transform .35s cubic-bezier(.2,.9,.3,1);}
+.scta.on{opacity:1;transform:none;pointer-events:auto;}
+.scta .t{font-size:14.5px;font-weight:700;color:var(--ink);line-height:1.3;}
+.scta .s{font-size:12.5px;color:var(--muted);margin-top:2px;}
+.scta .go{flex:none;background:var(--gold);color:#fff;border-radius:999px;padding:11px 18px;
+  font-size:13.5px;font-weight:700;white-space:nowrap;}
+.scta .go:hover{background:var(--gold-deep);}
+.scta .x{position:absolute;top:-9px;right:-9px;width:24px;height:24px;border-radius:50%;
+  background:#fff;border:1px solid var(--line-2);color:var(--muted);font-size:13px;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(30,49,69,.12);}
+@media(max-width:560px){.scta{left:16px;right:16px;bottom:16px;max-width:none;}}
+</style>
+</head>
+<body class="nav-dark">
+<div id="nav"></div>
+
+<!-- ============================ HERO ============================ -->
+<div class="hero-wrap">
+  <header class="jhero">
+    <img class="bg" src="img/join-hero.jpg" alt="" onerror="this.remove()">
+    <div class="fall"></div>
+    <div class="scrim"></div>
+    <div class="in">
+      <span class="badge"><i></i> Now accepting advisors</span>
+      <h1>Do the work you like,<br>for people who <em>value it.</em></h1>
+      <p>Set your own rate and your own hours. We bring you clients who already fit how you
+        work — matched on specialty, personality, and availability rather than who bids lowest.</p>
+      <div class="row">
+        <a class="btn-lg btn-gold" href="provider-portal.html">Start your application →</a>
+        <a class="btn-lg btn-line" href="#earnings">See what you'd earn</a>
+      </div>
+      <p class="fine">No listing fees · No lead fees · You keep your own clients</p>
+    </div>
+  </header>
+</div>
+
+<!-- ============================ WHY JOIN ============================ -->
+<section class="s">
+  <div class="wrap">
+    <div class="s-head c rv">
+      <span class="kicker">Why advisors join</span>
+      <h2>The good parts of the job, <em>without the rest</em></h2>
+      <p>You're here to fix things and explain them well. Everything around that — finding clients,
+        chasing quotes, invoicing, reminding people — is ours to carry.</p>
+    </div>
+    <div class="why">
+      <div class="wcard rv"><span class="ic"><svg viewBox="0 0 24 24">
+        <path d="M12 2v20M17 6.5c0-2-2.2-3-5-3s-5 .8-5 2.8c0 4.7 10 2.4 10 7 0 2.2-2.2 3.2-5 3.2s-5-1-5-3"/></svg></span>
+        <h3>You set the price</h3>
+        <p>Your hourly rate is yours to name and change whenever you like. Most advisors here sit
+          between $50 and $95. We never discount your work to win a booking.</p></div>
+      <div class="wcard rv"><span class="ic"><svg viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg></span>
+        <h3>Your own hours</h3>
+        <p>Weekday days, evenings, weekends, virtual-only — entirely your call. Empty slots are never
+          sold on your behalf, and blackout dates take one click.</p></div>
+      <div class="wcard rv"><span class="ic"><svg viewBox="0 0 24 24">
+        <path d="M4 17l5-5 4 3 7-8"/><path d="M15 7h5v5"/></svg></span>
+        <h3>Matched, never auctioned</h3>
+        <p>Clients answer a questionnaire and see you because your strengths, personality, and
+          availability fit theirs. No racing to underbid anyone.</p></div>
+      <div class="wcard rv"><span class="ic"><svg viewBox="0 0 24 24">
+        <rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span>
+        <h3>Scheduling handled</h3>
+        <p>Clients book real openings from your calendar. Confirmations, reminders, and reschedules
+          go out automatically, so your phone stops being a booking system.</p></div>
+      <div class="wcard rv"><span class="ic"><svg viewBox="0 0 24 24">
+        <rect x="2.5" y="6" width="19" height="13" rx="2"/><path d="M2.5 11h19"/></svg></span>
+        <h3>Paid weekly, no invoicing</h3>
+        <p>Clients are charged through the platform after the session. Your share lands weekly with a
+          plain statement of every visit — no chasing anyone for a cheque.</p></div>
+      <div class="wcard rv"><span class="ic"><svg viewBox="0 0 24 24">
+        <path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
+        <h3>Reputation that travels</h3>
+        <p>Reviews attach to your profile and your specialties, so being genuinely excellent at
+          printers or networking is something clients can actually find you for.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ HOW JOINING WORKS ============================ -->
+<section class="s" style="background:#fff;border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="s-head c rv">
+      <span class="kicker">Joining</span>
+      <h2>Four steps, about <em>a week</em></h2>
+      <p>No fee to apply, and nothing published until you've seen and approved your own profile.</p>
+    </div>
+    <div class="flow">
+      <div class="fstep rv"><div class="n">01</div>
+        <div><h3>Apply</h3>
+          <p>Tell us where you work, what you're strongest at, how many years you've been doing this,
+            and the rate you have in mind. There's one written question, because how you explain
+            things matters as much as what you know.</p>
+          <span class="when">About 10 minutes</span></div></div>
+      <div class="fstep rv"><div class="n">02</div>
+        <div><h3>Conversation</h3>
+          <p>A call with one of us: real scenarios, a short role-play where you explain a router reset
+            to someone nervous, and an honest talk about rate, radius, and the kind of work you
+            actually want more of.</p>
+          <span class="when">45 minutes</span></div></div>
+      <div class="fstep rv"><div class="n">03</div>
+        <div><h3>Checks</h3>
+          <p>Two professional references and a background check, which we run and pay for. If you offer
+            in-person visits we'll confirm insurance, and help you sort it if you don't have it yet.</p>
+          <span class="when">2–4 days</span></div></div>
+      <div class="fstep rv"><div class="n">04</div>
+        <div><h3>Build your profile and open your calendar</h3>
+          <p>Photo, biography, specialties, personality, rate, travel radius, and the hours you want.
+            You answer the same matching questionnaire clients take — that's what puts you in front of
+            the right people. Nothing goes live until you press publish.</p>
+          <span class="when">30 minutes, then you're live</span></div></div>
+    </div>
+    <div class="center rv" style="margin-top:40px">
+      <a class="btn-lg btn-gold" href="provider-portal.html">Start your application →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ EARNINGS ============================ -->
+<section class="s" id="earnings">
+  <div class="wrap">
+    <div class="s-head c rv">
+      <span class="kicker">Earnings</span>
+      <h2>What a week could <em>look like</em></h2>
+      <p>Set your rate and how much you want to work. This is an illustration, not a promise —
+        but the platform fee and the arithmetic are real.</p>
+    </div>
+    <div class="earn rv">
+      <div class="card" id="earnForm" style="background:#fff"></div>
+      <div class="ebox" id="earnBox"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ REQUIREMENTS ============================ -->
+<section class="s" style="background:#fff;border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="s-head c rv">
+      <span class="kicker">What we look for</span>
+      <h2>Skill matters. So does <em>patience.</em></h2>
+    </div>
+    <div class="req" style="max-width:940px;margin:0 auto">
+      <div class="rbox rv">
+        <h3>Requirements</h3>
+        <ul>
+          <li><i></i><span>Three or more years of hands-on IT or technology support work</span></li>
+          <li><i></i><span>Two professional references we can speak to</span></li>
+          <li><i></i><span>A background check — we run it and pay for it</span></li>
+          <li><i></i><span>Own transport if you offer in-person visits</span></li>
+          <li><i></i><span>Liability insurance, or willingness to arrange it</span></li>
+          <li><i></i><span>A device and connection good enough for screen-share work</span></li>
+        </ul>
+      </div>
+      <div class="rbox soft rv">
+        <h3>What makes an application stand out</h3>
+        <ul>
+          <li><i></i><span>You can explain something technical without using a single acronym</span></li>
+          <li><i></i><span>You're comfortable telling a client they don't need to buy anything</span></li>
+          <li><i></i><span>You write things down for people, unprompted</span></li>
+          <li><i></i><span>You have a specialty you're genuinely known for</span></li>
+          <li><i></i><span>You want the same clients for years, not a stream of one-offs</span></li>
+          <li><i></i><span>You're patient with people who are embarrassed to ask</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ VOICES ============================ -->
+<section class="s">
+  <div class="wrap">
+    <div class="s-head c rv">
+      <span class="kicker">From advisors</span>
+      <h2>In their words</h2>
+    </div>
+    <div class="voices">
+      <div class="voice rv">
+        <p>"I stopped advertising eighteen months ago. The clients who come through fit what I'm
+           actually good at, and they've already read how I work."</p>
+        <div class="who"><span class="av">MW</span>
+          <span><span class="nm">Marcus W.</span><br><span class="rl">Network engineer · 15 years</span></span></div>
+      </div>
+      <div class="voice rv">
+        <p>"The part I didn't expect to love is the notes. I remember every client's setup, so nobody
+           has to explain their house to me twice."</p>
+        <div class="who"><span class="av">RA</span>
+          <span><span class="nm">Ruth A.</span><br><span class="rl">Technology educator · 18 years</span></span></div>
+      </div>
+      <div class="voice rv">
+        <p>"I work evenings and weekends only, and the calendar respects that absolutely. No one calls
+           me at nine on a Tuesday morning anymore."</p>
+        <div class="who"><span class="av">EP</span>
+          <span><span class="nm">Ethan P.</span><br><span class="rl">Security consultant · 8 years</span></span></div>
+      </div>
+    </div>
+    <p class="center rv" style="margin-top:22px;font-size:12.5px;color:var(--faint)">
+      Illustrative advisor voices from our demo network.</p>
+  </div>
+</section>
+
+<!-- ============================ FAQ ============================ -->
+<section class="s" style="background:#fff;border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="s-head c rv">
+      <span class="kicker">Advisor questions</span>
+      <h2>Before you <em>apply</em></h2>
+    </div>
+    <div class="faq" id="faq"></div>
+  </div>
+</section>
+
+<!-- ============================ CLOSING ============================ -->
+<section class="s close" style="padding-top:clamp(56px,6.5vw,92px)">
+  <div class="cbox rv">
+    <h2>Bring your practice. <em>Keep your standards.</em></h2>
+    <p>Applications take about ten minutes, cost nothing, and we reply within three business days.
+      You'll approve everything before a single client sees your profile.</p>
+    <div class="row">
+      <a class="btn-lg btn-cream" href="provider-portal.html">Start your application →</a>
+      <a class="btn-lg btn-ghost" href="support.html">Ask a question first</a>
+    </div>
+    <p class="fine">Already an advisor here? <a href="login.html" style="color:var(--gold-line);font-weight:600">Sign in to your portal</a></p>
+  </div>
+</section>
+
+<aside class="scta" id="scta">
+  <button class="x" id="sctaX" aria-label="Dismiss">×</button>
+  <div><div class="t">Ready to advise with us?</div>
+    <div class="s">Ten minutes to apply. No fees.</div></div>
+  <a class="go" href="provider-portal.html">Apply now</a>
+</aside>
+
+<div id="footer"></div>
+<script src="js/data.js"></script>
+<script src="js/nav.js"></script>
+<script>
+'use strict';
+
+/* ---------------- earnings illustration ---------------- */
+const E={rate:75,hours:12,mode:'both'};
+const FEE=0.15;
+function drawEarn(){
+  document.getElementById('earnForm').innerHTML=`
+    <div class="erow"><div class="lbl">Your hourly rate <span>$${E.rate}/hr</span></div>
+      <input type="range" id="eRate" min="45" max="120" step="5" value="${E.rate}">
+      <p style="font-size:12.5px;color:var(--faint);margin-top:7px">Advisors here range from $50 to $95.
+        You can change this whenever you like.</p></div>
+    <div class="erow"><div class="lbl">Billable hours a week <span>${E.hours} hrs</span></div>
+      <input type="range" id="eHours" min="4" max="30" step="1" value="${E.hours}">
+      <p style="font-size:12.5px;color:var(--faint);margin-top:7px">Most part-time advisors book
+        8–15 hours; full-time sits nearer 25.</p></div>
+    <div class="erow"><div class="lbl">How you work</div>
+      <div class="eopts">
+        <button class="eopt ${E.mode==='onsite'?'on':''}" data-m="onsite">In person only</button>
+        <button class="eopt ${E.mode==='remote'?'on':''}" data-m="remote">Virtual only</button>
+        <button class="eopt ${E.mode==='both'?'on':''}" data-m="both">Both</button>
+      </div>
+      <p style="font-size:12.5px;color:var(--faint);margin-top:9px">Advisors offering both typically
+        fill more of their calendar, because clients can choose what suits the problem.</p></div>`;
+  const rr=document.getElementById('eRate'),hh=document.getElementById('eHours');
+  rr.addEventListener('input',()=>{E.rate=+rr.value;drawEarn();});
+  hh.addEventListener('input',()=>{E.hours=+hh.value;drawEarn();});
+  document.querySelectorAll('.eopt').forEach(b=>b.addEventListener('click',()=>{
+    E.mode=b.dataset.m;drawEarn();}));
+
+  const fill=E.mode==='both'?1:(E.mode==='onsite'?.88:.82);
+  const gross=E.rate*E.hours*fill;
+  const fee=gross*FEE, net=gross-fee;
+  document.getElementById('earnBox').innerHTML=`
+    <div class="k">Estimated weekly, after fees</div>
+    <div class="big">$${Math.round(net).toLocaleString()}</div>
+    <div class="sub">≈ $${Math.round(net*52).toLocaleString()} a year at this pace</div>
+    <div class="brk">
+      <div class="br"><span>Billed to clients</span><b>$${Math.round(gross).toLocaleString()}</b></div>
+      <div class="br"><span>Platform fee (15%)</span><b>−$${Math.round(fee).toLocaleString()}</b></div>
+      <div class="br"><span>Listing or lead fees</span><b>$0</b></div>
+      <div class="br"><span>Payout schedule</span><b>Weekly</b></div>
+    </div>
+    <p class="note">Illustration only. Assumes a realistic fill rate for your chosen working style
+      and excludes taxes, travel, and your own expenses.</p>
+    <a class="btn-lg btn-cream" href="provider-portal.html" style="width:100%;margin-top:18px;justify-content:center">
+      Start your application</a>`;
+}
+drawEarn();
+
+/* ---------------- FAQ ---------------- */
+const FAQ=[
+ ['What does Greylock take?',
+  'A flat 15% platform fee on the session value, deducted before your weekly payout. There are no listing fees, no fees for receiving a match, and no charge for the background check — we cover that.'],
+ ['Do I have to give up my existing clients?',
+  'Not at all, and we would not ask you to. Plenty of advisors run their own book alongside Greylock work and use us to fill the gaps. Your existing clients stay entirely yours, on whatever terms you already have with them.'],
+ ['Can I set my own travel radius?',
+  'Yes. You choose the area you will drive to, and clients outside it simply never see you as an in-person option. You can also work virtual-only and skip travel altogether.'],
+ ['How many clients would I get?',
+  'Honestly, it depends on your specialty, your rate, your availability, and how many advisors already cover your area. We would rather talk that through on the call than promise you a number on a web page.'],
+ ['What if a client and I are not a good fit?',
+  'Say so and we will rematch them, with no penalty to you. A mismatch caught early is far better for everyone than an awkward hour that ends in a poor review.'],
+ ['Who owns the notes I keep on a client?',
+  'You write them, they stay private to you, and they exist so a returning client never has to explain their setup twice. They are never shown to other advisors or sold to anyone.'],
+ ['Can I pause my calendar?',
+  'Any time, for any reason, with one click. Holidays, a busy stretch at your main job, or simply a full week — blocked time is respected absolutely and nothing gets booked over it.'],
+ ['Do I need to offer the free intro call?',
+  'It is optional. Most advisors offer it because it converts well and starts the relationship warmly, but you can withdraw it whenever you like from your profile settings.'],
+ ['What insurance do I need?',
+  'General liability is required if you visit clients in person. If you do not have it yet, tell us on the call — it is inexpensive and we will point you at providers other advisors here use.'],
+];
+document.getElementById('faq').innerHTML=FAQ.map(([q,a],i)=>`
+  <div class="fq"><button class="fq-q">${q}<span class="mk">+</span></button>
+    <div class="fq-a">${a}</div></div>`).join('');
+document.querySelectorAll('.fq-q').forEach(b=>b.addEventListener('click',()=>
+  b.parentElement.classList.toggle('open')));
+
+/* ---------------- sticky CTA ---------------- */
+const scta=document.getElementById('scta');
+let closed=false;
+document.getElementById('sctaX').addEventListener('click',()=>{closed=true;scta.classList.remove('on');});
+addEventListener('scroll',()=>{
+  if(closed)return;
+  const past=window.scrollY>window.innerHeight*.9;
+  const atEnd=window.scrollY+window.innerHeight>document.body.scrollHeight-200;
+  scta.classList.toggle('on',past&&!atEnd);
+},{passive:true});
+
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+}),{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv:not(.in)').forEach(t=>io.observe(t));
+</script>
+</body>
+</html>

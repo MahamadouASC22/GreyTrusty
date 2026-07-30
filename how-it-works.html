@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How It Works — Greylock Trust</title>
+<meta name="description" content="How Greylock Trust matches you with a vetted technology advisor: the questionnaire, the scoring model, and booking. Try the live match simulator.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<style>
+.timeline{position:relative;max-width:860px;margin:0 auto;}
+.timeline::before{content:"";position:absolute;left:27px;top:18px;bottom:18px;width:2px;
+  background:linear-gradient(180deg,var(--gold),var(--line));}
+.tl{position:relative;padding:0 0 46px 82px;}
+.tl:last-child{padding-bottom:0;}
+.tl .dot{position:absolute;left:0;top:0;width:56px;height:56px;border-radius:50%;background:#fff;
+  border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;
+  font-size:17px;font-weight:700;color:var(--gold-deep);box-shadow:0 6px 20px rgba(195,144,60,.18);}
+.tl .ph{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold-deep);display:block;margin-bottom:6px;}
+.tl h3{font-size:23px;margin-bottom:9px;}
+.tl p{color:var(--muted);font-size:15px;max-width:44em;}
+.tl .detail{margin-top:14px;background:var(--bg);border:1px solid var(--line);
+  border-radius:14px;padding:16px 18px;}
+.tl .detail li{list-style:none;font-size:14px;padding:5px 0;display:flex;gap:10px;}
+.tl .detail li::before{content:"\u25C6";color:var(--gold);flex:none;font-size:9px;margin-top:6px;}
+
+/* simulator */
+.sim{display:grid;grid-template-columns:1fr 340px;gap:26px;align-items:start;}
+@media(max-width:900px){.sim{grid-template-columns:1fr;}}
+.sim-q{border-bottom:1px solid var(--line);padding:16px 0;}
+.sim-q:last-child{border-bottom:none;}
+.sim-q .lbl{font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:10px;}
+.sim-opts{display:flex;flex-wrap:wrap;gap:8px;}
+.sim-opt{border:1px solid var(--line-2);background:#fff;border-radius:999px;padding:9px 16px;
+  font-size:13.5px;font-weight:600;color:var(--ink);transition:all .13s ease;}
+.sim-opt:hover{border-color:var(--gold);}
+.sim-opt.on{background:var(--gold);border-color:var(--gold);color:#fff;}
+.sim-res{position:sticky;top:96px;}
+.sim-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);
+  transition:all .4s cubic-bezier(.3,.9,.3,1);}
+.sim-row:last-child{border-bottom:none;}
+.sim-row img,.sim-row .fb{width:40px;height:40px;border-radius:11px;object-fit:cover;flex:none;}
+.sim-row .fb{background:var(--ink);color:var(--gold);display:flex;align-items:center;
+  justify-content:center;font-size:14px;font-weight:700;}
+.sim-row .nm{font-size:14px;font-weight:700;color:var(--ink);}
+.sim-row .tt{font-size:12px;color:var(--muted);}
+.sim-row .pc{margin-left:auto;text-align:right;flex:none;}
+.sim-row .pc b{font-size:16px;font-weight:700;color:var(--gold-deep);}
+.sim-row .track{height:4px;background:var(--chipbg);border-radius:99px;width:66px;
+  margin-top:4px;overflow:hidden;}
+.sim-row .fill{height:100%;background:var(--gold);border-radius:99px;transition:width .5s ease;}
+.sim-why{font-size:12px;color:var(--muted);background:var(--gold-wash);border-radius:10px;
+  padding:9px 12px;margin-top:12px;}
+/* weights */
+.wt{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);}
+.wt:last-child{border-bottom:none;}
+.wt .wn{font-size:14.5px;font-weight:600;color:var(--ink);min-width:150px;}
+.wt .wbar{flex:1;height:8px;background:var(--chipbg);border-radius:99px;overflow:hidden;}
+.wt .wfill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-deep));border-radius:99px;}
+.wt .wv{font-size:12.5px;font-weight:700;color:var(--gold-deep);min-width:52px;text-align:right;}
+.cmp{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);
+  border-radius:18px;overflow:hidden;}
+.cmp th,.cmp td{padding:15px 18px;text-align:left;font-size:14.5px;border-bottom:1px solid var(--line);}
+.cmp th{background:var(--bg);font-size:11px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--faint);}
+.cmp td:first-child{font-weight:600;color:var(--ink);}
+.cmp .yes{color:var(--gold-deep);font-weight:700;}
+.cmp .no{color:var(--faint);}
+.cmp tr:last-child td{border-bottom:none;}
+.cmp .us{background:var(--gold-wash);}
+@media(max-width:700px){.cmp th:nth-child(3),.cmp td:nth-child(3){display:none;}}
+</style>
+</head>
+<body>
+<div id="nav"></div>
+
+<header class="sec-tight" style="background:radial-gradient(760px 400px at 8% 0%,rgba(195,144,60,.13),transparent 62%),linear-gradient(170deg,#FFFDF9,var(--bg));border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <span class="eyebrow">How it works</span>
+    <h1 class="h1" style="margin-top:14px;max-width:19em">From "this thing is driving me mad" to fixed.</h1>
+    <p class="lead" style="margin-top:14px;max-width:40em">Greylock Trust is a marketplace of vetted
+      technology advisors. You tell us what you need and how you like to work. We score every advisor
+      against that and put the best fits first. You book, you meet, it gets sorted.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px">
+      <a class="pill pill-gold" href="marketplace.html">Start the questionnaire</a>
+      <a class="pill pill-soft" href="#simulator">Try the match simulator</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ TIMELINE ============ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="center rv" style="max-width:620px;margin:0 auto 50px">
+      <span class="eyebrow c">The whole journey</span>
+      <h2 class="h2" style="margin-top:14px">Five steps, and only two need you</h2>
+    </div>
+    <div class="timeline">
+      <div class="tl rv"><div class="dot">01</div>
+        <span class="ph">About two minutes</span>
+        <h3>You answer the questionnaire</h3>
+        <p>Most directories ask for a zip code and stop. We ask what is actually broken, how soon you
+           need it, whether you want to understand the fix or just have it work, which personality you
+           would rather sit beside, and what you might need years from now.</p>
+        <div class="detail"><ul>
+          <li>What you need help with — six specialties, choose as many as apply</li>
+          <li>Urgency, from "broken right now" through to "planning ahead"</li>
+          <li>Why you want an advisor: ongoing support, trust, security, purchases, learning, business, family</li>
+          <li>How you like to learn — watch, follow along, read after, ask as you go, or just have it handled</li>
+          <li>Preferred personality: patient teacher, friendly conversationalist, efficient problem solver,
+              highly technical expert, calm and reassuring</li>
+          <li>Working style — quick replies, evenings, weekends, advance scheduling, recurring check-ins</li>
+          <li>Meeting preference and a comfortable hourly budget</li>
+        </ul></div>
+        <p style="margin-top:12px;font-size:13.5px;color:var(--faint)">Any question can be skipped, and
+           preferences only reorder your matches — they never remove anyone from the list.</p>
+      </div>
+      <div class="tl rv"><div class="dot">02</div>
+        <span class="ph">Instant</span>
+        <h3>We score every advisor against your answers</h3>
+        <p>Each advisor gets a match percentage, drawn as a ring on their card. It is not a popularity
+           score and it is not paid placement — it is your answers weighed against their specialties,
+           rating, availability, rate, and working style. Two different people see two different orders.</p>
+      </div>
+      <div class="tl rv"><div class="dot">03</div>
+        <span class="ph">As long as you like</span>
+        <h3>You compare real profiles</h3>
+        <p>Every profile carries an hourly rate, a single overall rating with the full review breakdown,
+           specialties, personality, next availability, a written biography, and a Q&amp;A in that
+           advisor's own words. Filter by specialty, rate, personality, availability, or meeting type at
+           any point.</p>
+      </div>
+      <div class="tl rv"><div class="dot">04</div>
+        <span class="ph">Under a minute</span>
+        <h3>You book straight into their calendar</h3>
+        <p>No phone tag, no waiting for a callback. Their real availability appears in a month grid;
+           pick a day, pick a time, confirm. Most advisors offer a free 20-minute intro call, which is
+           the lowest-risk way to begin.</p>
+        <div class="detail"><ul>
+          <li>Free intro call — 20 minutes, no charge, no obligation to book further</li>
+          <li>Full session — typically one to two hours, billed to the minute after the first hour</li>
+          <li>Reschedule or cancel from your confirmation email</li>
+        </ul></div>
+      </div>
+      <div class="tl rv"><div class="dot">05</div>
+        <span class="ph">Ongoing</span>
+        <h3>It stays fixed</h3>
+        <p>Follow-up on anything you worked on together is included. Advisors keep private notes on your
+           devices and setup, so the second visit never starts from zero — and some offer recurring
+           check-ins that catch problems before they become the reason you call.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SIMULATOR ============ -->
+<section class="sec" id="simulator" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="center rv" style="max-width:640px;margin:0 auto 40px">
+      <span class="eyebrow c">See it work</span>
+      <h2 class="h2" style="margin-top:14px">Change an answer, watch the ranking move</h2>
+      <p class="lead" style="margin-top:12px">This is the live scoring model, running on the same nine
+        demo advisors as the marketplace. Nothing is saved.</p>
+    </div>
+    <div class="sim rv">
+      <div class="card" id="simForm"></div>
+      <div class="sim-res">
+        <div class="card">
+          <div class="sec-label">Your ranking, live</div>
+          <div id="simList"></div>
+          <div class="sim-why" id="simWhy"></div>
+          <a class="pill pill-gold" href="marketplace.html" style="width:100%;margin-top:16px">Do this for real</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WEIGHTS ============ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="grid g2" style="gap:44px;align-items:center">
+      <div class="rv">
+        <span class="eyebrow">Inside the score</span>
+        <h2 class="h2" style="margin-top:12px">What counts, and how much</h2>
+        <p class="lead" style="margin-top:12px">We publish the weighting because a match score you cannot
+          interrogate is just a marketing number. These are the real factors, in the real proportions.</p>
+        <p style="margin-top:16px;font-size:14px;color:var(--muted)">Scores are clamped between 44% and
+          99% — nobody is a perfect match, and nobody who appears in your results is a bad one.</p>
+      </div>
+      <div class="card rv">
+        <div class="wt"><span class="wn">Specialty fit</span>
+          <span class="wbar"><span class="wfill" style="width:100%"></span></span><span class="wv">+10 ea</span></div>
+        <div class="wt"><span class="wn">Personality match</span>
+          <span class="wbar"><span class="wfill" style="width:90%"></span></span><span class="wv">+9</span></div>
+        <div class="wt"><span class="wn">Within your budget</span>
+          <span class="wbar"><span class="wfill" style="width:60%"></span></span><span class="wv">+6</span></div>
+        <div class="wt"><span class="wn">Meeting preference</span>
+          <span class="wbar"><span class="wfill" style="width:60%"></span></span><span class="wv">+6</span></div>
+        <div class="wt"><span class="wn">Business support needed</span>
+          <span class="wbar"><span class="wfill" style="width:60%"></span></span><span class="wv">+6</span></div>
+        <div class="wt"><span class="wn">Worked together before</span>
+          <span class="wbar"><span class="wfill" style="width:60%"></span></span><span class="wv">+6</span></div>
+        <div class="wt"><span class="wn">Learning style fit</span>
+          <span class="wbar"><span class="wfill" style="width:40%"></span></span><span class="wv">+4</span></div>
+        <div class="wt"><span class="wn">Urgency vs availability</span>
+          <span class="wbar"><span class="wfill" style="width:50%"></span></span><span class="wv">+5</span></div>
+        <div class="wt"><span class="wn">Future goals overlap</span>
+          <span class="wbar"><span class="wfill" style="width:20%"></span></span><span class="wv">+2 ea</span></div>
+        <div class="wt"><span class="wn">Over your budget</span>
+          <span class="wbar"><span class="wfill" style="width:100%;background:#C77B6B"></span></span>
+          <span class="wv" style="color:#B4452F">\u221212</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPARISON ============ -->
+<section class="sec" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="center rv" style="max-width:600px;margin:0 auto 36px">
+      <span class="eyebrow c">Why not just…</span>
+      <h2 class="h2" style="margin-top:14px">The alternatives, honestly compared</h2>
+    </div>
+    <div class="rv" style="overflow-x:auto">
+      <table class="cmp">
+        <tr><th>&nbsp;</th><th class="us">Greylock Trust</th><th>Big-box tech desk</th><th>Found on a directory</th></tr>
+        <tr><td>Matched to your problem</td><td class="us yes">Scored across 9 factors</td>
+            <td class="no">Whoever is on shift</td><td class="no">You guess from a list</td></tr>
+        <tr><td>Price known before booking</td><td class="us yes">On every card</td>
+            <td class="no">Often quoted after diagnosis</td><td class="no">Varies</td></tr>
+        <tr><td>Free first conversation</td><td class="us yes">20 minutes, most advisors</td>
+            <td class="no">Rare</td><td class="no">Rare</td></tr>
+        <tr><td>Same person next time</td><td class="us yes">Yours to rebook</td>
+            <td class="no">Different technician</td><td class="us">Sometimes</td></tr>
+        <tr><td>Vetting and background checks</td><td class="us yes">Every advisor</td>
+            <td class="us">Usually</td><td class="no">Unverified</td></tr>
+        <tr><td>Personality considered</td><td class="us yes">Explicitly asked</td>
+            <td class="no">No</td><td class="no">No</td></tr>
+        <tr><td>Commission on products sold</td><td class="us yes">None</td>
+            <td class="no">Common</td><td class="no">Unknown</td></tr>
+        <tr><td>Follow-up included</td><td class="us yes">On the same issue</td>
+            <td class="no">New ticket</td><td class="no">Depends</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="sec center">
+  <div class="wrap rv">
+    <h2 class="h2">Ready to see your matches?</h2>
+    <p class="lead" style="margin:12px auto 26px;max-width:31em">Two minutes of questions, then real
+      profiles with prices, availability, and reviews.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a class="pill pill-gold" href="marketplace.html">Find my advisor</a>
+      <a class="pill pill-soft" href="faqs.html">Read the FAQs</a>
+    </div>
+  </div>
+</section>
+
+<div id="footer"></div>
+<script src="js/data.js"></script>
+<script src="js/nav.js"></script>
+<script>
+'use strict';
+/* ---------------- live match simulator ---------------- */
+const S={need:'Cybersecurity',pers:'Patient teacher',budget:80,mode:'either',style:'works',urgency:'week'};
+const QS=[
+ {k:'need',lbl:'What do you need help with?',opts:SPECS.map(s=>[s,s])},
+ {k:'pers',lbl:'Which personality would suit you?',opts:PERSONALITIES.map(p=>[p,p])},
+ {k:'style',lbl:'Which best describes you?',opts:[['enjoy','I enjoy learning'],
+   ['works','Just make it work'],['stress','Technology stresses me out']]},
+ {k:'urgency',lbl:'How urgent is it?',opts:[['today','Right now'],['week','This week'],['whenever','No rush']]},
+ {k:'mode',lbl:'How would you like to meet?',opts:[['either','Either'],['onsite','In-Person'],['remote','Virtual']]},
+ {k:'budget',lbl:'Comfortable hourly budget',opts:[[60,'Up to $60'],[80,'Up to $80'],[100,'Up to $100'],[120,'Up to $120']]},
+];
+function simScore(a){
+  let s=48,why=[];
+  if(a.specs.includes(S.need)){s+=10;why.push('specialises in '+S.need.toLowerCase());}
+  if(a.personality===S.pers){s+=9;why.push('is a '+S.pers.toLowerCase());}
+  if(a.rate<=S.budget)s+=6;else{s-=12;why.push('is above your budget');}
+  if(S.mode==='onsite'){a.onsite?s+=6:s-=15;}
+  if(S.mode==='remote'&&a.remote)s+=5;
+  if(S.style==='enjoy'&&a.personality==='Patient teacher')s+=4;
+  if(S.style==='works'&&a.personality==='Efficient problem solver')s+=4;
+  if(S.style==='stress'&&a.personality==='Calm and reassuring'){s+=5;why.push('is calm and reassuring');}
+  if(S.urgency==='today'&&(a.evenings||a.weekends)){s+=5;why.push('has evening or weekend hours');}
+  s+=(a.rating-4.5)*4;
+  if(a.past)s+=6;
+  return {pct:Math.max(44,Math.min(99,Math.round(s))),why};
+}
+function drawSim(){
+  document.getElementById('simForm').innerHTML=QS.map(q=>`
+    <div class="sim-q"><div class="lbl">${q.lbl}</div>
+      <div class="sim-opts">${q.opts.map(([v,t])=>
+        `<button class="sim-opt ${S[q.k]===v?'on':''}" data-k="${q.k}" data-v="${v}">${t}</button>`).join('')}
+      </div></div>`).join('');
+  document.querySelectorAll('.sim-opt').forEach(b=>b.addEventListener('click',()=>{
+    const v=b.dataset.v;S[b.dataset.k]=isNaN(+v)?v:+v;drawSim();}));
+  const ranked=A.map(a=>({...a,m:simScore(a)})).sort((x,y)=>y.m.pct-x.m.pct).slice(0,5);
+  document.getElementById('simList').innerHTML=ranked.map(a=>`
+    <div class="sim-row">
+      <img src="${a.photo}" alt="" onerror="this.outerHTML='<div class=&quot;fb&quot;>${initials(a.name)}</div>'">
+      <div><div class="nm">${a.name}</div><div class="tt">${a.title} \u00b7 $${a.rate}/hr</div></div>
+      <div class="pc"><b>${a.m.pct}%</b><div class="track"><div class="fill" style="width:${a.m.pct}%"></div></div></div>
+    </div>`).join('');
+  const top=ranked[0];
+  document.getElementById('simWhy').innerHTML=top.m.why.length
+    ? `<b>${top.name.split(' ')[0]} leads because they</b> ${top.m.why.join(', ')}.`
+    : `<b>${top.name.split(' ')[0]} leads</b> on overall rating and availability.`;
+}
+drawSim();
+</script>
+</body>
+</html>
