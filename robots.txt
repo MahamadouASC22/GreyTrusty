@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /client-dashboard.html
+Disallow: /login.html
+Disallow: /provider-dashboard.html
+Disallow: /provider-portal.html
+
+
+Sitemap: https://greylocktrust.com/sitemap.xml
