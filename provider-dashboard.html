@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your dashboard — Greylock Trust</title>
+<meta name="description" content="Greylock Trust advisor dashboard: your schedule, incoming matches, clients, profile, and payouts.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<style>
+:root{ --serif:'Fraunces',Georgia,serif; }
+body{background:var(--bg);}
+.dash{max-width:1300px;margin:0 auto;padding:calc(88px + 1vw) 24px 80px;}
+
+
+/* ---------- greeting ---------- */
+.greet{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:22px;}
+.greet .who{display:flex;align-items:center;gap:16px;}
+.greet img,.greet .fb{width:62px;height:62px;border-radius:16px;object-fit:cover;}
+.greet .fb{background:var(--ink);color:var(--gold);display:flex;align-items:center;
+  justify-content:center;font-size:22px;font-weight:600;}
+.greet h1{font-family:var(--serif);font-weight:300;font-size:clamp(26px,3.2vw,38px);
+  color:var(--ink);letter-spacing:-.03em;line-height:1.05;}
+.greet h1 em{font-style:italic;color:var(--gold-deep);font-weight:400;}
+.greet .sub{font-size:14px;color:var(--muted);margin-top:5px;}
+.greet .act{margin-left:auto;display:flex;gap:9px;flex-wrap:wrap;}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;
+  font-weight:600;font-size:13.5px;padding:11px 18px;transition:all .18s ease;}
+.pill-gold{background:var(--gold);color:#fff;} .pill-gold:hover{background:var(--gold-deep);}
+.pill-soft{border:1px solid var(--line-2);color:var(--ink);background:#fff;}
+.pill-soft:hover{border-color:var(--ink);}
+.pill-ink{background:var(--ink);color:#fff;} .pill-ink:hover{background:var(--ink-2);}
+
+
+/* ---------- status strip ---------- */
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px;}
+@media(max-width:900px){.strip{grid-template-columns:1fr 1fr;}}
+@media(max-width:520px){.strip{grid-template-columns:1fr;}}
+.stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px;}
+.stat .k{font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);}
+.stat .v{font-size:27px;font-weight:700;color:var(--ink);line-height:1;margin:9px 0 4px;}
+.stat .v small{font-size:13px;font-weight:600;color:var(--muted);}
+.stat .n{font-size:12.5px;color:var(--muted);}
+.stat.gold{background:var(--gold-wash);border-color:var(--gold-line);}
+.stat.gold .v{color:var(--gold-deep);}
+
+
+/* ---------- layout ---------- */
+.cols{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:20px;align-items:start;}
+@media(max-width:1040px){.cols{grid-template-columns:1fr;}}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;margin-bottom:20px;}
+.card:last-child{margin-bottom:0;}
+.ch{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+.ch h2{font-family:var(--serif);font-weight:400;font-size:21px;color:var(--ink);letter-spacing:-.02em;}
+.ch .more{margin-left:auto;font-size:13px;font-weight:600;color:var(--gold-deep);}
+.ch .more:hover{text-decoration:underline;text-underline-offset:3px;}
+
+
+/* ---------- tabs ---------- */
+.tabs{display:flex;gap:4px;background:var(--chipbg);border-radius:999px;padding:4px;margin-bottom:18px;
+  overflow-x:auto;}
+.tab{border-radius:999px;padding:10px 16px;font-size:13.5px;font-weight:700;color:var(--muted);
+  white-space:nowrap;}
+.tab.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(30,49,69,.09);}
+.tab .badge{display:inline-block;margin-left:6px;background:var(--gold);color:#fff;border-radius:999px;
+  font-size:10.5px;padding:1px 7px;}
+
+
+/* ---------- appointment rows ---------- */
+.appt{display:flex;gap:16px;align-items:center;padding:15px 0;border-bottom:1px solid var(--line);}
+.appt:last-child{border-bottom:none;}
+.appt .when{width:78px;flex:none;text-align:center;background:var(--bg);border:1px solid var(--line);
+  border-radius:12px;padding:9px 4px;}
+.appt .when .d{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);}
+.appt .when .n{font-size:20px;font-weight:700;color:var(--ink);line-height:1.1;}
+.appt .when .t{font-size:11.5px;color:var(--muted);}
+.appt .who2{min-width:0;}
+.appt .nm{font-size:15.5px;font-weight:700;color:var(--ink);}
+.appt .meta{font-size:13px;color:var(--muted);margin-top:3px;}
+.appt .tags{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap;}
+.tg{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  background:var(--chipbg);border-radius:999px;padding:4px 9px;color:var(--muted);}
+.tg.gold{background:var(--gold-wash);color:var(--gold-deep);}
+.tg.ink{background:var(--ink);color:#fff;}
+.appt .go{margin-left:auto;flex:none;display:flex;gap:7px;}
+.appt .go .pill{padding:9px 14px;font-size:12.5px;}
+@media(max-width:640px){.appt{flex-wrap:wrap;}.appt .go{margin-left:0;width:100%;}}
+
+
+/* ---------- matches ---------- */
+.match{display:flex;gap:14px;align-items:flex-start;padding:15px 0;border-bottom:1px solid var(--line);}
+.match:last-child{border-bottom:none;}
+.match .ring{width:50px;height:50px;flex:none;position:relative;}
+.match .ring svg{width:50px;height:50px;transform:rotate(-90deg);}
+.match .ring .bgc{stroke:var(--line);} .match .ring .arc{stroke:var(--gold);stroke-linecap:round;}
+.match .ring b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:12.5px;font-weight:700;color:var(--ink);}
+.match .nm{font-size:15px;font-weight:700;color:var(--ink);}
+.match .need{font-size:13.5px;color:var(--body-c);margin-top:3px;line-height:1.6;}
+.match .meta{font-size:12.5px;color:var(--faint);margin-top:5px;}
+.match .go{margin-left:auto;flex:none;}
+
+
+/* ---------- availability ---------- */
+.avail{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;}
+.day{border:1px solid var(--line);border-radius:12px;padding:11px 6px;text-align:center;
+  background:#fff;transition:all .18s ease;}
+.day .dw{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);}
+.day .hrs{font-size:12.5px;font-weight:700;color:var(--ink);margin-top:6px;line-height:1.35;}
+.day.off{background:var(--bg);} .day.off .hrs{color:var(--faint);font-weight:600;}
+.day.on{border-color:var(--gold);background:var(--gold-wash);}
+.day.on .hrs{color:var(--gold-deep);}
+@media(max-width:640px){.avail{grid-template-columns:repeat(4,1fr);}}
+.togs{display:grid;gap:11px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line);}
+.tog{display:flex;align-items:center;gap:12px;}
+.tog .lab{font-size:14px;font-weight:600;color:var(--ink);}
+.tog .lab small{display:block;font-size:12px;font-weight:400;color:var(--muted);margin-top:1px;}
+.sw{margin-left:auto;width:44px;height:25px;border-radius:99px;background:var(--line-2);
+  position:relative;flex:none;transition:background .22s ease;}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:19px;height:19px;border-radius:50%;
+  background:#fff;transition:transform .22s ease;box-shadow:0 2px 6px rgba(30,49,69,.2);}
+.sw.on{background:var(--gold);} .sw.on::after{transform:translateX(19px);}
+
+
+/* ---------- right rail ---------- */
+.mini{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;margin-bottom:18px;}
+.mini h3{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:14px;}
+.pay{background:linear-gradient(155deg,var(--ink-deep),var(--ink));color:#fff;position:relative;
+  overflow:hidden;border:none;}
+.pay::after{content:"";position:absolute;right:-70px;top:-70px;width:220px;height:220px;border-radius:50%;
+  background:radial-gradient(circle,rgba(195,144,60,.28),transparent 66%);}
+.pay>*{position:relative;z-index:1;}
+.pay h3{color:var(--gold-line);}
+.pay .amt{font-size:34px;font-weight:700;line-height:1;}
+.pay .sub{font-size:12.5px;color:rgba(255,255,255,.6);margin-top:5px;}
+.pay .rows{margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.16);}
+.pay .r{display:flex;justify-content:space-between;font-size:13.5px;padding:5px 0;
+  color:rgba(255,255,255,.78);} .pay .r b{color:#fff;}
+.prof-row{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--line);
+  font-size:14px;color:var(--body-c);}
+.prof-row:last-child{border-bottom:none;}
+.prof-row b{color:var(--ink);margin-left:auto;font-weight:700;}
+.bar{height:7px;background:var(--chipbg);border-radius:99px;overflow:hidden;margin:12px 0 8px;}
+.bar i{display:block;height:100%;background:var(--gold);border-radius:99px;}
+.task{display:flex;gap:11px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line);
+  font-size:14px;color:var(--body-c);line-height:1.55;}
+.task:last-child{border-bottom:none;}
+.task .dot{width:8px;height:8px;transform:rotate(45deg);background:var(--gold);flex:none;margin-top:6px;}
+.task.done{color:var(--faint);text-decoration:line-through;}
+.task.done .dot{background:var(--line-2);}
+.empty{text-align:center;padding:26px 10px;color:var(--muted);font-size:14px;}
+.demo{font-size:11.5px;color:var(--faint);text-align:center;margin-top:22px;}
+</style>
+</head>
+<body class="nav-dark">
+<div id="nav"></div>
+
+
+<main class="dash">
+  <div class="greet" id="greet"></div>
+  <div class="strip" id="strip"></div>
+  <div class="cols">
+    <div>
+      <section class="card">
+        <div class="tabs" id="tabs"></div>
+        <div id="apptList"></div>
+      </section>
+
+
+      <section class="card">
+        <div class="ch"><h2>New matches</h2>
+          <span class="more" id="matchNote"></span></div>
+        <div id="matchList"></div>
+      </section>
+
+
+      <section class="card">
+        <div class="ch"><h2>Your week</h2>
+          <a class="more" href="#" id="editHours">Edit hours</a></div>
+        <div class="avail" id="avail"></div>
+        <div class="togs" id="togs"></div>
+      </section>
+    </div>
+
+
+    <aside>
+      <div class="mini pay" id="pay"></div>
+      <div class="mini" id="profileCard"></div>
+      <div class="mini" id="tasks"></div>
+    </aside>
+  </div>
+  <p class="demo">Demo dashboard — figures and clients are illustrative. Connect Supabase to make it live.</p>
+</main>
+
+
+<div id="footer"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/nav.js"></script>
+<script>
+'use strict';
+
+
+/* signed-in advisor (demo): Marcus, or ?id= */
+const me=A.find(x=>x.id===+(new URLSearchParams(location.search).get('id')||1))||A[0];
+const first=me.name.split(' ')[0];
+const hour=new Date().getHours();
+const partOfDay=hour<12?'Good morning':hour<18?'Good afternoon':'Good evening';
+
+
+/* ---------------- greeting ---------------- */
+document.getElementById('greet').innerHTML=`
+  <div class="who">
+    <img src="${me.photo}" alt="" onerror="this.outerHTML='<div class=&quot;fb&quot;>${initials(me.name)}</div>'">
+    <div>
+      <h1>${partOfDay}, <em>${first}.</em></h1>
+      <p class="sub">${me.title} · $${me.rate}/hour · Profile live and accepting bookings</p>
+    </div>
+  </div>
+  <div class="act">
+    <a class="pill pill-soft" href="advisor.html?id=${me.id}">View public profile</a>
+    <a class="pill pill-gold" href="#" id="addTime">Add availability</a>
+  </div>`;
+
+
+/* ---------------- status strip ---------------- */
+const WEEK={sessions:6,intros:3,hours:11.5,newMatches:4};
+document.getElementById('strip').innerHTML=`
+  <div class="stat"><div class="k">This week</div>
+    <div class="v">${WEEK.sessions}</div><div class="n">booked sessions</div></div>
+  <div class="stat"><div class="k">Intro calls</div>
+    <div class="v">${WEEK.intros}</div><div class="n">free, 20 minutes each</div></div>
+  <div class="stat gold"><div class="k">New matches</div>
+    <div class="v">${WEEK.newMatches}</div><div class="n">clients you ranked highly for</div></div>
+  <div class="stat"><div class="k">Your rating</div>
+    <div class="v">${me.rating.toFixed(1)}<small>/5</small></div>
+    <div class="n">across ${me.reviews} reviews</div></div>`;
+
+
+/* ---------------- appointments ---------------- */
+const APPTS=[
+ {when:['Wed','30','9:30 AM'],nm:'Margaret Hale',need:'Wi-Fi dead zones upstairs',
+  mode:'In person',kind:'Session',dur:'2 hrs',addr:'14 Chapel St',tab:'upcoming',repeat:true},
+ {when:['Wed','30','1:00 PM'],nm:'Owen Brady',need:'Laptop very slow to start',
+  mode:'Virtual',kind:'Session',dur:'1 hr',tab:'upcoming'},
+ {when:['Thu','31','9:00 AM'],nm:'Priya Nandra',need:'Wants to talk about home security',
+  mode:'Virtual',kind:'Intro call',dur:'20 min',tab:'upcoming'},
+ {when:['Thu','31','3:00 PM'],nm:'The Whitfields',need:'New router plus four devices',
+  mode:'In person',kind:'Session',dur:'2 hrs',addr:'8 Elm Road',tab:'upcoming'},
+ {when:['Fri','1','11:00 AM'],nm:'Ronald Keane',need:'Printer offline again',
+  mode:'In person',kind:'Session',dur:'1 hr',addr:'22 Mill Lane',tab:'upcoming',repeat:true},
+ {when:['Mon','4','9:30 AM'],nm:'Aisha Mensah',need:'Backup review and credit freeze',
+  mode:'Virtual',kind:'Session',dur:'1.5 hrs',tab:'upcoming'},
+ {when:['Tue','29','10:00 AM'],nm:'Dana Whitfield',need:'Smart doorbell setup',
+  mode:'In person',kind:'Session',dur:'1.5 hrs',tab:'past',paid:'$112.50'},
+ {when:['Mon','28','2:00 PM'],nm:'Tom Reilly',need:'Password manager rollout',
+  mode:'Virtual',kind:'Session',dur:'2 hrs',tab:'past',paid:'$150.00'},
+ {when:['Fri','25','9:00 AM'],nm:'Helen Cross',need:'Intro call — considering ongoing support',
+  mode:'Virtual',kind:'Intro call',dur:'20 min',tab:'past',paid:'Free'},
+];
+let tab='upcoming';
+function drawTabs(){
+  const up=APPTS.filter(x=>x.tab==='upcoming').length;
+  document.getElementById('tabs').innerHTML=`
+    <button class="tab ${tab==='upcoming'?'on':''}" data-t="upcoming">Upcoming<span class="badge">${up}</span></button>
+    <button class="tab ${tab==='past'?'on':''}" data-t="past">Past</button>
+    <button class="tab ${tab==='requests'?'on':''}" data-t="requests">Requests</button>`;
+  document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
+    tab=b.dataset.t;drawTabs();drawAppts();}));
+}
+function drawAppts(){
+  const list=APPTS.filter(x=>x.tab===tab);
+  const el=document.getElementById('apptList');
+  if(tab==='requests'){
+    el.innerHTML=`<div class="empty">No pending requests. New bookings appear here first when you
+      have <b>manual approval</b> switched on.</div>`;return;
+  }
+  el.innerHTML=list.map(x=>`
+    <div class="appt">
+      <div class="when"><div class="d">${x.when[0]}</div><div class="n">${x.when[1]}</div>
+        <div class="t">${x.when[2]}</div></div>
+      <div class="who2">
+        <div class="nm">${x.nm}</div>
+        <div class="meta">${x.need}</div>
+        <div class="tags">
+          <span class="tg ${x.kind==='Intro call'?'gold':''}">${x.kind}</span>
+          <span class="tg">${x.mode}</span>
+          <span class="tg">${x.dur}</span>
+          ${x.addr?`<span class="tg">${x.addr}</span>`:''}
+          ${x.repeat?'<span class="tg ink">Returning</span>':''}
+          ${x.paid?`<span class="tg gold">${x.paid}</span>`:''}
+        </div>
+      </div>
+      <div class="go">
+        ${x.tab==='upcoming'
+          ?'<button class="pill pill-soft">Notes</button><button class="pill pill-ink">Open</button>'
+          :'<button class="pill pill-soft">Notes</button>'}
+      </div>
+    </div>`).join('');
+}
+drawTabs();drawAppts();
+
+
+/* ---------------- new matches ---------------- */
+const MATCHES=[
+ {pct:96,nm:'Jonathan A.',need:'Whole-house Wi-Fi is unreliable; wants someone patient who will explain it.',
+  meta:'4 mi away · In person preferred · up to $90/hr'},
+ {pct:91,nm:'Beatrice L.',need:'Recently scammed by a phone call; wants accounts locked down properly.',
+  meta:'Virtual · this week · up to $95/hr'},
+ {pct:88,nm:'The Okafor family',need:'Four devices, two teenagers, no backups anywhere.',
+  meta:'7 mi away · weekends only · up to $80/hr'},
+ {pct:84,nm:'Marcus D.',need:'Small business — shared drive and staff device security.',
+  meta:'In person or virtual · no rush · up to $100/hr'},
+];
+document.getElementById('matchNote').textContent='Matched to your specialties';
+document.getElementById('matchList').innerHTML=MATCHES.map(m=>{
+  const R=21,C=2*Math.PI*R,off=C*(1-m.pct/100);
+  return `<div class="match">
+    <div class="ring"><svg viewBox="0 0 50 50">
+      <circle class="bgc" cx="25" cy="25" r="${R}" fill="none" stroke-width="3.5"/>
+      <circle class="arc" cx="25" cy="25" r="${R}" fill="none" stroke-width="3.5"
+        stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}"/></svg>
+      <b>${m.pct}</b></div>
+    <div><div class="nm">${m.nm}</div>
+      <div class="need">${m.need}</div>
+      <div class="meta">${m.meta}</div></div>
+    <div class="go"><button class="pill pill-soft">Respond</button></div>
+  </div>`;}).join('');
+
+
+/* ---------------- availability ---------------- */
+const WK=[['Mon','9–5'],['Tue','9–5'],['Wed','9–5'],['Thu','9–7'],['Fri','9–3'],
+          ['Sat',me.weekends?'10–2':'Off'],['Sun','Off']];
+document.getElementById('avail').innerHTML=WK.map(([d,h])=>`
+  <div class="day ${h==='Off'?'off':'on'}"><div class="dw">${d}</div><div class="hrs">${h}</div></div>`).join('');
+const TOGS=[
+ ['Offer free 20-minute intro calls','Shown as a gold badge on your profile',me.intro],
+ ['Available evenings','Adds 6pm and 7pm slots on weekdays',me.evenings],
+ ['Available weekends','Opens Saturday bookings',me.weekends],
+ ['Offer recurring check-ins','Clients can book you quarterly',me.checkins],
+ ['Take small-business work','Appears in the business support filter',me.business],
+ ['Approve bookings manually','New bookings arrive as requests first',false],
+];
+document.getElementById('togs').innerHTML=TOGS.map(([t,s,on],i)=>`
+  <div class="tog"><div class="lab">${t}<small>${s}</small></div>
+    <button class="sw ${on?'on':''}" data-i="${i}" aria-label="${t}"></button></div>`).join('');
+document.querySelectorAll('.sw').forEach(b=>b.addEventListener('click',()=>b.classList.toggle('on')));
+
+
+/* ---------------- payouts ---------------- */
+const gross=6*me.rate*1.6, fee=gross*.15, net=gross-fee;
+document.getElementById('pay').innerHTML=`
+  <h3>Next payout</h3>
+  <div class="amt">$${net.toFixed(0)}</div>
+  <div class="sub">Friday, for the week ending Thursday</div>
+  <div class="rows">
+    <div class="r"><span>Billed to clients</span><b>$${gross.toFixed(0)}</b></div>
+    <div class="r"><span>Platform fee (15%)</span><b>−$${fee.toFixed(0)}</b></div>
+    <div class="r"><span>This month so far</span><b>$${(net*3.2).toFixed(0)}</b></div>
+    <div class="r"><span>Payout method</span><b>•••• 4417</b></div>
+  </div>
+  <a class="pill pill-gold" href="#" style="width:100%;margin-top:18px">View statements</a>`;
+
+
+/* ---------------- profile strength ---------------- */
+const filled=82;
+document.getElementById('profileCard').innerHTML=`
+  <h3>Profile strength</h3>
+  <div style="font-size:24px;font-weight:700;color:var(--ink)">${filled}%</div>
+  <div class="bar"><i style="width:${filled}%"></i></div>
+  <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px">Stronger profiles appear higher
+    for the clients they genuinely fit.</p>
+  <div class="prof-row">Headshot <b>Added</b></div>
+  <div class="prof-row">Biography <b>Added</b></div>
+  <div class="prof-row">Specialties <b>${me.specs.length} listed</b></div>
+  <div class="prof-row">Qualifications <b>4 listed</b></div>
+  <div class="prof-row" style="color:var(--gold-deep)">Add a short intro video
+    <b style="color:var(--gold-deep)">To do</b></div>
+  <a class="pill pill-soft" href="#" style="width:100%;margin-top:16px">Edit profile</a>`;
+
+
+/* ---------------- tasks ---------------- */
+document.getElementById('tasks').innerHTML=`
+  <h3>Needs you</h3>
+  <div class="task"><span class="dot"></span><span>Confirm Friday's address change with
+    <b>Ronald Keane</b></span></div>
+  <div class="task"><span class="dot"></span><span>Reply to <b>Beatrice L.</b> — new match, 91% fit</span></div>
+  <div class="task"><span class="dot"></span><span>Complete the Q3 security briefing (30 min, counts
+    toward continuing education)</span></div>
+  <div class="task done"><span class="dot"></span><span>Upload updated insurance certificate</span></div>
+  <div class="task done"><span class="dot"></span><span>Set August blackout dates</span></div>`;
+
+
+/* demo handlers */
+['addTime','editHours'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el)el.addEventListener('click',e=>{e.preventDefault();
+    alert('Demo only — availability editing is not wired up yet.');});
+});
+</script>
+</body>
+</html>
+
+
+

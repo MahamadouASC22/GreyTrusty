@@ -10,6 +10,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/site.css">
 <style>
+.q-inner{
+  max-width:1100px;width:100%;text-align:center;
+  animation:qin .25s ease both;
+  transition:opacity .2s ease;
+  will-change:opacity;
+  -webkit-backface-visibility:hidden;
+  transform:translateZ(0);
+}
+@keyframes qin{from{opacity:0}to{opacity:1}}   /* opacity only, no translateY */
+
+
+.q-mid{flex:1;display:flex;align-items:center;justify-content:center;
+  padding:16px 24px;overflow-y:auto;overflow-x:hidden;
+  position:relative;isolation:isolate;-webkit-overflow-scrolling:touch;}
+
+
 .head{padding:calc(96px + 1.6vw) 26px 0;text-align:center;}
 .head h1{font-family:'Fraunces',Georgia,serif;font-weight:300;letter-spacing:-.03em;
   font-size:clamp(30px,4vw,46px);color:var(--ink);}
@@ -160,6 +176,23 @@ body.booking .bp-in{opacity:1;transform:none;}
   align-items:center;justify-content:center;margin:0 auto 14px;}
 .bp-done h4{font-size:19px;font-weight:700;color:var(--ink);margin-bottom:7px;}
 .bp-done p{font-size:14px;color:var(--muted);line-height:1.7;}
+
+
+.row{
+    display:flex;
+    justify-content:center;
+}
+
+
+
+
+.start-btn,
+.hero {
+    display:flex;
+    justify-content:center;
+    margin:32px auto 0;
+    width:fit-content;
+}
 @media(max-width:1080px){
   body.booking .stage{grid-template-columns:1fr;}
   .bcol{position:fixed;inset:auto 0 0 0;top:auto;z-index:700;max-height:86vh;overflow:auto;
@@ -168,12 +201,16 @@ body.booking .bp-in{opacity:1;transform:none;}
   .bp-body{max-height:60vh;}
 }
 
+
 /* quiz */
-.quiz{position:fixed;inset:0;z-index:800;display:flex;flex-direction:column;
-  background:radial-gradient(900px 560px at 12% 6%,rgba(92,122,153,.13),transparent 62%),
+.quiz{position:fixed;left:0;right:0;bottom:0;
+  top:76px;                 /* was inset:0 or top:0 — clears the navbar */
+  z-index:500;              /* was 800 — below the nav's 700 */
+  display:flex;flex-direction:column; background:radial-gradient(900px 560px at 12% 6%,rgba(92,122,153,.13),transparent 62%),
              radial-gradient(760px 520px at 88% 94%,rgba(195,144,60,.12),transparent 58%),
              linear-gradient(168deg,#FFFFFF,#F7FAFC 46%,var(--frost));}
-.q-bar{height:3px;background:var(--line);} .q-bar i{display:block;height:100%;background:var(--gold);width:0;
+.q-bar{height:3px;background:var(--line);}
+.q-bar i{display:block;height:100%;background:var(--gold);width:0;
   transition:width .3s ease;}
 .q-mid{flex:1;display:flex;align-items:center;justify-content:center;padding:16px 24px;overflow:auto;}
 .q-inner{
@@ -200,8 +237,52 @@ body.booking .bp-in{opacity:1;transform:none;}
 .q-slider{display:flex;align-items:center;gap:14px;max-width:400px;margin:22px auto 0;}
 .q-slider input{flex:1;accent-color:var(--gold);}
 .q-slider .v{font-weight:700;color:var(--gold-deep);min-width:70px;text-align:left;font-size:14.5px;}
-.q-bot{border-top:1px solid var(--line);background:rgba(255,255,255,.88);backdrop-filter:blur(10px);padding:14px 26px;
-  display:flex;justify-content:center;gap:11px;position:relative;}
+.q-bot{
+
+
+display:grid;
+
+
+grid-template-columns:1fr auto 1fr;
+
+
+align-items:center;
+
+
+padding:18px 28px;
+
+
+border-top:1px solid var(--line);
+
+
+background:rgba(255,255,255,.92);
+
+
+backdrop-filter:blur(10px);
+
+
+}
+
+
+.q-back{
+
+
+justify-self:end;
+
+
+}
+
+
+.q-next{
+
+
+justify-self:start;
+
+
+margin-left:12px;
+
+
+}
 .q-browse{position:absolute;left:26px;top:50%;transform:translateY(-50%);font-size:13.5px;
   font-weight:600;color:#fff;background:var(--ink);border-radius:999px;padding:12px 21px;}
 .q-browse:hover{background:var(--ink-2);}
@@ -210,16 +291,167 @@ body.booking .bp-in{opacity:1;transform:none;}
   font-weight:600;font-size:14px;padding:12px 26px;}
 .q-next{background:var(--gold);color:#fff;border-radius:999px;font-weight:700;font-size:14px;padding:12px 36px;}
 .q-next:hover{background:var(--gold-deep);}
-.wel{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:70px;
-  align-items:center;
-  text-align:left;
-  max-width:1100px;
-  width:100%;
-  margin:0 auto;
+
+
+.q-inner{
+
+
+animation:qin .25s ease;
+
+
+opacity:1;
+
+
 }
+
+
+.q-inner h2{
+
+
+display:block;
+
+
+opacity:1;
+
+
+visibility:visible;
+
+
+}
+
+
+.q-sub{
+
+
+display:block;
+
+
+opacity:1;
+
+
+visibility:visible;
+
+
+}
+
+
+.rt2{
+
+
+font-size:18px;
+
+
+font-weight:700;
+
+
+color:var(--ink);
+
+
+margin-bottom:6px;
+
+
+}
+
+
+.rs{
+
+
+font-size:15px;
+
+
+line-height:1.6;
+
+
+color:var(--muted);
+
+
+}
+@media(max-width:640px){
+  .quiz{top:64px;}
+  .q-bot{grid-template-columns:1fr;gap:8px;padding:12px 16px;}
+  .q-browse{display:none;}
+  .q-back,.q-next{justify-self:stretch;margin-left:0;}
+}
+.art{
+
+
+width:100%;
+
+
+max-width:360px;
+
+
+display:block;
+
+
+margin:0 auto 32px;
+
+
+border-radius:18px;
+
+
+}
+
+
+.art-ph{
+
+
+width:360px;
+
+
+height:240px;
+
+
+display:flex;
+
+
+align-items:center;
+
+
+justify-content:center;
+
+
+border:2px dashed var(--line);
+
+
+border-radius:18px;
+
+
+color:var(--muted);
+
+
+margin:0 auto 32px;
+
+
+}
+
+
+.wel{
+
+
+display:flex;
+
+
+flex-direction:column;
+
+
+justify-content:center;
+
+
+align-items:center;
+
+
+text-align:center;
+
+
+max-width:760px;
+
+
+margin:auto;
+
+
+}
+
 
 .wel h2{
   font-family:'Fraunces',Georgia,serif;
@@ -229,66 +461,46 @@ body.booking .bp-in{opacity:1;transform:none;}
   font-size:clamp(34px,4vw,52px);
 }
 
-.wel h2 b{
-  color:var(--gold-deep);
-  font-weight:400;
-  font-style:italic;
-}
 
 .wel .q-sub{
   font-size:17px;
   line-height:1.7;
-  max-width:500px;
+  max-width:550px;
+  margin-left:auto;
+  margin-right:auto;
 }
 
+
+.q-inner{
+
+
+transition:opacity .2s ease;
+
+
+}
 .wel .rows{
   margin-top:35px;
+  width:100%;
 }
+
 
 .wel .row{
   display:flex;
+  justify-content:center;
+  text-align:center;
   gap:18px;
   align-items:flex-start;
   padding:18px 0;
   border-top:1px solid var(--line);
 }
 
+
 .wel .row:last-child{
   border-bottom:1px solid var(--line);
 }
 
-.wel .ic{
-  display:none;
-}
-
-.wel .rt2{
-  font-size:20px;
-  font-weight:700;
-  color:var(--ink);
-}
-
-.wel .rs{
-  font-size:16px;
-  line-height:1.6;
-  color:var(--muted);
-  margin-top:5px;
-}
 
 
-/* create the right side */
-.wel:after{
-  content:"";
-  display:block;
-  height:320px;
-  border-radius:28px;
-  background:
-    linear-gradient(
-      145deg,
-      var(--gold-wash),
-      rgba(255,255,255,.8)
-    );
-  border:1px solid var(--gold-line);
-}
 
 @media(max-width:720px){
   .wel{
@@ -297,9 +509,11 @@ body.booking .bp-in{opacity:1;transform:none;}
     text-align:center;
   }
 
+
   .wel:after{
     display:none;
   }
+
 
   .wel .row{
     text-align:left;
@@ -310,11 +524,13 @@ body.booking .bp-in{opacity:1;transform:none;}
 <body class="nav-dark">
 <div id="nav"></div>
 
+
 <header class="head">
   <h1>Advisors matched to <em>you.</em></h1>
   <p class="sub">Sorted by fit. Every rate, rating, and opening is real and up to date.</p>
 </header>
 <div class="fbar" id="fbar"></div>
+
 
 <div class="stage">
   <main class="list">
@@ -324,6 +540,7 @@ body.booking .bp-in{opacity:1;transform:none;}
   </main>
   <aside class="bcol"><div class="bp-in" id="bpIn"></div></aside>
 </div>
+
 
 <div class="quiz" id="quiz">
   <div class="q-bar"><i id="qBar"></i></div>
@@ -335,24 +552,65 @@ body.booking .bp-in{opacity:1;transform:none;}
   </div>
 </div>
 
+
 <div id="footer"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/data.js"></script>
+<script src="js/auth.js"></script>
 <script src="js/nav.js"></script>
 <script>
 'use strict';
-const P={need:[],urgency:null,reasons:[],style:null,learn:null,personality:null,
-         working:[],goals:[],zip:'',logi:null,budget:100};
+
+
+const P = {
+ need:[],
+ urgency:null,
+ reasons:[],
+ style:null,
+ learn:null,
+ personality:null,
+ working:[],
+ goals:[],
+ zip:'',
+ logi:null,
+ budget:100,
+ regionStatus:null
+};
 const F={meet:'',spec:'',avail:'',pers:'',rate:999,offer:'',sort:'match'};
+
+
+const QKEY='greylockQuiz';
+
+
+function saveQuiz(){
+  try{localStorage.setItem(QKEY,JSON.stringify({P,F,done:true}));}catch(e){}
+}
+function saveDraft(){
+  try{localStorage.setItem(QKEY,JSON.stringify({P,F,done:false}));}catch(e){}
+}
+function loadQuiz(){
+  try{
+    const raw=localStorage.getItem(QKEY);
+    if(!raw)return false;
+    const o=JSON.parse(raw);
+    if(!o.done)return false;          // only a completed run skips the quiz
+    Object.assign(P,o.P||{});Object.assign(F,o.F||{});
+    return true;
+  }catch(e){return false;}
+}
+
 
 /* pre-filter from homepage links */
 const qs=new URLSearchParams(location.search);
 if(qs.get('spec')){F.spec=qs.get('spec');P.need=[qs.get('spec')];}
+
 
 /* ---------- art slots (drop your own images) ---------- */
 const ART1=`<img class="art" src="img/quiz-welcome.png" alt=""
   onerror="this.outerHTML='&lt;div class=&quot;art-ph&quot;&gt;img/quiz-welcome.png&lt;/div&gt;'">`;
 const ART2=`<img class="art" src="img/quiz-ready.png" alt=""
   onerror="this.outerHTML='&lt;div class=&quot;art-ph&quot;&gt;img/quiz-ready.png&lt;/div&gt;'">`;
+
 
 const STEPS=[
  {id:'welcome'},
@@ -380,8 +638,26 @@ const STEPS=[
         ['checkins','Offers recurring check-ins'],['plans','Helps me plan future upgrades']]},
  {id:'goals',multi:true,h:'Looking ahead, what might you want <em class="g">help</em> with?',
   sub:'Think a few years out \u2014 select any',opts:FUTURES},
- {id:'logi',h:'How would you like to <em class="g">meet?</em>',sub:'And a comfortable hourly budget',
-  opts:[['either','Either works'],['onsite','In-Person'],['remote','Virtual']],slider:true},
+ {
+ id:'logi',
+ h:'How would you like to <em class="g">work with your Privacy Advisor?</em>',
+ sub:'Most advisors work virtually. Some regions also have specialized in-person support.',
+ opts:[
+   ['either','No preference'],
+   ['remote','Virtual support'],
+   ['onsite','In-person support (select regions)']
+ ],
+ slider:true
+},
+{
+ id:'region',
+ h:'Check <em class="g">in-person availability</em>',
+ sub:'Enter your ZIP code to see if a Privacy Advisor is available nearby.',
+ zip:true
+},
+{
+ id:'regionResult'
+},
  {id:'done'},
 ];
 let step=0;
@@ -389,21 +665,29 @@ const qBody=document.getElementById('qBody'),qBar=document.getElementById('qBar'
       qBack=document.getElementById('qBack'),qNext=document.getElementById('qNext');
 function renderStep(){
   const s=STEPS[step];
-  qBar.style.width=(step/(STEPS.length-1)*100)+'%';
-  qBack.style.visibility=step===0?'hidden':'visible';
+const progress = Math.max(
+0,
+Math.min(
+100,
+(step/(STEPS.length-1))*100
+)
+);
+
+
+qBar.style.width = progress + "%";  qBack.style.visibility=step===0?'hidden':'visible';
   qNext.textContent=s.id==='done'?'See my matches':(step===0?'Let\u2019s begin':'Next');
   if(s.id==='welcome'){
     qBody.innerHTML=`<div class="wel"><div>
-      <h2>Technology help that <b>fits you</b> \u2014 not the other way around.</h2>
+      <h2>Technology help that <em>fits you</em> \u2014 not the other way around.</h2>
       <p class="q-sub" style="margin-bottom:0">A couple of minutes of questions about your
         technology, your pace, and your preferences. Then we\u2019ll show you who fits, with
         prices and availability up front.</p>
       <div class="rows">
         <div class="row"><div>
-          <div class="rt2">Answer a few questions</div>
+          <div class="rt2"><b>Answer a few questions</b></div>
           <div class="rs">Skip anything you\u2019d rather not answer.</div></div></div>
         <div class="row"><div>
-          <div class="rt2">Meet your matches</div>
+          <div class="rt2"><b>Meet your matches</b></div>
           <div class="rs">Compare profiles, then book straight into their calendar.</div></div></div>
       </div></div></div>`;
     return;
@@ -415,17 +699,71 @@ function renderStep(){
         percentage is personal \u2014 scored from what you just told us.</p>
       <div class="rows">
         <div class="row"><div>
-          <div class="rt2">The ring is your fit</div>
+          <div class="rt2"><b>The ring is your fit</b></div>
           <div class="rs">It weighs your needs, personality, pace, and budget together.</div></div></div>
         <div class="row"><div>
-          <div class="rt2">Book in one motion</div>
+          <div class="rt2"><b>Book in one motion</b></div>
           <div class="rs">Pick a time from their calendar without leaving the page.</div></div></div>
       </div></div></div>`;
     return;
   }
+if(s.id==='regionResult'){
+  const available = P.regionStatus==='available';
+  const wantedOnsite = P.logi==='onsite';
+
+
+  const H = available
+      ? 'Good news — <em class="g">in-person support is available.</em>'
+      : (wantedOnsite
+          ? 'No in-person advisor <em class="g">near you yet.</em>'
+          : 'We\u2019ll match you <em class="g">virtually.</em>');
+
+
+  const SUB = available
+      ? (wantedOnsite
+          ? 'We found Privacy Advisors who can visit you locally. Your matches will lead with them.'
+          : 'Your matches will include both local and virtual advisors, so you can pick per visit.')
+      : (wantedOnsite
+          ? 'We haven\u2019t reached your area for in-person visits yet. Every advisor also works virtually \u2014 same rate, same people, usually a faster appointment.'
+          : 'No in-person coverage there yet, which is fine \u2014 virtual is how most of our work happens anyway.');
+
+
+  const RT = available
+      ? (wantedOnsite ? 'Local advisors included' : 'Local and virtual included')
+      : 'Virtual advisors available';
+
+
+  const RS = available
+      ? 'Your matches will include advisors who offer in-person support nearby.'
+      : 'Your advisor guides you securely over screen share, at the same hourly rate.';
+
+
+  qBody.innerHTML=`
+    <div class="wel"><div>
+      <h2>${H}</h2>
+      <p class="q-sub">${SUB}</p>
+      <div class="rows">
+        <div class="row"><div>
+          <div class="rt2"><b>${RT}</b></div>
+          <div class="rs">${RS}</div></div></div>
+        <div class="row"><div>
+          <div class="rt2"><b>You can change this any time</b></div>
+          <div class="rs">The filter at the top of your results switches between virtual and in-person.</div></div></div>
+      </div>
+    </div></div>`;
+  qNext.textContent="See my matches";
+  return;
+}
+ 
   let html=`<h2>${s.h}</h2><p class="q-sub">${s.sub}</p>`;
-  if(s.zip){html+=`<input class="q-zip" id="qZip" maxlength="5" value="${P.zip}" placeholder="ZIP">`;}
-  else{
+if(s.zip){
+ html+=`
+ <input class="q-zip" id="qZip" maxlength="5"
+ value="${P.zip}" placeholder="ZIP">
+ <p class="q-hint">
+ We'll check whether in-person Privacy Advisors are available nearby.
+ </p>`;
+}  else{
     html+='<div class="q-opts">'+s.opts.map(o=>{
       const v=Array.isArray(o)?o[0]:o,t=Array.isArray(o)?o[1]:o;
       const on=s.multi?P[s.id].includes(v):P[s.id]===v;
@@ -435,29 +773,237 @@ function renderStep(){
   if(s.slider)html+=`<div class="q-slider"><span style="font-size:13px;color:var(--faint)">Up to</span>
     <input type="range" id="qBud" min="50" max="120" step="5" value="${P.budget}">
     <span class="v" id="qBudV">$${P.budget}/hr</span></div>`;
-  qBody.innerHTML=html;
-  qBody.querySelectorAll('.q-opt').forEach(b=>b.addEventListener('click',()=>{
-    const v=b.dataset.v;
-    if(s.multi){const i=P[s.id].indexOf(v);i>-1?P[s.id].splice(i,1):P[s.id].push(v);}
-    else P[s.id]=P[s.id]===v?null:v;
-    renderStep();}));
-  const sk=qBody.querySelector('#qSkip');
-  if(sk)sk.addEventListener('click',()=>{P[s.id]=s.multi?[]:null;step++;renderStep();});
-  const bud=qBody.querySelector('#qBud');
-  if(bud)bud.addEventListener('input',()=>{P.budget=+bud.value;
-    qBody.querySelector('#qBudV').textContent='$'+bud.value+'/hr';});
+
+
+    if(s.id==='logi' && P.logi==='remote'){
+  html+=`<p class="q-hint" style="max-width:44ch;margin:18px auto 0;font-size:13.5px;
+    color:var(--gold-deep)">Virtual works anywhere \u2014 every advisor offers screen-share
+    sessions at the same hourly rate as a visit.</p>`;
 }
-qBack.addEventListener('click',()=>{if(step>0){step--;renderStep();}});
-qNext.addEventListener('click',()=>{
-  if(step<STEPS.length-1){step++;renderStep();}else finish();});
-document.getElementById('skipAll').addEventListener('click',finish);
-document.getElementById('redoQuiz').addEventListener('click',()=>{
-  closeBook();step=0;document.getElementById('quiz').style.display='flex';renderStep();});
-function finish(){
+qBody.style.opacity = 0;
+  qBody.innerHTML = '';                    // clear the old frame first
+  void qBody.offsetHeight;                 // force reflow — kills the ghost
+  qBody.innerHTML = html;
+  attachStepEvents(s);                     // bind to the NEW DOM, once
+  requestAnimationFrame(() => { qBody.style.opacity = 1; });
+}
+
+
+
+
+function attachStepEvents(s){
+const bud = document.getElementById("qBud");
+
+
+if(bud){
+    bud.addEventListener("input", () => {
+        P.budget = Number(bud.value);
+
+
+        const value = document.getElementById("qBudV");
+        if(value){
+            value.textContent = "$" + P.budget + "/hr";
+        }
+    });
+}
+
+
+    const zip = document.getElementById("qZip");
+
+
+   if(zip){
+        zip.addEventListener("input", () => {
+            zip.value = zip.value.replace(/\D/g,"").slice(0,5);
+            P.zip = zip.value;
+            saveDraft();
+        });
+    }
+    qBody.querySelectorAll(".q-opt").forEach(btn => {
+        btn.addEventListener("click", () => {
+
+
+            const value = btn.dataset.v;
+
+
+            if(s.multi){
+                const i = P[s.id].indexOf(value);
+
+
+                if(i > -1){
+                    P[s.id].splice(i,1);
+                }else{
+                    P[s.id].push(value);
+                }
+            }else{
+                P[s.id] = value;
+            }
+
+
+            renderStep();
+
+
+        });
+    });
+
+
+    const skip = document.getElementById("qSkip");
+
+
+    if(skip){
+        skip.addEventListener("click", () => {
+
+
+            P[s.id] = s.multi ? [] : null;
+
+
+            step++;
+
+
+            renderStep();
+
+
+        });
+    }
+
+
+  }
+  function completeMatches(){
+  saveQuiz();
   document.getElementById('quiz').style.display='none';
-  if(P.need.length===1)F.spec=P.need[0];
+  if(P.need.length===1 && !F.spec) F.spec=P.need[0];
+  if(P.logi==='remote') F.meet='remote';
+  if(P.logi==='onsite' && P.regionStatus==='available') F.meet='onsite';
   buildFilters();update();
 }
+
+
+qBack.addEventListener('click',()=>{
+
+
+  if(step>0){
+
+
+    step=previousStep();
+    renderStep();
+
+
+  }
+
+
+});
+qNext.addEventListener('click',()=>{
+
+
+    const s = STEPS[step];
+
+
+    // Welcome screen
+    if(s.id === "welcome"){
+        step++;
+        renderStep();
+        return;
+    }
+
+
+    // Final screen
+    if(s.id === "done"){
+        completeMatches();
+        return;
+    }
+
+
+    // Region result page
+    if(s.id === "regionResult"){
+        completeMatches();
+        return;
+    }
+
+
+    if(s.zip){
+
+
+        if(!/^\d{5}$/.test(P.zip)){
+            alert("Please enter a valid 5 digit ZIP code.");
+            return;
+        }
+
+
+        checkRegion();
+    }
+
+
+    if(step < STEPS.length-1){
+    if(s.id === "logi" && P.logi === "remote"){   // was: !== "onsite"
+        step += 2;                                 // virtual skips region + result
+    }else{
+        step++;
+    }
+    renderStep();
+}
+
+
+});
+
+
+document.getElementById('skipAll').addEventListener('click',finish);
+ function previousStep(){
+
+
+  let prev=step-1;
+
+
+  while(prev>=0){
+
+
+    const id=STEPS[prev].id;
+
+
+    // Hide region ZIP step unless user chose in-person
+    if(id==='region' && P.logi!=='remote'){
+      prev--;
+      continue;
+    }
+
+
+    // Hide region result unless user chose in-person
+    if(id==='regionResult' && P.logi!=='remote'){
+      prev--;
+      continue;
+    }
+
+
+    break;
+  }
+
+
+  return prev;
+}
+function inPersonAvailable(zip){
+  const regions = [
+    "01267",
+    "01060",
+    "01103",
+    "02108",
+    "10001"
+  ];
+
+
+  return regions.includes(zip);
+}
+function checkRegion(){
+  if(P.logi==='remote') return;
+  P.regionStatus = inPersonAvailable(P.zip) ? 'available' : 'unavailable';
+}
+
+
+function finish(){                 // "Browse all advisors" — leave the quiz now
+  try{localStorage.removeItem(QKEY);}catch(e){}
+  document.getElementById('quiz').style.display='none';
+  buildFilters();update();
+}
+
+
+
 
 /* ---------- matching ---------- */
 function score(a){
@@ -485,6 +1031,7 @@ function score(a){
   if(a.past)s+=6;
   return {pct:Math.max(44,Math.min(99,Math.round(s)))};
 }
+
 
 /* ---------- filters ---------- */
 const chev=`<svg width="11" height="7" viewBox="0 0 11 7" fill="none"><path d="M1 1l4.5 4.5L10 1"
@@ -540,6 +1087,7 @@ function toggleP(w){
 }
 document.addEventListener('click',()=>document.querySelectorAll('.fpill.open').forEach(x=>x.classList.remove('open')));
 
+
 /* ---------- render ---------- */
 let current=[];
 function update(){
@@ -565,7 +1113,6 @@ function update(){
         <h3 class="a-name">${a.name}${a.past?'<span class="a-past">\u2726 Booked before</span>':''}</h3>
         <p class="a-cred">${a.title}, ${a.yrs} years of experience</p>
         <div class="a-rate">$${a.rate}<span>/hour</span></div>
-        <p class="a-meta"><span class="st">\u2605</span> <b>${a.rating.toFixed(1)}</b> (${a.reviews})
           <span class="d">\u00b7</span>${a.onsite?(a.remote?'Virtual \u2022 In-Person':'In-Person'):'Virtual'}
           <span class="d">\u00b7</span>Next available <b>${a.nextAvail}</b></p>
         ${a.intro?'<p class="a-free">Offers a free 20-minute intro call</p>':''}
@@ -585,6 +1132,7 @@ function update(){
      </article>`);
   });
 }
+
 
 /* ---------- booking, inline beside the list ---------- */
 let B={id:null,mode:'session',date:null,mView:null,time:null,step:'when',
@@ -646,6 +1194,7 @@ function renderBook(a){
   }
   const times=B.date?availFor(a,new Date(B.date),intro):[];
 
+
   const when=`
     <div class="bp-sec">1 \u00b7 Pick a day</div>
     <div class="mc">
@@ -664,6 +1213,7 @@ function renderBook(a){
       ${B.time?'Continue to your details':'Select a time to continue'}</button>
     <p class="bp-note">Demo schedule \u2014 real availability comes from each advisor\u2019s calendar.</p>`;
 
+
   const modeSeg=intro?`
     <div style="font-size:13px;color:var(--muted)">Intro calls are
       <b style="color:var(--ink)">virtual</b> \u2014 we\u2019ll email you a link.</div>`
@@ -676,6 +1226,7 @@ function renderBook(a){
       </div></div>`
    :`<div style="font-size:13px;color:var(--muted)">This advisor meets
       <b style="color:var(--ink)">${a.onsite?'in person':'virtually'}</b>.</div>`;
+
 
   const details=`
     <div class="bp-sec">3 \u00b7 Your details</div>
@@ -705,9 +1256,12 @@ function renderBook(a){
         :'Nothing is charged until after the session.'}</p>
     </form>`;
 
+
   document.getElementById('bpIn').innerHTML=head
 
+
     +`<div class="bp-body">${B.step==='when'?when:details}</div>`;
+
 
   if(B.step==='when'){
     const pv=document.getElementById('mcPrev');
@@ -747,7 +1301,25 @@ function check(id,msg,pass){
   if(m)m.classList.toggle('on',!pass);
   return pass;
 }
-renderStep();
+document.getElementById('redoQuiz').addEventListener('click',()=>{
+  try{sessionStorage.removeItem(QKEY);}catch(e){}
+  Object.assign(P,{need:[],urgency:null,reasons:[],style:null,learn:null,personality:null,
+    working:[],goals:[],zip:'',region:null,zipState:null,logi:null,budget:100});
+  Object.assign(F,{meet:'',spec:'',avail:'',pers:'',rate:999,offer:'',sort:'match'});
+  step=0;document.getElementById('quiz').style.display='flex';renderStep();
+});
+
+
+if(loadQuiz()){
+  document.getElementById('quiz').style.display='none';
+  buildFilters();update();
+}else{
+  renderStep();
+}
+['change','click'].forEach(ev=>document.addEventListener(ev,()=>{
+  if(document.getElementById('quiz').style.display==='none')saveQuiz();
+},true));
 </script>
 </body>
 </html>
+

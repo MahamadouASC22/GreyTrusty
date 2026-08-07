@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advisor profile — Greylock Trust</title>
+<meta name="description" content="Read about a Greylock Trust advisor — how they work, what they specialise in, their qualifications and reviews — then book a session or a free intro call.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<style>
+:root{ --serif:'Fraunces',Georgia,serif; }
+.page{max-width:1240px;margin:0 auto;padding:calc(92px + 1.2vw) 26px 90px;}
+.back{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;
+  color:var(--muted);margin-bottom:16px;}
+.back:hover{color:var(--ink);}
+.split{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:22px;align-items:start;}
+@media(max-width:980px){.split{grid-template-columns:1fr;}}
+
+
+/* ---------- cards ---------- */
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px;
+  margin-bottom:18px;}
+.card:last-child{margin-bottom:0;}
+.c-label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:14px;}
+.card h2{font-family:var(--serif);font-weight:300;font-size:clamp(22px,2.6vw,29px);
+  color:var(--ink);letter-spacing:-.025em;line-height:1.14;}
+.card h2 em{font-style:italic;color:var(--gold-deep);font-weight:400;}
+.card p{font-size:15.5px;line-height:1.8;color:var(--body-c);}
+.card p+p{margin-top:14px;}
+
+
+/* ---------- identity card ---------- */
+.idc{display:grid;grid-template-columns:190px 1fr;gap:26px;align-items:start;}
+@media(max-width:640px){.idc{grid-template-columns:1fr;}}
+.idc .ph,.idc .ph-fb{width:190px;height:216px;border-radius:16px;object-fit:cover;}
+@media(max-width:640px){.idc .ph,.idc .ph-fb{width:100%;height:250px;}}
+.idc .ph-fb{background:var(--ink);color:var(--gold);display:flex;align-items:center;
+  justify-content:center;font-size:52px;font-weight:600;}
+.id-name{font-family:var(--serif);font-weight:300;font-size:clamp(28px,3.4vw,40px);
+  color:var(--ink);letter-spacing:-.03em;line-height:1.05;}
+.id-title{font-size:15.5px;color:var(--muted);margin-top:7px;}
+.id-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+.mchip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line-2);
+  background:var(--bg);border-radius:999px;padding:8px 14px;font-size:13px;font-weight:600;
+  color:var(--ink);}
+.mchip.gold{background:var(--gold-wash);border-color:var(--gold-line);color:var(--gold-deep);}
+.mchip svg{width:14px;height:14px;stroke:currentColor;stroke-width:1.8;fill:none;
+  stroke-linecap:round;stroke-linejoin:round;}
+.id-specs{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);}
+.id-specs .t{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:9px;}
+.chips{display:flex;flex-wrap:wrap;gap:7px;}
+.chip{font-size:12.5px;font-weight:600;background:var(--chipbg);border-radius:999px;
+  padding:7px 13px;color:var(--body-c);}
+.chip.g{background:var(--gold-wash);color:var(--gold-deep);}
+
+
+/* ---------- intro quote ---------- */
+.quote{font-family:var(--serif);font-weight:300;font-style:italic;
+  font-size:clamp(20px,2.4vw,27px);line-height:1.42;color:var(--ink);letter-spacing:-.015em;}
+.quote-mark{font-family:var(--serif);font-size:44px;color:var(--gold);line-height:.6;
+  display:block;margin-bottom:10px;}
+
+
+/* ---------- how they work ---------- */
+.works{display:grid;gap:0;margin-top:6px;}
+.work{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);}
+.work:last-child{border-bottom:none;}
+.work .n{width:30px;height:30px;border-radius:50%;background:var(--gold-wash);
+  border:1px solid var(--gold-line);color:var(--gold-deep);font-size:12.5px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex:none;}
+.work h4{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:5px;}
+.work p{font-size:14.5px;line-height:1.7;color:var(--muted);}
+
+
+/* ---------- qualifications ---------- */
+.quals{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:640px){.quals{grid-template-columns:1fr;}}
+.qual{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:var(--bg);}
+.qual .yr{font-size:11.5px;font-weight:700;letter-spacing:.1em;color:var(--gold-deep);}
+.qual h4{font-size:15px;font-weight:700;color:var(--ink);margin:5px 0 4px;}
+.qual p{font-size:13.5px;color:var(--muted);line-height:1.6;}
+.verified{display:flex;align-items:center;gap:10px;margin-top:18px;padding-top:16px;
+  border-top:1px solid var(--line);font-size:13.5px;color:var(--muted);}
+.verified b{color:var(--ink);}
+.verified .tick{width:24px;height:24px;border-radius:50%;background:var(--gold-wash);
+  border:1px solid var(--gold-line);color:var(--gold-deep);display:flex;align-items:center;
+  justify-content:center;font-size:12px;flex:none;}
+
+
+/* ---------- ratings ---------- */
+.rsum{display:flex;gap:28px;align-items:center;flex-wrap:wrap;margin-bottom:20px;}
+.rscore{font-size:46px;font-weight:700;color:var(--ink);line-height:1;}
+.rscore span{font-size:15px;color:var(--muted);font-weight:600;}
+.rstars{color:var(--gold);font-size:15px;letter-spacing:2px;margin-top:5px;}
+.rcount{font-size:13px;color:var(--muted);margin-top:4px;}
+.bars{flex:1;min-width:210px;}
+.bar{display:flex;align-items:center;gap:9px;font-size:11.5px;color:var(--muted);margin:3px 0;}
+.bar .t{width:36px;}
+.bar .track{flex:1;height:6px;background:var(--chipbg);border-radius:99px;overflow:hidden;}
+.bar .fill{height:100%;background:var(--gold);border-radius:99px;}
+.rev{border-top:1px solid var(--line);padding:18px 0;}
+.rev:last-of-type{padding-bottom:0;}
+.rev-h{display:flex;align-items:center;gap:11px;margin-bottom:8px;}
+.rev-av{width:36px;height:36px;border-radius:50%;background:var(--ink);color:var(--gold);
+  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex:none;}
+.rev-n{font-size:14px;font-weight:700;color:var(--ink);}
+.rev-m{font-size:12px;color:var(--faint);}
+.rev-s{margin-left:auto;color:var(--gold);font-size:12.5px;letter-spacing:1.5px;}
+.rev-b{font-size:14.5px;line-height:1.72;color:var(--body-c);}
+.rev-tag{display:inline-block;margin-top:9px;font-size:11px;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted);background:var(--chipbg);border-radius:999px;padding:4px 10px;}
+.demo-note{font-size:12px;color:var(--faint);margin-top:16px;}
+
+
+/* ---------- booking rail ---------- */
+.rail{position:sticky;top:96px;}
+.bk{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;
+  box-shadow:0 22px 56px rgba(30,49,69,.10);}
+.bk-tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--chipbg);
+  border-radius:999px;padding:4px;margin-bottom:18px;}
+.bk-tab{border-radius:999px;padding:11px 6px;font-size:13px;font-weight:700;color:var(--muted);
+  line-height:1.25;}
+.bk-tab.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(30,49,69,.1);}
+.bk-tab small{display:block;font-size:10.5px;font-weight:600;color:var(--faint);margin-top:2px;}
+.bk-tab.on small{color:var(--gold-deep);}
+.bk-price{font-size:30px;font-weight:700;color:var(--ink);line-height:1;}
+.bk-price span{font-size:13.5px;font-weight:600;color:var(--muted);}
+.bk-note{font-size:13px;color:var(--muted);margin:8px 0 18px;line-height:1.6;}
+.bk-sec{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--faint);margin:16px 0 9px;}
+.mc{border:1px solid var(--line);border-radius:14px;padding:13px;}
+.mc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;}
+.mc-head b{font-size:14px;font-weight:700;color:var(--ink);}
+.mc-nav{width:30px;height:30px;border-radius:9px;border:1px solid var(--line-2);background:#fff;
+  font-size:14px;color:var(--ink);display:flex;align-items:center;justify-content:center;}
+.mc-nav:hover{border-color:var(--ink);} .mc-nav[disabled]{opacity:.3;cursor:default;}
+.mc-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
+.mc-dow{font-size:9.5px;font-weight:700;color:var(--faint);text-align:center;
+  text-transform:uppercase;padding:3px 0;}
+.mc-day{height:33px;border-radius:9px;font-size:13px;font-weight:600;color:var(--ink);
+  background:#fff;border:1px solid transparent;}
+.mc-day:hover{border-color:var(--gold);}
+.mc-day.off{color:var(--faint);opacity:.38;pointer-events:none;}
+.mc-day.sel{background:var(--ink);color:#fff;}
+.mc-day.blank{visibility:hidden;pointer-events:none;}
+.times{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:7px;}
+.time{border:1px solid var(--line-2);border-radius:10px;padding:10px 5px;text-align:center;
+  font-size:13px;font-weight:600;color:var(--ink);background:#fff;}
+.time.sel{background:var(--gold);border-color:var(--gold);color:#fff;}
+.bk-go{width:100%;padding:14px;font-size:14.5px;margin-top:16px;}
+.bk-go[disabled]{opacity:.45;cursor:not-allowed;}
+.bk-fine{font-size:11.5px;color:var(--faint);margin-top:10px;text-align:center;line-height:1.6;}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;
+  font-weight:600;font-size:14.5px;transition:all .18s ease;}
+.pill-gold{background:var(--gold);color:#fff;}
+.pill-gold:hover{background:var(--gold-deep);}
+.pill-soft{border:1px solid var(--line-2);color:var(--ink);background:#fff;}
+.pill-soft:hover{border-color:var(--ink);}
+</style>
+</head>
+<body class="nav-dark">
+<div id="nav"></div>
+
+
+<main class="page">
+<a class="back" href="marketplace.html?returning=true">‹ Back to your matches</a>  <div class="split">
+    <div id="left"></div>
+    <aside class="rail"><div class="bk" id="rail"></div></aside>
+  </div>
+</main>
+
+
+<div id="footer"></div>
+<script src="js/data.js"></script>
+<script src="js/nav.js"></script>
+<script>
+'use strict';
+
+
+/* ---------------- per-advisor written content ---------------- */
+const VOICE={
+ 1:{intro:'A network should be something you stop thinking about. That is the whole job.',
+    how:['I start by measuring, not guessing — signal in every room you actually use.',
+         'Nothing gets replaced until I have shown you why the old thing is the problem.',
+         'You get a one-page map of your own network before I leave.']},
+ 2:{intro:'I would rather run a fire drill with you than hand you a backup you have never tested.',
+    how:['We agree what would genuinely hurt to lose before touching anything.',
+         'Everything is set up in your name, with recovery codes you keep.',
+         'We restore a file together, so you know it works rather than hope it does.']},
+ 3:{intro:'Twenty years of house calls. Bring me the thing everyone else gave up on.',
+    how:['I tell you within the first ten minutes whether it is worth fixing.',
+         'Cables get labelled. Every time. You will thank me in two years.',
+         'If a sixty-dollar part saves a nine-hundred-dollar machine, that is what we do.']},
+ 4:{intro:'Nobody should be frightened of their own phone. We go at whatever pace suits you.',
+    how:['Photos and accounts are backed up before a single thing moves.',
+         'I show you once, then you do it while I watch, so it sticks.',
+         'You leave with the notes, written in your words rather than mine.']},
+ 5:{intro:'Everything I do happens over a screen share, with you watching every step.',
+    how:['You see my cursor the whole time and can end the session instantly.',
+         'I audit what is actually reaching your data before recommending anything.',
+         'Findings arrive as a plain-English summary, not a vulnerability report.']},
+ 6:{intro:'I taught school IT for eighteen years. I have never once made someone feel slow.',
+    how:['We start with what you want to be able to do, not what is broken.',
+         'Every step gets written down in a notebook you keep.',
+         'My aim is that you call me less each year. That is the measure of a good job.']},
+ 7:{intro:'A smart home should feel calm, not like operating a spaceship from four apps.',
+    how:['One system, one app, secured properly before anything else.',
+         'Cameras and doorbells are set up so the footage stays yours.',
+         'I leave you a printed card for the household so nobody breaks it.']},
+ 8:{intro:'Twelve years of photographs is not a technical problem. It is a personal one.',
+    how:['Old device stays untouched until the new one is verified working.',
+         'Two-factor codes are moved first, so you are never locked out.',
+         'Automatic backup is running before I leave, so this never happens again.']},
+ 9:{intro:'I have made house calls since dial-up. I show up, I fix it, I charge fairly.',
+    how:['Plain answers, no upselling, and I will tell you when to do nothing.',
+         'I work slowly enough that you can follow what I am doing.',
+         'If it needs a part, you buy it in your own name and own the warranty.']}
+};
+const QUALS={
+ 1:[['2011','CompTIA Network+','Certified network technician, renewed 2023'],
+    ['2014','Ubiquiti UniFi Certified','Enterprise wireless design and deployment'],
+    ['2019','CompTIA Security+','Network hardening and secure configuration'],
+    ['2024','Greylock Playbook Certified','Account, device, and network modules']],
+ 2:[['2013','CISSP','Certified Information Systems Security Professional'],
+    ['2016','Healthcare IT Security Lead','Regional hospital network, 6 years'],
+    ['2021','Certified Backup & Recovery Engineer','Disaster recovery planning'],
+    ['2024','Greylock Playbook Certified','Account, device, and network modules']],
+ 3:[['2005','CompTIA A+','Hardware and operating system repair'],
+    ['2012','Authorised Service Technician','Major printer and peripheral brands'],
+    ['2018','Data Recovery Level 1','Drive diagnostics and file rescue'],
+    ['2024','Greylock Playbook Certified','Account, device, and network modules']],
+ 4:[['2016','Apple Certified Support Professional','macOS and iOS support'],
+    ['2018','Genius Bar Lead','Three years leading a store support team'],
+    ['2022','Smart Home Integration Certificate','HomeKit and Matter systems'],
+    ['2024','Greylock Playbook Certified','Account, device, and network modules']],
+ 5:[['2017','CompTIA Security+','Secure configuration and threat response'],
+    ['2020','Certified Ethical Hacker','Assessment and remediation'],
+    ['2023','Privacy Fundamentals (IAPP)','Data minimisation and consent'],
+    ['2024','Greylock Playbook Certified','Account, device, and network modules']],
+ 6:[['2006','K-12 Technology Director','School district IT, twelve years'],
+    ['2011','Google Certified Educator','Teaching technology to adults and children'],
+    ['2019','Accessibility in Technology','Supporting older and disabled users'],
+    ['2024','Greylock Playbook Certified','Account, device, and network modules']],
+ 7:[['2015','Certified Low-Voltage Installer','Cameras, doorbells, and structured cabling'],
+    ['2019','Control4 Certified','Whole-home automation systems'],
+    ['2022','IoT Security Essentials','Securing connected devices'],
+    ['2024','Greylock Playbook Certified','Account, device, and network modules']],
+ 8:[['2019','Apple Certified iOS Technician','Device migration and repair'],
+    ['2021','Android Enterprise Associate','Device setup and management'],
+    ['2023','Digital Privacy for Families','Sharing settings and parental controls'],
+    ['2024','Greylock Playbook Certified','Account, device, and network modules']],
+ 9:[['1999','CompTIA A+','Hardware and operating system repair'],
+    ['2008','Certified Printer Technician','Laser and inkjet service'],
+    ['2016','Home Networking Specialist','Residential network installation'],
+    ['2024','Greylock Playbook Certified','Account, device, and network modules']]
+};
+const REVIEWS=[
+ {n:'Margaret H.',w:'2 weeks ago',s:5,t:'Patient and thorough',
+  b:a=>`I have had people "fix" my computer before and leave me more confused than when they arrived. ${a.name.split(' ')[0]} explained every step and wrote down what to do if it happens again. Worth every penny.`},
+ {n:'Tom R.',w:'1 month ago',s:5,t:'Fast response',
+  b:a=>`Called on a ${a.weekends?'Saturday':'Tuesday'} morning in a panic and had everything sorted the same day. No upselling and no talking down to me.`},
+ {n:'Dana & Phil W.',w:'2 months ago',s:5,t:'Great with our family',
+  b:()=>'Set up all four of our devices and got the children\\u2019s accounts locked down properly. Came back a month later to check on it without us even asking.'},
+ {n:'Ronald K.',w:'3 months ago',s:4,t:'Knowledgeable',
+  b:()=>'Solved a problem two other people could not. Took a little longer than estimated, but the work was solid and the explanation was clear.'},
+ {n:'Aisha M.',w:'4 months ago',s:5,t:'Trustworthy',
+  b:a=>`What I appreciated most was being told what I did not need. ${a.name.split(' ')[0]} talked me out of an upgrade I had already decided to buy.`},
+];
+const DIST={5:.78,4:.16,3:.04,2:.01,1:.01};
+const ICON={
+ pin:'<path d="M12 21s-7-5.5-7-11a7 7 0 0114 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="9.5" r="2.4"/>',
+ cam:'<rect x="3" y="7" width="12.5" height="10" rx="2"/><path d="M15.5 11l5.5-3v8l-5.5-3"/>',
+ clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/>',
+ star:'<path d="M12 3l2.7 5.6 6.3.9-4.5 4.3 1 6.2L12 17l-5.5 3 1-6.2L3 9.5l6.3-.9z"/>',
+ bag:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/>'
+};
+function stars(n){return '\\u2605'.repeat(n)+'\\u2606'.repeat(5-n);}
+
+
+/* ---------------- which advisor ---------------- */
+const id=+(new URLSearchParams(location.search).get('id')||1);
+const a=A.find(x=>x.id===id)||A[0];
+const v=VOICE[a.id]||VOICE[1];
+const q=QUALS[a.id]||QUALS[1];
+document.title=a.name+' — Greylock Trust';
+
+
+/* ---------------- left column ---------------- */
+document.getElementById('left').innerHTML=`
+  <!-- identity -->
+  <section class="card">
+    <div class="idc">
+      <img class="ph" src="${a.photo}" alt="${a.name}"
+        onerror="this.outerHTML='<div class=&quot;ph-fb&quot;>${initials(a.name)}</div>'">
+      <div>
+        <h1 class="id-name">${a.name}</h1>
+        <p class="id-title">${a.title} · ${a.yrs} years of experience</p>
+        <div class="id-meta">
+          <span class="mchip"><svg viewBox="0 0 24 24">${ICON.star}</svg>
+            ${a.rating.toFixed(1)} (${a.reviews})</span>
+          <span class="mchip"><svg viewBox="0 0 24 24">${a.onsite?ICON.pin:ICON.cam}</svg>
+            ${a.onsite?(a.remote?'In person &amp; virtual':'In person'):'Virtual'}</span>
+          <span class="mchip"><svg viewBox="0 0 24 24">${ICON.bag}</svg>$${a.rate}/hour</span>
+          <span class="mchip"><svg viewBox="0 0 24 24">${ICON.clock}</svg>Next: ${a.nextAvail}</span>
+          ${a.intro?'<span class="mchip gold">Free 20-minute intro call</span>':''}
+        </div>
+        <div class="id-specs">
+          <div class="t">Specialties</div>
+          <div class="chips">${a.specs.map(s=>`<span class="chip g">${s}</span>`).join('')}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+  <!-- about me -->
+  <section class="card">
+    <div class="c-label">About me</div>
+    <h2>Who you'll be <em>working with</em></h2>
+    <p style="margin-top:14px">${a.bio}</p>
+    <p>My working style is best described as <b>${a.personality.toLowerCase()}</b>. I work mainly with
+      ${a.platforms.join(' and ')} households${a.business?' and small businesses':''}, and I am
+      ${a.evenings&&a.weekends?'available evenings and weekends as well as weekdays'
+        :a.evenings?'available in the evenings as well as during the day'
+        :a.weekends?'available at weekends as well as during the week':'available during weekday hours'}.</p>
+    <div class="id-specs" style="border-top:1px solid var(--line);margin-top:18px;padding-top:16px">
+      <div class="t">Can help you plan for</div>
+      <div class="chips">${a.futures.map(f=>`<span class="chip">${f}</span>`).join('')}</div>
+    </div>
+  </section>
+
+
+  <!-- how they work -->
+  <section class="card">
+    <div class="c-label">How I work</div>
+    <h2>What a visit with me <em>looks like</em></h2>
+    <div class="works">
+      ${v.how.map((w,i)=>`<div class="work"><span class="n">${i+1}</span>
+        <div><h4>${['Before we touch anything','During the visit','Before I leave'][i]||'Afterwards'}</h4>
+        <p>${w}</p></div></div>`).join('')}
+      <div class="work"><span class="n">${v.how.length+1}</span>
+        <div><h4>Afterwards</h4>
+        <p>Follow-up on anything we worked on together is included${a.checkins
+          ?', and I offer recurring check-ins so small problems get caught before they become the reason you call'
+          :''}. I keep private notes on your setup, so a second visit never starts from zero.</p></div></div>
+    </div>
+  </section>
+
+
+  <!-- qualifications -->
+  <section class="card">
+    <div class="c-label">Qualifications</div>
+    <h2>Training and <em>credentials</em></h2>
+    <div class="quals" style="margin-top:16px">
+      ${q.map(([yr,t,d])=>`<div class="qual"><div class="yr">${yr}</div>
+        <h4>${t}</h4><p>${d}</p></div>`).join('')}
+    </div>
+    <div class="verified">
+      <span class="tick">✓</span>
+      <span><b>Verified by Greylock Trust</b> — references checked, background check completed,
+        and interviewed before joining the platform.</span>
+    </div>
+  </section>
+
+
+  <!-- ratings -->
+  <section class="card">
+    <div class="c-label">Ratings &amp; reviews</div>
+    <div class="rsum">
+      <div>
+        <div class="rscore">${a.rating.toFixed(1)}<span>/5</span></div>
+        <div class="rcount">${a.reviews} verified reviews</div>
+      </div>
+      <div class="bars">
+        ${[5,4,3,2,1].map(n=>`<div class="bar"><span class="t">${n} star</span>
+          <span class="track"><span class="fill" style="width:${(DIST[n]*100).toFixed(0)}%"></span></span>
+          <span>${Math.round(DIST[n]*a.reviews)}</span></div>`).join('')}
+      </div>
+    </div>
+ 
+  </section>`;
+
+
+/* ---------------- booking rail ---------------- */
+let B={mode:a.intro?'intro':'session',date:null,mView:null,time:null};
+function drawRail(){
+  const intro=B.mode==='intro';
+  if(!B.mView){const n=new Date();B.mView=new Date(n.getFullYear(),n.getMonth(),1);}
+  if(!B.date){const p=new Date();p.setHours(0,0,0,0);
+    for(let i=1;i<=40;i++){p.setDate(p.getDate()+1);
+      if(availFor(a,p,intro).length){B.date=new Date(p);
+        B.mView=new Date(p.getFullYear(),p.getMonth(),1);break;}}}
+  const mv=B.mView,y=mv.getFullYear(),mo=mv.getMonth();
+  const fd=new Date(y,mo,1).getDay(),dim=new Date(y,mo+1,0).getDate();
+  const today=new Date();today.setHours(0,0,0,0);
+  const prevOk=mv>new Date(today.getFullYear(),today.getMonth(),1);
+  let cells='';
+  for(let i=0;i<fd;i++)cells+='<button class="mc-day blank"></button>';
+  for(let d=1;d<=dim;d++){
+    const date=new Date(y,mo,d),av=availFor(a,date,intro).length;
+    const sel=B.date&&date.getTime()===new Date(B.date).setHours(0,0,0,0);
+    cells+=`<button class="mc-day ${av?'':'off'} ${sel?'sel':''}" data-d="${date.toISOString()}">${d}</button>`;
+  }
+  const times=B.date?availFor(a,new Date(B.date),intro):[];
+  document.getElementById('rail').innerHTML=`
+    ${a.intro?`<div class="bk-tabs">
+      <button class="bk-tab ${intro?'on':''}" data-mode="intro">Intro call<small>20 min · free</small></button>
+      <button class="bk-tab ${intro?'':'on'}" data-mode="session">Full session<small>$${a.rate}/hour</small></button>
+    </div>`:''}
+    <div class="bk-price">${intro?'Free':'$'+a.rate+'<span>/hour</span>'}</div>
+    <p class="bk-note">${intro
+      ? 'Twenty minutes to meet '+a.name.split(' ')[0]+', describe the problem, and decide afterwards. Held virtually.'
+      : 'Billed to the minute after the first hour. '+(a.onsite?(a.remote?'In person or virtual — your choice at booking.':'In person, at your address.'):'Held virtually over screen share.')}</p>
+    <div class="bk-sec">1 · Pick a day</div>
+    <div class="mc">
+      <div class="mc-head">
+        <button class="mc-nav" id="mcPrev" ${prevOk?'':'disabled'}>‹</button>
+        <b>${MONTHS[mo]} ${y}</b>
+        <button class="mc-nav" id="mcNext">›</button>
+      </div>
+      <div class="mc-grid">${DOW.map(d=>`<div class="mc-dow">${d[0]}</div>`).join('')}${cells}</div>
+    </div>
+    <div class="bk-sec">2 · ${B.date?dLabel(new Date(B.date)):'Pick a time'}</div>
+    <div class="times">${times.map(t=>
+      `<button class="time ${t===B.time?'sel':''}" data-t="${t}">${t}</button>`).join('')||
+      '<span style="font-size:13px;color:var(--faint)">Choose an available day above.</span>'}</div>
+    <a class="pill pill-gold bk-go" id="go" ${B.time?'':'disabled'}
+       href="${B.time?`marketplace.html?book=${a.id}&kind=${B.mode}&day=${encodeURIComponent(dLabel(new Date(B.date)))}&time=${encodeURIComponent(B.time)}`:'#'}">
+      ${B.time?'Continue — '+dLabel(new Date(B.date))+' at '+B.time:'Select a time to continue'}</a>
+    <p class="bk-fine">${intro?'Nothing is charged for an intro call.'
+      :'Nothing is charged until after the session.'} You'll enter your details on the next step.</p>`;
+
+
+  document.querySelectorAll('.bk-tab').forEach(b=>b.addEventListener('click',()=>{
+    B={mode:b.dataset.mode,date:null,mView:null,time:null};drawRail();}));
+  const pv=document.getElementById('mcPrev');
+  if(pv&&prevOk)pv.addEventListener('click',()=>{B.mView=new Date(y,mo-1,1);drawRail();});
+  document.getElementById('mcNext').addEventListener('click',()=>{B.mView=new Date(y,mo+1,1);drawRail();});
+  document.querySelectorAll('.mc-day:not(.off):not(.blank)').forEach(b=>b.addEventListener('click',()=>{
+    B.date=new Date(b.dataset.d);B.time=null;drawRail();}));
+  document.querySelectorAll('.time').forEach(b=>b.addEventListener('click',()=>{
+    B.time=b.dataset.t;drawRail();}));
+}
+drawRail();
+</script>
+</body>
+</html>
+
+
+

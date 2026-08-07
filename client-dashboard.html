@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your account — Greylock Trust</title>
+<meta name="description" content="Your Greylock Trust account: upcoming sessions, your advisor, visit notes, and saved matches.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<style>
+:root{ --serif:'Fraunces',Georgia,serif; }
+.dash{max-width:1240px;margin:0 auto;padding:calc(88px + 1vw) 24px 80px;}
+.greet{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:24px;}
+.greet h1{font-family:var(--serif);font-weight:300;font-size:clamp(28px,3.4vw,42px);
+  color:var(--ink);letter-spacing:-.03em;line-height:1.04;}
+.greet h1 em{font-style:italic;color:var(--gold-deep);font-weight:400;}
+.greet .sub{font-size:14.5px;color:var(--muted);margin-top:7px;}
+.greet .act{margin-left:auto;display:flex;gap:9px;flex-wrap:wrap;}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;
+  font-weight:600;font-size:13.5px;padding:11px 18px;transition:all .18s ease;}
+.pill-gold{background:var(--gold);color:#fff;} .pill-gold:hover{background:var(--gold-deep);}
+.pill-soft{border:1px solid var(--line-2);color:var(--ink);background:#fff;}
+.pill-soft:hover{border-color:var(--ink);}
+.pill-ink{background:var(--ink);color:#fff;} .pill-ink:hover{background:var(--ink-2);}
+
+
+.cols{display:grid;grid-template-columns:minmax(0,1fr) 352px;gap:20px;align-items:start;}
+@media(max-width:1040px){.cols{grid-template-columns:1fr;}}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;margin-bottom:20px;}
+.card:last-child{margin-bottom:0;}
+.ch{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+.ch h2{font-family:var(--serif);font-weight:400;font-size:21px;color:var(--ink);letter-spacing:-.02em;}
+.ch .more{margin-left:auto;font-size:13px;font-weight:600;color:var(--gold-deep);}
+.ch .more:hover{text-decoration:underline;text-underline-offset:3px;}
+
+
+/* next visit hero */
+.next{position:relative;overflow:hidden;border-radius:20px;padding:26px;margin-bottom:20px;
+  background:linear-gradient(155deg,var(--ink-deep),var(--ink));color:#fff;}
+.next::after{content:"";position:absolute;right:-70px;top:-80px;width:250px;height:250px;
+  border-radius:50%;background:radial-gradient(circle,rgba(195,144,60,.3),transparent 66%);}
+.next>*{position:relative;z-index:1;}
+.next .k{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-line);}
+.next .when{font-family:var(--serif);font-weight:300;font-size:clamp(24px,3vw,34px);
+  letter-spacing:-.025em;margin:12px 0 6px;}
+.next .with{display:flex;align-items:center;gap:13px;margin-top:18px;padding-top:16px;
+  border-top:1px solid rgba(255,255,255,.16);}
+.next .with img,.next .with .fb{width:46px;height:46px;border-radius:13px;object-fit:cover;}
+.next .with .fb{background:rgba(255,255,255,.12);color:var(--gold);display:flex;
+  align-items:center;justify-content:center;font-weight:700;font-size:16px;}
+.next .with .nm{font-size:15px;font-weight:700;}
+.next .with .tt{font-size:12.5px;color:rgba(255,255,255,.66);margin-top:2px;}
+.next .tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px;}
+.next .tg{font-size:11.5px;font-weight:700;background:rgba(255,255,255,.12);
+  border-radius:999px;padding:5px 11px;color:rgba(255,255,255,.9);}
+.next .row{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px;}
+.pill-cream{background:#fff;color:var(--ink);} .pill-cream:hover{transform:translateY(-1px);}
+.pill-ghost{border:1px solid rgba(255,255,255,.42);color:#fff;}
+.pill-ghost:hover{background:rgba(255,255,255,.12);}
+
+
+/* visit rows */
+.visit{display:flex;gap:15px;align-items:center;padding:15px 0;border-bottom:1px solid var(--line);}
+.visit:last-child{border-bottom:none;}
+.visit .when{width:74px;flex:none;text-align:center;background:var(--bg);border:1px solid var(--line);
+  border-radius:12px;padding:9px 4px;}
+.visit .when .d{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);}
+.visit .when .n{font-size:19px;font-weight:700;color:var(--ink);line-height:1.15;}
+.visit .when .t{font-size:11.5px;color:var(--muted);}
+.visit .nm{font-size:15px;font-weight:700;color:var(--ink);}
+.visit .meta{font-size:13px;color:var(--muted);margin-top:3px;}
+.visit .tags{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap;}
+.tg{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  background:var(--chipbg);border-radius:999px;padding:4px 9px;color:var(--muted);}
+.tg.gold{background:var(--gold-wash);color:var(--gold-deep);}
+.visit .go{margin-left:auto;flex:none;display:flex;gap:7px;}
+.visit .go .pill{padding:9px 14px;font-size:12.5px;}
+@media(max-width:640px){.visit{flex-wrap:wrap;}.visit .go{margin-left:0;width:100%;}}
+
+
+/* notes */
+.note-item{border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:12px;
+  background:var(--bg);}
+.note-item:last-child{margin-bottom:0;}
+.note-item .top{display:flex;align-items:center;gap:10px;margin-bottom:9px;}
+.note-item .dt{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--gold-deep);}
+.note-item .by{margin-left:auto;font-size:12.5px;color:var(--faint);}
+.note-item h4{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:7px;}
+.note-item ul{list-style:none;display:grid;gap:7px;}
+.note-item li{display:flex;gap:10px;font-size:14px;color:var(--body-c);line-height:1.6;}
+.note-item li i{width:7px;height:7px;transform:rotate(45deg);background:var(--gold);flex:none;margin-top:6px;}
+
+
+/* saved matches */
+.saved{display:flex;gap:13px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line);}
+.saved:last-child{border-bottom:none;}
+.saved img,.saved .fb{width:48px;height:52px;border-radius:12px;object-fit:cover;flex:none;}
+.saved .fb{background:var(--ink);color:var(--gold);display:flex;align-items:center;
+  justify-content:center;font-weight:700;font-size:16px;}
+.saved .nm{font-size:14.5px;font-weight:700;color:var(--ink);}
+.saved .tt{font-size:12.5px;color:var(--muted);margin-top:2px;}
+.saved .pct{margin-left:auto;flex:none;text-align:right;}
+.saved .pct b{font-size:15px;font-weight:700;color:var(--gold-deep);}
+.saved .pct span{display:block;font-size:9.5px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--faint);}
+
+
+/* rail cards */
+.mini{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;margin-bottom:18px;}
+.mini h3{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:14px;}
+.adv-card{text-align:center;}
+.adv-card img,.adv-card .fb{width:84px;height:84px;border-radius:50%;object-fit:cover;margin:0 auto 14px;}
+.adv-card .fb{background:var(--ink);color:var(--gold);display:flex;align-items:center;
+  justify-content:center;font-size:28px;font-weight:600;}
+.adv-card .nm{font-family:var(--serif);font-weight:400;font-size:20px;color:var(--ink);}
+.adv-card .tt{font-size:13px;color:var(--muted);margin-top:4px;}
+.adv-card .stars{color:var(--gold);font-size:13px;letter-spacing:1.5px;margin-top:8px;}
+.adv-card .btns{display:grid;gap:8px;margin-top:16px;}
+.adv-card .btns .pill{width:100%;padding:11px;font-size:13.5px;}
+.srow{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--line);
+  font-size:14px;color:var(--body-c);}
+.srow:last-child{border-bottom:none;}
+.srow b{margin-left:auto;color:var(--ink);font-weight:700;}
+.tip{background:var(--gold-wash);border:1px solid var(--gold-line);border-radius:16px;padding:20px;}
+.tip h3{color:var(--gold-deep);}
+.tip p{font-size:14px;color:var(--body-c);line-height:1.7;}
+.tip .pill{width:100%;margin-top:14px;padding:11px;font-size:13.5px;}
+.demo{font-size:11.5px;color:var(--faint);text-align:center;margin-top:24px;}
+</style>
+</head>
+<body class="nav-dark">
+<div id="nav"></div>
+
+
+<main class="dash">
+  <div class="greet" id="greet"></div>
+  <div class="cols">
+    <div>
+      <div id="next"></div>
+      <section class="card">
+        <div class="ch"><h2>Your visits</h2><a class="more" href="marketplace.html">Book another</a></div>
+        <div id="visits"></div>
+      </section>
+      <section class="card">
+        <div class="ch"><h2>Notes from your visits</h2><span class="more">Yours to keep</span></div>
+        <div id="notes"></div>
+      </section>
+      <section class="card">
+        <div class="ch"><h2>Saved from your questionnaire</h2>
+          <a class="more" href="marketplace.html">Retake it</a></div>
+        <div id="saved"></div>
+      </section>
+    </div>
+    <aside>
+      <div class="mini adv-card" id="advCard"></div>
+      <div class="mini" id="summary"></div>
+      <div class="mini tip" id="tip"></div>
+    </aside>
+  </div>
+  <p class="demo">Demo account — bookings and notes are illustrative. Connect Supabase to make it live.</p>
+</main>
+
+
+<div id="footer"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/nav.js"></script>
+<script>
+'use strict';
+const CLIENT={name:'Margaret Hale',first:'Margaret'};
+const mine=A.find(x=>x.past)||A[0];           // their regular advisor
+const hour=new Date().getHours();
+const part=hour<12?'Good morning':hour<18?'Good afternoon':'Good evening';
+
+
+document.getElementById('greet').innerHTML=`
+  <div>
+    <h1>${part}, <em>${CLIENT.first}.</em></h1>
+    <p class="sub">You've had 3 visits with Greylock Trust · Member since March 2026</p>
+  </div>
+  <div class="act">
+    <a class="pill pill-soft" href="marketplace.html">Browse advisors</a>
+    <a class="pill pill-gold" href="advisor.html?id=${mine.id}">Book with ${mine.name.split(' ')[0]}</a>
+  </div>`;
+
+
+/* ---------- next visit ---------- */
+document.getElementById('next').innerHTML=`
+  <div class="next">
+    <div class="k">Your next visit</div>
+    <div class="when">Wednesday 30 July, 9:30 AM</div>
+    <div class="tags">
+      <span class="tg">Full session</span><span class="tg">In person</span>
+      <span class="tg">2 hours</span><span class="tg">14 Chapel St</span>
+    </div>
+    <div class="with">
+      <img src="${mine.photo}" alt="" onerror="this.outerHTML='<div class=&quot;fb&quot;>${initials(mine.name)}</div>'">
+      <div><div class="nm">${mine.name}</div>
+        <div class="tt">${mine.title} · $${mine.rate}/hour</div></div>
+    </div>
+    <div class="row">
+      <a class="pill pill-cream" href="#">Reschedule</a>
+      <a class="pill pill-ghost" href="#">Message ${mine.name.split(' ')[0]}</a>
+      <a class="pill pill-ghost" href="#">Cancel</a>
+    </div>
+  </div>`;
+
+
+/* ---------- visits ---------- */
+const VISITS=[
+ {d:['Wed','30','9:30 AM'],nm:mine.name,what:'Wi-Fi dead zones upstairs',
+  tags:['Upcoming','In person','2 hrs'],up:true},
+ {d:['Aug','12','1:00 PM'],nm:mine.name,what:'Quarterly check-in',
+  tags:['Upcoming','Virtual','1 hr','Recurring'],up:true},
+ {d:['Jun','18','10:00 AM'],nm:mine.name,what:'Password manager and two-factor setup',
+  tags:['Completed','In person','$150.00']},
+ {d:['May','2','2:00 PM'],nm:'Priya Raman',what:'Backup review after the new laptop',
+  tags:['Completed','Virtual','$90.00']},
+ {d:['Mar','9','11:00 AM'],nm:mine.name,what:'Intro call',
+  tags:['Completed','Virtual','Free']},
+];
+document.getElementById('visits').innerHTML=VISITS.map(v=>`
+  <div class="visit">
+    <div class="when"><div class="d">${v.d[0]}</div><div class="n">${v.d[1]}</div>
+      <div class="t">${v.d[2]}</div></div>
+    <div>
+      <div class="nm">${v.nm}</div>
+      <div class="meta">${v.what}</div>
+      <div class="tags">${v.tags.map((t,i)=>
+        `<span class="tg ${i===0&&v.up?'gold':''}">${t}</span>`).join('')}</div>
+    </div>
+    <div class="go">${v.up
+      ?'<button class="pill pill-soft">Reschedule</button><button class="pill pill-ink">Details</button>'
+      :'<button class="pill pill-soft">Receipt</button><button class="pill pill-ink">Book again</button>'}</div>
+  </div>`).join('');
+
+
+/* ---------- notes ---------- */
+const NOTES=[
+ {dt:'18 June 2026',by:mine.name,h:'Password manager and two-factor setup',
+  li:['Your vault is Bitwarden — the master phrase is on the card in the kitchen drawer.',
+      'Two-factor is on for email and both bank accounts, using the app on your phone.',
+      'Recovery codes printed and filed with your passport.',
+      'Next time: we agreed to move the photo library off the old laptop.']},
+ {dt:'2 May 2026',by:'Priya Raman',h:'Backup review after the new laptop',
+  li:['Time Machine runs nightly to the white drive on the desk.',
+      'Cloud backup is on and finished its first full run on 4 May.',
+      'We restored a test file together — it took about a minute.']},
+ {dt:'9 March 2026',by:mine.name,h:'Intro call',
+  li:['Talked through the Wi-Fi in the back bedroom and the printer.',
+      'Agreed to start with the accounts rather than buying anything.']},
+];
+document.getElementById('notes').innerHTML=NOTES.map(n=>`
+  <div class="note-item">
+    <div class="top"><span class="dt">${n.dt}</span><span class="by">Written by ${n.by}</span></div>
+    <h4>${n.h}</h4>
+    <ul>${n.li.map(l=>`<li><i></i><span>${l}</span></li>`).join('')}</ul>
+  </div>`).join('');
+
+
+/* ---------- saved matches ---------- */
+const SAVED=[...A].filter(x=>x.id!==mine.id).slice(0,4)
+  .map((x,i)=>({...x,pct:[94,89,86,81][i]}));
+document.getElementById('saved').innerHTML=SAVED.map(s=>`
+  <a class="saved" href="advisor.html?id=${s.id}">
+    <img src="${s.photo}" alt="" onerror="this.outerHTML='<div class=&quot;fb&quot;>${initials(s.name)}</div>'">
+    <div><div class="nm">${s.name}</div>
+      <div class="tt">${s.title} · $${s.rate}/hr</div></div>
+    <div class="pct"><b>${s.pct}%</b><span>match</span></div>
+  </a>`).join('');
+
+
+/* ---------- rail ---------- */
+document.getElementById('advCard').innerHTML=`
+  <h3>Your advisor</h3>
+  <img src="${mine.photo}" alt="" onerror="this.outerHTML='<div class=&quot;fb&quot;>${initials(mine.name)}</div>'">
+  <div class="nm">${mine.name}</div>
+  <div class="tt">${mine.title} · ${mine.yrs} years</div>
+  <div class="stars">★★★★★ <span style="color:var(--muted);letter-spacing:0">${mine.rating.toFixed(1)}</span></div>
+  <div class="btns">
+    <a class="pill pill-gold" href="advisor.html?id=${mine.id}">Book again</a>
+    <a class="pill pill-soft" href="#">Message</a>
+  </div>`;
+
+
+document.getElementById('summary').innerHTML=`
+  <h3>Your account</h3>
+  <div class="srow">Visits completed <b>3</b></div>
+  <div class="srow">Hours with an advisor <b>5.5</b></div>
+  <div class="srow">Spent this year <b>$240.00</b></div>
+  <div class="srow">Saved advisors <b>${SAVED.length}</b></div>
+  <div class="srow">Payment method <b>•••• 2291</b></div>
+  <a class="pill pill-soft" href="#" style="width:100%;margin-top:14px;padding:11px;font-size:13.5px">
+    Account settings</a>`;
+
+
+document.getElementById('tip').innerHTML=`
+  <h3>From your last visit</h3>
+  <p><b>${mine.name.split(' ')[0]} suggested one thing</b> — freezing your credit at all three bureaus.
+     It's free, reversible, and takes about fifteen minutes. Ask about it on Wednesday, or read it
+     through first.</p>
+  <a class="pill pill-gold" href="our-suite.html">See the suite</a>`;
+
+
+document.querySelectorAll('a[href="#"]').forEach(a=>a.addEventListener('click',e=>{
+  e.preventDefault();alert('Demo only — this action is not wired up yet.');}));
+</script>
+</body>
+</html>
+
+
+

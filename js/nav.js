@@ -9,12 +9,14 @@
 const CV=`<svg class="cv" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4"
   stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`;
 
+
 const MENU=[
- {label:'For Providers',items:[
+ {label:'Find an Advisor',href:'marketplace.html'},
+ {label:'For Advisors',items:[
    {t:'Provider Portal',s:'Manage your calendar and clients',h:'provider-portal.html'},
    {t:'Join Greylock Trust',s:'Apply to advise on the platform',h:'join.html'}]},
- {label:'Find an Advisor',href:'marketplace.html'},
 ];
+
 
 const navHTML=`
 <nav class="site-nav" id="siteNav">
@@ -51,6 +53,7 @@ const navHTML=`
   </div>
 </div>`;
 
+
 const footHTML=`
 <footer>
   <div class="wrap">
@@ -63,7 +66,7 @@ const footHTML=`
         <p>Vetted technology advisors, matched to how you actually live and work — then supported for as long as you need us.</p>
       </div>
       <div><a href="marketplace.html">Find an Advisor</a></div>
-      <div><h4>For Providers</h4><ul>
+      <div><h4>For Advisors</h4><ul>
         <li><a href="provider-portal.html">Provider Portal</a></li>
         <li><a href="join.html">Join Greylock Trust</a></li>
       </ul></div>
@@ -76,14 +79,17 @@ const footHTML=`
   </div>
 </footer>`;
 
+
 function mount(){
   const n=document.getElementById('nav'); if(n)n.outerHTML=navHTML;
   const f=document.getElementById('footer'); if(f)f.outerHTML=footHTML;
+
 
   const nav=document.getElementById('siteNav');
   const solid=document.body.classList.contains('nav-solid');
   const onScroll=()=>{ if(nav) nav.classList.toggle('scrolled', window.scrollY>40); };
   window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
 
   document.querySelectorAll('.nav-item').forEach(li=>{
     const btn=li.querySelector('button.nav-link'); if(!btn)return;
@@ -101,11 +107,13 @@ function mount(){
   document.addEventListener('click',()=>
     document.querySelectorAll('.nav-item.open').forEach(x=>x.classList.remove('open')));
 
+
   const b=document.getElementById('burger'),mn=document.getElementById('mnav');
   if(b&&mn)b.addEventListener('click',()=>{
     const on=mn.classList.toggle('on');
     b.setAttribute('aria-expanded',on?'true':'false');
   });
+
 
   const targets=document.querySelectorAll('.rv');
   if(targets.length){
@@ -118,3 +126,8 @@ function mount(){
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount);
 else mount();
 })();
+
+
+
+
+

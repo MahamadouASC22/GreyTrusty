@@ -22,7 +22,7 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--gold);ba
 .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line);}
 </style>
 </head>
-<body>
+<body class="nav-dark">
 <div id="nav"></div>
 <section class="sec">
   <div class="wrap narrow">
@@ -53,17 +53,25 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--gold);ba
     </div>
   </div>
 </section><div id="footer"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/data.js"></script>
+<script src="js/auth.js"></script>
 <script src="js/nav.js"></script>
 <script>
 const tc=document.getElementById('tabClient'),tp=document.getElementById('tabPro');
 tc.addEventListener('click',()=>{tc.classList.add('on');tp.classList.remove('on');});
 tp.addEventListener('click',()=>{tp.classList.add('on');tc.classList.remove('on');});
+
+
 document.getElementById('loginForm').addEventListener('submit',e=>{
   e.preventDefault();
-  document.getElementById('loginMsg').textContent=
-    'Demo only — connect Supabase Auth to enable real sign-in.';
+  const f=e.target;
+  const r=GT_AUTH.signIn(f.email.value,f.pw.value);
+  const msg=document.getElementById('loginMsg');
+  if(!r.ok){ msg.textContent=r.error; msg.style.color='#B4452F'; return; }
+  location.href=GT_AUTH.home(r.session);      // advisor→provider dash, client→client dash
 });
 </script>
 </body>
 </html>
+

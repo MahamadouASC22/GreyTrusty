@@ -1,115 +1,642 @@
 'use strict';
-const A=[
- {id:1,name:'Marcus Webb',photo:'https://randomuser.me/api/portraits/men/33.jpg',
-  title:'Network engineer',yrs:15,rate:75,onsite:true,remote:true,evenings:true,weekends:false,
-  checkins:true,business:true,rating:4.9,reviews:132,past:true,intro:true,nextAvail:'Thu 7/31',
-  platforms:['Windows','Mac'],personality:'Calm and reassuring',
-  specs:['Wi-Fi & internet','Cybersecurity','Smart home'],
-  futures:['Home networking','Cybersecurity','Smart home devices'],
-  bio:'Fifteen years keeping Berkshire homes and small offices online. Marcus rebuilds Wi-Fi dead zones, secures routers properly, and leaves you a one-page map of your own network.'},
- {id:2,name:'Priya Raman',photo:'https://randomuser.me/api/portraits/women/65.jpg',
-  title:'Security specialist',yrs:12,rate:90,onsite:true,remote:true,evenings:false,weekends:true,
-  checkins:true,business:true,rating:5.0,reviews:87,intro:true,nextAvail:'Sat 8/2',
-  platforms:['Windows','Mac'],personality:'Highly technical expert',
-  specs:['Cybersecurity','Data backup','Computers & laptops'],
-  futures:['Cybersecurity','Data backup','Privacy'],
-  bio:'Former hospital IT security lead. Priya builds bulletproof backup and recovery plans, then runs a fire drill with you so you know \u2014 not hope \u2014 that they work.'},
- {id:3,name:'Dan Kowalski',photo:'https://randomuser.me/api/portraits/men/11.jpg',
-  title:'Repair technician',yrs:20,rate:55,onsite:true,remote:false,evenings:false,weekends:true,
-  checkins:false,business:false,rating:4.8,reviews:214,intro:false,nextAvail:'Sat 8/2',
-  platforms:['Windows'],personality:'Efficient problem solver',
-  specs:['Printers & peripherals','Computers & laptops','Wi-Fi & internet'],
-  futures:['New computers','Home networking'],
-  bio:'The Adams area\u2019s go-to fixer for two decades. Printers that finally print, laptops that boot again, and straight answers about when a machine is worth saving.'},
- {id:4,name:'Sof\u00eda Delgado',photo:'https://randomuser.me/api/portraits/women/21.jpg',
-  title:'Apple specialist',yrs:9,rate:70,onsite:true,remote:true,evenings:true,weekends:false,
-  checkins:true,business:false,rating:4.9,reviews:96,intro:true,nextAvail:'Wed 7/30',
-  platforms:['Mac'],personality:'Patient teacher',
-  specs:['Phones & tablets','Smart home','Wi-Fi & internet'],
-  futures:['Phone setup','Smart home devices','Family tech support'],
-  bio:'Ex-Genius Bar lead. Sof\u00eda untangles iCloud, moves a lifetime of photos safely between devices, and sets up smart homes the whole family can actually use.'},
- {id:5,name:'Ethan Park',photo:'https://randomuser.me/api/portraits/men/41.jpg',
-  title:'Security consultant',yrs:8,rate:95,onsite:false,remote:true,evenings:true,weekends:true,
-  checkins:false,business:true,rating:4.7,reviews:61,intro:true,nextAvail:'Tonight',
-  platforms:['Windows','Mac'],personality:'Highly technical expert',
-  specs:['Cybersecurity','Computers & laptops','AI tools'],
-  futures:['Cybersecurity','AI tools','Privacy'],
-  bio:'Works entirely over screen-share, anywhere. Ethan hardens accounts, removes what shouldn\u2019t be there, and audits exactly what\u2019s watching you.'},
- {id:6,name:'Ruth Adler',photo:'https://randomuser.me/api/portraits/women/58.jpg',
-  title:'Technology educator',yrs:18,rate:60,onsite:true,remote:true,evenings:false,weekends:false,
-  checkins:true,business:false,rating:4.8,reviews:178,intro:true,nextAvail:'Thu 7/31',
-  platforms:['Windows'],personality:'Patient teacher',
-  specs:['Computers & laptops','Printers & peripherals','Phones & tablets'],
-  futures:['Tech education','Family tech support','New computers'],
-  bio:'Retired school IT director who teaches as she fixes. Ruth\u2019s clients keep a notebook of what they learned \u2014 and call her a little less every year.'},
- {id:7,name:'Jamal Carter',photo:'https://randomuser.me/api/portraits/men/86.jpg',
-  title:'Smart home installer',yrs:11,rate:85,onsite:true,remote:true,evenings:true,weekends:true,
-  checkins:true,business:true,rating:4.9,reviews:104,intro:true,nextAvail:'Sat 8/2',
-  platforms:['Windows','Mac'],personality:'Friendly conversationalist',
-  specs:['Smart home','Wi-Fi & internet','Cybersecurity'],
-  futures:['Smart home devices','Home networking','Cybersecurity'],
-  bio:'Installer turned advisor. Jamal brings cameras, doorbells, thermostats, and TVs into one calm, secured system you control from a single screen.'},
- {id:8,name:'Linh Tr\u1ea7n',photo:'https://randomuser.me/api/portraits/women/45.jpg',
-  title:'Mobile specialist',yrs:7,rate:65,onsite:true,remote:true,evenings:false,weekends:true,
-  checkins:false,business:false,rating:4.9,reviews:143,intro:true,nextAvail:'Sat 8/2',
-  platforms:['Windows','Mac'],personality:'Friendly conversationalist',
-  specs:['Phones & tablets','Computers & laptops','Smart home'],
-  futures:['Phone setup','Family tech support','Cloud storage'],
-  bio:'Linh migrates you to a new phone without losing a single photo, quiets the notification storm, and sets up family sharing that respects privacy.'},
- {id:9,name:'Gene Ostrowski',photo:'https://randomuser.me/api/portraits/men/60.jpg',
-  title:'House-call technician',yrs:26,rate:50,onsite:true,remote:false,evenings:false,weekends:false,
-  checkins:false,business:false,rating:4.6,reviews:257,intro:false,nextAvail:'Mon 8/4',
-  platforms:['Windows'],personality:'Calm and reassuring',
-  specs:['Printers & peripherals','Wi-Fi & internet','Computers & laptops'],
-  futures:['New computers','Home networking'],
-  bio:'Gene has made house calls since dial-up. He shows up, fixes it, labels the cables, and charges fairly. Ask about the printer museum in his garage.'},
+
+
+const A = [
+
+
+{
+id:1,
+name:'Marcus Webb',
+photo:'https://randomuser.me/api/portraits/men/33.jpg',
+title:'Privacy Advisor',
+yrs:15,
+rate:75,
+onsite:true,
+remote:true,
+evenings:true,
+weekends:false,
+checkins:true,
+business:false,
+rating:4.9,
+reviews:132,
+past:true,
+intro:true,
+nextAvail:'Thu 7/31',
+platforms:['Windows','Mac'],
+personality:'Calm and reassuring',
+
+
+specs:[
+'Wi-Fi & Internet',
+'Cybersecurity & Protection',
+'Computers & Laptops'
+],
+
+
+futures:[
+'Home networking',
+'Device security',
+'Digital organization'
+],
+
+
+bio:
+'Marcus helps people create a safer, more organized digital life. He improves home networks, strengthens security settings, and explains technology clearly so clients feel confident using their devices.'
+},
+
+
+
+
+{
+id:2,
+name:'Priya Raman',
+photo:'https://randomuser.me/api/portraits/women/65.jpg',
+title:'Privacy Advisor',
+yrs:12,
+rate:90,
+onsite:true,
+remote:true,
+evenings:false,
+weekends:true,
+checkins:true,
+business:false,
+rating:5.0,
+reviews:87,
+intro:true,
+nextAvail:'Sat 8/2',
+platforms:['Windows','Mac'],
+personality:'Highly technical expert',
+
+
+specs:[
+'Cybersecurity & Protection',
+'Email & Accounts',
+'Computers & Laptops'
+],
+
+
+futures:[
+'Privacy improvements',
+'Password organization',
+'Data backup'
+],
+
+
+bio:
+'Priya helps clients protect their accounts, personal information, and devices. She turns complicated security concerns into practical steps people can understand and maintain.'
+},
+
+
+
+
+{
+id:3,
+name:'Dan Kowalski',
+photo:'https://randomuser.me/api/portraits/men/11.jpg',
+title:'Privacy Advisor',
+yrs:20,
+rate:55,
+onsite:true,
+remote:false,
+evenings:false,
+weekends:true,
+checkins:false,
+business:false,
+rating:4.8,
+reviews:214,
+intro:false,
+nextAvail:'Sat 8/2',
+platforms:['Windows'],
+personality:'Efficient problem solver',
+
+
+specs:[
+'Setup, Repairs & Troubleshooting',
+'Computers & Laptops',
+'Wi-Fi & Internet'
+],
+
+
+futures:[
+'New computer setup',
+'Technology organization'
+],
+
+
+bio:
+'Dan helps clients solve everyday technology problems without confusion. From device setup to troubleshooting, he provides straightforward guidance and practical solutions.'
+},
+
+
+
+
+{
+id:4,
+name:'Sofía Delgado',
+photo:'https://randomuser.me/api/portraits/women/21.jpg',
+title:'Privacy Advisor',
+yrs:9,
+rate:70,
+onsite:true,
+remote:true,
+evenings:true,
+weekends:false,
+checkins:true,
+business:false,
+rating:4.9,
+reviews:96,
+intro:true,
+nextAvail:'Wed 7/30',
+platforms:['Mac'],
+personality:'Patient teacher',
+
+
+specs:[
+'Phones & Tablets',
+'Email & Accounts',
+'Wi-Fi & Internet'
+],
+
+
+futures:[
+'Device setup',
+'Family technology support',
+'Digital organization'
+],
+
+
+bio:
+'Sofía helps people feel comfortable with the technology they use every day. She specializes in device setup, account organization, and making digital routines easier.'
+},
+
+
+
+
+{
+id:5,
+name:'Ethan Park',
+photo:'https://randomuser.me/api/portraits/men/41.jpg',
+title:'Privacy Advisor',
+yrs:8,
+rate:95,
+onsite:false,
+remote:true,
+evenings:true,
+weekends:true,
+checkins:false,
+business:false,
+rating:4.7,
+reviews:61,
+intro:true,
+nextAvail:'Tonight',
+platforms:['Windows','Mac'],
+personality:'Highly technical expert',
+
+
+specs:[
+'Cybersecurity & Protection',
+'Email & Accounts',
+'Computers & Laptops'
+],
+
+
+futures:[
+'Privacy improvements',
+'Account security',
+'Technology planning'
+],
+
+
+bio:
+'Ethan helps clients strengthen their digital security through careful reviews of accounts, devices, and privacy settings. He works remotely to make technology safer and easier to manage.'
+},
+
+
+
+
+{
+id:6,
+name:'Ruth Adler',
+photo:'https://randomuser.me/api/portraits/women/58.jpg',
+title:'Privacy Advisor',
+yrs:18,
+rate:60,
+onsite:true,
+remote:true,
+evenings:false,
+weekends:false,
+checkins:true,
+business:false,
+rating:4.8,
+reviews:178,
+intro:true,
+nextAvail:'Thu 7/31',
+platforms:['Windows'],
+personality:'Patient teacher',
+
+
+specs:[
+'Computers & Laptops',
+'Phones & Tablets',
+'Setup, Repairs & Troubleshooting'
+],
+
+
+futures:[
+'Technology education',
+'Family technology support',
+'New devices'
+],
+
+
+bio:
+'Ruth believes technology should feel approachable. She teaches while helping, giving clients the knowledge and confidence to manage their digital lives.'
+},{
+id:7,
+name:'Jamal Carter',
+photo:'https://randomuser.me/api/portraits/men/86.jpg',
+title:'Privacy Advisor',
+yrs:11,
+rate:85,
+onsite:true,
+remote:true,
+evenings:true,
+weekends:true,
+checkins:true,
+business:false,
+rating:4.9,
+reviews:104,
+intro:true,
+nextAvail:'Sat 8/2',
+platforms:['Windows','Mac'],
+personality:'Friendly conversationalist',
+
+
+specs:[
+'Wi-Fi & Internet',
+'Cybersecurity & Protection',
+'Setup, Repairs & Troubleshooting'
+],
+
+
+futures:[
+'Smart home security',
+'Home networking',
+'Device protection'
+],
+
+
+bio:
+'Jamal helps clients build technology setups that are secure, reliable, and easy to use. He focuses on creating systems that work together while keeping privacy in mind.'
+},
+
+
+
+
+{
+id:8,
+name:'Linh Trần',
+photo:'https://randomuser.me/api/portraits/women/45.jpg',
+title:'Privacy Advisor',
+yrs:7,
+rate:65,
+onsite:true,
+remote:true,
+evenings:false,
+weekends:true,
+checkins:false,
+business:false,
+rating:4.9,
+reviews:143,
+intro:true,
+nextAvail:'Sat 8/2',
+platforms:['Windows','Mac'],
+personality:'Friendly conversationalist',
+
+
+specs:[
+'Phones & Tablets',
+'Computers & Laptops',
+'Email & Accounts'
+],
+
+
+futures:[
+'Phone setup',
+'Cloud storage',
+'Family technology support'
+],
+
+
+bio:
+'Linh helps clients organize their devices, transfer important information safely, and create easier ways to manage their everyday technology.'
+},
+
+
+
+
+{
+id:9,
+name:'Gene Ostrowski',
+photo:'https://randomuser.me/api/portraits/men/60.jpg',
+title:'Privacy Advisor',
+yrs:26,
+rate:50,
+onsite:true,
+remote:false,
+evenings:false,
+weekends:false,
+checkins:false,
+business:false,
+rating:4.6,
+reviews:257,
+intro:false,
+nextAvail:'Mon 8/4',
+platforms:['Windows'],
+personality:'Calm and reassuring',
+
+
+specs:[
+'Setup, Repairs & Troubleshooting',
+'Wi-Fi & Internet',
+'Computers & Laptops'
+],
+
+
+futures:[
+'New computer setup',
+'Home technology organization'
+],
+
+
+bio:
+'Gene has spent decades helping people feel comfortable with technology. He provides patient guidance, fixes problems, and helps clients understand the tools they rely on.'
+}
+
+
 ];
 
+
+
+
+
+
 /* shared reference data */
-const SPECS=['Wi-Fi & internet','Computers & laptops','Email & Accounts','Phones & tablets','Setup, Repairs & Troubleshooting','Cybersecurity & Protection'];
-const PERSONALITIES=['Patient teacher','Friendly conversationalist','Efficient problem solver','Highly technical expert','Calm and reassuring'];
-const FUTURES=['Home networking','Smart home devices','Cybersecurity','AI tools','New computers','Phone setup','Family tech support','Data backup','Cloud storage','Privacy','Tech education'];
-const CARE=[
- {t:'Wi-Fi & internet',s:'Dead zones, slow speeds, new routers',k:'Wi-Fi & internet'},
- {t:'Computers & laptops',s:'Slow machines, setup, repairs, upgrades',k:'Computers & laptops'},
- {t:'Cybersecurity',s:'Scams, breaches, passwords, protection',k:'Cybersecurity'},
- {t:'Phones & tablets',s:'New devices, photos, backups, syncing',k:'Phones & tablets'},
- {t:'Smart home',s:'Cameras, doorbells, thermostats, TVs',k:'Smart home'},
- {t:'Printers & peripherals',s:'The printer that never works',k:'Printers & peripherals'},
+
+
+const SPECS=[
+'Wi-Fi & Internet',
+'Cybersecurity & Protection',
+'Computers & Laptops',
+'Phones & Tablets',
+'Setup, Repairs & Troubleshooting',
+'Email & Accounts'
 ];
-/* scheduling helpers (shared by marketplace + profile) */
-const DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-const MONTHS=['January','February','March','April','May','June','July',
-              'August','September','October','November','December'];
-const BASE=['9:30 AM','11:00 AM','1:00 PM','3:00 PM'];
-const INTRO_TIMES=['9:00 AM','9:20 AM','11:40 AM','12:40 PM','4:30 PM'];
+
+
+
+
+const PERSONALITIES=[
+'Patient teacher',
+'Friendly conversationalist',
+'Efficient problem solver',
+'Highly technical expert',
+'Calm and reassuring'
+];
+
+
+
+
+const FUTURES=[
+'Home networking',
+'Smart home security',
+'Cybersecurity',
+'AI tools',
+'New computers',
+'Phone setup',
+'Family technology support',
+'Data backup',
+'Cloud storage',
+'Privacy improvements',
+'Technology education'
+];
+
+
+
+
+const CARE=[
+{
+t:'Wi-Fi & Internet',
+s:'Slow speeds, connection problems, improving your home network',
+k:'Wi-Fi & Internet'
+},
+
+
+{
+t:'Cybersecurity & Protection',
+s:'Scams, passwords, privacy settings, and account protection',
+k:'Cybersecurity & Protection'
+},
+
+
+{
+t:'Computers & Laptops',
+s:'Setup, repairs, upgrades, and understanding your devices',
+k:'Computers & Laptops'
+},
+
+
+{
+t:'Phones & Tablets',
+s:'New devices, transfers, backups, and organization',
+k:'Phones & Tablets'
+},
+
+
+{
+t:'Setup, Repairs & Troubleshooting',
+s:'Help fixing technology problems and getting things working',
+k:'Setup, Repairs & Troubleshooting'
+},
+
+
+{
+t:'Email & Accounts',
+s:'Organizing accounts, improving security, and staying protected',
+k:'Email & Accounts'
+}
+
+
+];
+
+
+
+
+
+
+/* scheduling helpers */
+
+
+const DOW=[
+'Sun',
+'Mon',
+'Tue',
+'Wed',
+'Thu',
+'Fri',
+'Sat'
+];
+
+
+
+
+const MONTHS=[
+'January',
+'February',
+'March',
+'April',
+'May',
+'June',
+'July',
+'August',
+'September',
+'October',
+'November',
+'December'
+];
+
+
+
+
+const BASE=[
+'9:30 AM',
+'11:00 AM',
+'1:00 PM',
+'3:00 PM'
+];
+
+
+
+
+const INTRO_TIMES=[
+'9:00 AM',
+'9:20 AM',
+'11:40 AM',
+'12:40 PM',
+'4:30 PM'
+];
+
+
+
+
 function availFor(a,date,intro){
-  const today=new Date();today.setHours(0,0,0,0);
-  const horizon=new Date(today);horizon.setDate(horizon.getDate()+60);
-  if(date<=today||date>horizon)return [];
-  const dow=date.getDay();
-  if(dow===0)return [];
-  if(dow===6&&!a.weekends)return [];
-  if((a.id+date.getDate())%5===0)return [];
-  const src=intro?INTRO_TIMES:BASE;
-  let t=src.filter((x,i)=>(a.id+date.getDate()+i)%3!==0);
-  if(!intro&&a.evenings&&date.getDate()%2===1)t=t.concat('6:00 PM');
-  if(!t.length)t=[src[(a.id+date.getDate())%src.length]];
-  return t;
+
+
+const today=new Date();
+today.setHours(0,0,0,0);
+
+
+const horizon=new Date(today);
+horizon.setDate(horizon.getDate()+60);
+
+
+if(date<=today||date>horizon)return [];
+
+
+const dow=date.getDay();
+
+
+if(dow===0)return [];
+
+
+if(dow===6&&!a.weekends)return [];
+
+
+if((a.id+date.getDate())%5===0)return [];
+
+
+const src=intro?INTRO_TIMES:BASE;
+
+
+let t=src.filter(
+(x,i)=>(a.id+date.getDate()+i)%3!==0
+);
+
+
+if(!intro&&a.evenings&&date.getDate()%2===1){
+t=t.concat('6:00 PM');
 }
-function dLabel(d){return DOW[d.getDay()]+' '+(d.getMonth()+1)+'/'+d.getDate();}
-function initials(n){return n.split(' ').map(w=>w[0]).join('');}
-function stars(n){return '\u2605'.repeat(n)+'\u2606'.repeat(5-n);}
+
+
+if(!t.length){
+t=[src[(a.id+date.getDate())%src.length]];
+}
+
+
+return t;
+
+
+}
+
+
+
+
+function dLabel(d){
+return DOW[d.getDay()]+' '+(d.getMonth()+1)+'/'+d.getDate();
+}
+
+
+
+
+function initials(n){
+return n.split(' ').map(w=>w[0]).join('');
+}
+
+
+
+
+function stars(n){
+return '★'.repeat(n)+'☆'.repeat(5-n);
+}
+
+
+
+
 function ringHTML(pct,size){
-  const S=size||58,R=S/2-4,C=2*Math.PI*R,off=C*(1-pct/100);
-  return `<div class="ring" style="width:${S}px;height:${S}px">
-    <svg viewBox="0 0 ${S} ${S}" style="width:${S}px;height:${S}px">
-    <circle class="bgc" cx="${S/2}" cy="${S/2}" r="${R}" fill="none" stroke-width="4"/>
-    <circle class="arc" cx="${S/2}" cy="${S/2}" r="${R}" fill="none" stroke-width="4"
-      stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}"/></svg>
-    <div class="rt"><b>${pct}%</b><span>match</span></div></div>`;
+
+
+const S=size||58;
+const R=S/2-4;
+const C=2*Math.PI*R;
+const off=C*(1-pct/100);
+
+
+return `
+<div class="ring" style="width:${S}px;height:${S}px">
+<svg viewBox="0 0 ${S} ${S}" style="width:${S}px;height:${S}px">
+<circle class="bgc" cx="${S/2}" cy="${S/2}" r="${R}" fill="none" stroke-width="4"/>
+<circle class="arc" cx="${S/2}" cy="${S/2}" r="${R}" fill="none" stroke-width="4"
+stroke-dasharray="${C.toFixed(1)}"
+stroke-dashoffset="${off.toFixed(1)}"/>
+</svg>
+<div class="rt">
+<b>${pct}%</b>
+<span>match</span>
+</div>
+</div>`;
 }
+
+
+
+
 function avatarHTML(a,cls,fbcls){
-  return `<img class="${cls}" src="${a.photo}" alt="${a.name}"
-    onerror="this.outerHTML='<div class=&quot;${fbcls}&quot;>${initials(a.name)}</div>'">`;
+
+
+return `<img class="${cls}"
+src="${a.photo}"
+alt="${a.name}"
+onerror="this.outerHTML='<div class=&quot;${fbcls}&quot;>${initials(a.name)}</div>'">`;
+
+
 }
+
