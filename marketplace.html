@@ -523,6 +523,37 @@ transition:opacity .2s ease;
     text-align:left;
   }
 }
+
+@media(max-width:700px){
+  .stage{padding:18px 14px 70px;}
+  .list{padding:0;}
+  .adv{grid-template-columns:1fr;padding:16px;gap:14px;}
+  .ava,.ava-fb{width:100%;height:200px;min-height:0;grid-row:auto;}
+  .a-name{font-size:19px;padding-right:64px;}
+  .ring{top:14px;right:14px;transform:scale(.88);transform-origin:top right;}
+  .a-foot{flex-direction:column;align-items:stretch;}
+  .a-btns{margin-left:0;flex-direction:column;}
+  .a-btns .pill,.a-foot>.pill{width:100%;}
+  .fbar{padding:14px;gap:8px;}
+  .fpill>button{padding:10px 14px;font-size:13.5px;}
+  .fpill .panel{min-width:min(280px,calc(100vw - 40px));}
+  .head{padding-top:78px;}
+}
+
+
+/* keep the button bar on screen */
+.q-mid{min-height:0;}
+.q-bot{position:relative;flex:none;}
+.quiz{height:auto;}
+@media(max-width:640px){
+  .q-mid{padding:14px 16px;}
+  .q-inner h2{font-size:clamp(23px,6.4vw,31px);}
+  .wel h2{font-size:clamp(26px,7vw,34px);}
+  .wel .rows{margin-top:22px;}
+  .wel .row{padding:13px 0;}
+  .q-opts{gap:8px;}
+  .q-opt{padding:11px 17px;font-size:14px;}
+}
 </style>
 </head>
 <body class="nav-dark">

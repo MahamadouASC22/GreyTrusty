@@ -103,9 +103,9 @@ body.nav-dark .burger{border-color:var(--line-2);background:#fff;}
 @media(max-width:1060px){
   .nav-menu{display:none;} .nav-login{display:none;} .burger{display:flex;}
   .brand-text{left:62px;font-size:13px;}
+  .site-nav.scrolled .brand-text{opacity:1;pointer-events:auto;}  /* stays visible */
 }
-@media(max-width:420px){.brand-text{display:none;}}
-
+@media(max-width:420px){.brand-text{font-size:11.5px;letter-spacing:.08em;}}
 
 /* ---------- shared section furniture ---------- */
 .eyebrow{display:inline-flex;align-items:center;gap:11px;font-size:11.5px;font-weight:700;
@@ -191,5 +191,26 @@ footer{background:#fff;border-top:1px solid var(--line);padding:56px 0 34px;marg
   .rv{opacity:1;transform:none;}
 }
 
+/* ---- nav pill centering ---- */
+.mnav .mcta a.pill,
+.nav-right a.pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  gap:8px;
+  line-height:1.2;
+  padding:13px 26px;
+}
+.mnav .mcta a.pill{width:100%;}
 
+
+.nav-cta-mobile{display:none;}
+@media(max-width:1060px){
+  .nav-cta-desktop{display:none;}
+  .nav-cta-mobile{display:inline-flex;}
+}
+@media(max-width:420px){
+  .nav-cta-mobile{padding:10px 14px;font-size:13px;}
+}
 
