@@ -28,7 +28,7 @@ personality:'Calm and reassuring',
 
 specs:[
 'Wi-Fi & Internet',
-'Cybersecurity & Protection',
+'Data Protection',
 'Computers & Laptops'
 ],
 
@@ -69,7 +69,7 @@ personality:'Highly technical expert',
 
 
 specs:[
-'Cybersecurity & Protection',
+'Data Protection',
 'Email & Accounts',
 'Computers & Laptops'
 ],
@@ -194,7 +194,7 @@ personality:'Highly technical expert',
 
 
 specs:[
-'Cybersecurity & Protection',
+'Data Protection',
 'Email & Accounts',
 'Computers & Laptops'
 ],
@@ -274,7 +274,7 @@ personality:'Friendly conversationalist',
 
 specs:[
 'Wi-Fi & Internet',
-'Cybersecurity & Protection',
+'Data Protection',
 'Setup, Repairs & Troubleshooting'
 ],
 
@@ -386,7 +386,7 @@ bio:
 
 const SPECS=[
 'Wi-Fi & Internet',
-'Cybersecurity & Protection',
+'Data Protection',
 'Computers & Laptops',
 'Phones & Tablets',
 'Setup, Repairs & Troubleshooting',
@@ -433,9 +433,9 @@ k:'Wi-Fi & Internet'
 
 
 {
-t:'Cybersecurity & Protection',
+t:'Data Protection',
 s:'Scams, passwords, privacy settings, and account protection',
-k:'Cybersecurity & Protection'
+k:'Data Protection'
 },
 
 

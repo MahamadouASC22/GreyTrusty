@@ -585,28 +585,22 @@ const F={meet:'',spec:'',avail:'',pers:'',rate:999,offer:'',sort:'match'};
 
 const QKEY='greylockQuiz';
 
-
-function saveQuiz(){
-  try{localStorage.setItem(QKEY,JSON.stringify({P,F,done:true}));}catch(e){}
-}
-function saveDraft(){
-  try{localStorage.setItem(QKEY,JSON.stringify({P,F,done:false}));}catch(e){}
-}
+const QSTORE = window.sessionStorage;
+function saveQuiz(){  try{QSTORE.setItem(QKEY,JSON.stringify({P,F}));}catch(e){} }
+const saveDraft = saveQuiz;
 function loadQuiz(){
   try{
-    const raw=localStorage.getItem(QKEY);
-    if(!raw)return false;
-    const o=JSON.parse(raw);
-    if(!o.done)return false;          // only a completed run skips the quiz
-    Object.assign(P,o.P||{});Object.assign(F,o.F||{});
+    const o = JSON.parse(QSTORE.getItem(QKEY) || 'null');
+    if(!o) return false;
+    Object.assign(P, o.P||{}); Object.assign(F, o.F||{});
     return true;
-  }catch(e){return false;}
+  }catch(e){ return false; }
 }
-
 
 /* pre-filter from homepage links */
 const qs=new URLSearchParams(location.search);
-if(qs.get('spec')){F.spec=qs.get('spec');P.need=[qs.get('spec')];}
+const hp = new URLSearchParams(location.hash.replace(/^#/,''));
+const RETURNING = qs.has('returning') || qs.has('book') || hp.has('returning') || hp.has('book');if(qs.get('spec')){F.spec=qs.get('spec');P.need=[qs.get('spec')];}
 
 
 /* ---------- art slots (drop your own images) ---------- */
@@ -871,11 +865,11 @@ if(bud){
 
 
   }
-  function completeMatches(){
-  saveQuiz();
+function completeMatches(){
+  saveQuiz();                                    // ← writes here…
   document.getElementById('quiz').style.display='none';
   if(P.need.length===1 && !F.spec) F.spec=P.need[0];
-  if(P.logi==='remote') F.meet='remote';
+  if(P.logi==='remote') F.meet='remote';         // ← …but F changes here
   if(P.logi==='onsite' && P.regionStatus==='available') F.meet='onsite';
   buildFilters();update();
 }
@@ -950,38 +944,19 @@ qNext.addEventListener('click',()=>{
 
 
 document.getElementById('skipAll').addEventListener('click',finish);
- function previousStep(){
 
-
-  let prev=step-1;
-
-
-  while(prev>=0){
-
-
-    const id=STEPS[prev].id;
-
-
-    // Hide region ZIP step unless user chose in-person
-    if(id==='region' && P.logi!=='remote'){
-      prev--;
-      continue;
-    }
-
-
-    // Hide region result unless user chose in-person
-    if(id==='regionResult' && P.logi!=='remote'){
-      prev--;
-      continue;
-    }
-
-
+function previousStep(){
+  let prev = step - 1;
+  while(prev >= 0){
+    // The ZIP step is only shown when the user did NOT pick virtual-only,
+    // so it's the only step that ever gets skipped going backwards.
+    if(STEPS[prev].id === 'region' && P.logi === 'remote'){ prev--; continue; }
     break;
   }
-
-
   return prev;
 }
+
+
 function inPersonAvailable(zip){
   const regions = [
     "01267",
@@ -1000,8 +975,8 @@ function checkRegion(){
 }
 
 
-function finish(){                 // "Browse all advisors" — leave the quiz now
-  try{localStorage.removeItem(QKEY);}catch(e){}
+function finish(){                 // "Browse all advisors"
+  saveQuiz();
   document.getElementById('quiz').style.display='none';
   buildFilters();update();
 }
@@ -1095,8 +1070,10 @@ document.addEventListener('click',()=>document.querySelectorAll('.fpill.open').f
 /* ---------- render ---------- */
 let current=[];
 function update(){
+  saveQuiz();
   current=A.map(a=>({...a,m:score(a)}))
-   .filter(a=>F.meet!=='onsite'||a.onsite).filter(a=>F.meet!=='remote'||a.remote)
+   .filter(a=>F.meet!=='onsite'||a.onsite)
+   .filter(a=>F.meet!=='remote'||a.remote)
    .filter(a=>!F.spec||a.specs.includes(F.spec))
    .filter(a=>F.avail!=='evenings'||a.evenings).filter(a=>F.avail!=='weekends'||a.weekends)
    .filter(a=>!F.pers||a.personality===F.pers).filter(a=>a.rate<=F.rate)
@@ -1120,14 +1097,14 @@ function update(){
           <span class="d">\u00b7</span>${a.onsite?(a.remote?'Virtual \u2022 In-Person':'In-Person'):'Virtual'}
           <span class="d">\u00b7</span>Next available <b>${a.nextAvail}</b></p>
         ${a.intro?'<p class="a-free">Offers a free 20-minute intro call</p>':''}
-        <p class="a-bio">${a.bio} <a href="advisor.html?id=${a.id}">Read more</a></p>
+<p class="a-bio">${a.bio} <a href="advisor.html?id=${a.id}#a=${a.id}">Read more</a></p>
         <div class="a-chips">
           ${a.specs.slice(0,3).map(s=>`<span class="a-chip ${hit.has(s)?'hit':''}">${s}</span>`).join('')}
           <span class="a-chip more">+ ${a.futures.length} more</span>
         </div>
       </div>
       <div class="a-foot">
-        <a class="pill pill-soft" href="advisor.html?id=${a.id}">View Profile</a>
+<a class="pill pill-soft" href="advisor.html?id=${a.id}#a=${a.id}">View Profile</a>
         <div class="a-btns">
           ${a.intro?`<button class="pill pill-goldline" onclick="openBook(${a.id},'intro')">Book Free Intro Call</button>`:''}
           <button class="pill pill-gold" onclick="openBook(${a.id},'session')">Book Session</button>
@@ -1306,23 +1283,32 @@ function check(id,msg,pass){
   return pass;
 }
 document.getElementById('redoQuiz').addEventListener('click',()=>{
-  try{sessionStorage.removeItem(QKEY);}catch(e){}
+try{ QSTORE.removeItem(QKEY); }catch(e){}
   Object.assign(P,{need:[],urgency:null,reasons:[],style:null,learn:null,personality:null,
     working:[],goals:[],zip:'',region:null,zipState:null,logi:null,budget:100});
   Object.assign(F,{meet:'',spec:'',avail:'',pers:'',rate:999,offer:'',sort:'match'});
   step=0;document.getElementById('quiz').style.display='flex';renderStep();
 });
 
+if(RETURNING){
+  loadQuiz();
+  document.getElementById('quiz').style.display = 'none';
+  buildFilters(); update();
 
-if(loadQuiz()){
-  document.getElementById('quiz').style.display='none';
-  buildFilters();update();
+ const bookId = qs.get('book') || hp.get('book');
+  if(bookId){
+    const adv = A.find(x => String(x.id) === String(bookId));
+    const kind = qs.get('kind') || hp.get('kind');
+    if(adv) setTimeout(() => openBook(adv.id, kind==='intro'?'intro':'session'), 80);
+  }
+   history.replaceState({}, '', 'marketplace.html');
 }else{
+  try{ QSTORE.removeItem(QKEY); }catch(e){}
+  try{ localStorage.removeItem(QKEY); }catch(e){}   // clears the stuck old entries
+  step = 0;
+  document.getElementById('quiz').style.display = 'flex';
   renderStep();
 }
-['change','click'].forEach(ev=>document.addEventListener(ev,()=>{
-  if(document.getElementById('quiz').style.display==='none')saveQuiz();
-},true));
 </script>
 </body>
 </html>

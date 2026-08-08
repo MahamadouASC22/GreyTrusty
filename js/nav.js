@@ -13,7 +13,7 @@ const CV=`<svg class="cv" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4"
 const MENU=[
  {label:'Find an Advisor',href:'marketplace.html'},
  {label:'For Advisors',items:[
-   {t:'Provider Portal',s:'Manage your calendar and clients',h:'provider-portal.html'},
+   {t:'Advisor Portal',s:'Manage your calendar and clients',h:'provider-portal.html'},
    {t:'Join Greylock Trust',s:'Apply to advise on the platform',h:'join.html'}]},
 ];
 
@@ -67,7 +67,7 @@ const footHTML=`
       </div>
       <div><a href="marketplace.html">Find an Advisor</a></div>
       <div><h4>For Advisors</h4><ul>
-        <li><a href="provider-portal.html">Provider Portal</a></li>
+        <li><a href="provider-portal.html">Advisor Portal</a></li>
         <li><a href="join.html">Join Greylock Trust</a></li>
       </ul></div>
      
