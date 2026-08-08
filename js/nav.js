@@ -35,7 +35,6 @@ const navHTML=`
         <li class="nav-item"><a class="nav-link" href="${m.href}">${m.label}</a></li>`).join('')}
       </ul>
     <a class="nav-login" href="login.html">Login</a>
-      <a class="nav-login" href="get-started.html">Get Started</a>
       <a class="pill pill-gold pill-sm" href="marketplace.html">Find an Advisor</a>
       <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
     <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -44,14 +43,13 @@ const navHTML=`
   </div>
 </nav>
 <div class="mnav" id="mnav">
-  <div class="mgroup"><a href="marketplace.html">Find an Advisor</a></div>
   ${MENU.map(m=>m.items?`<div class="mgroup"><div class="mtitle">${m.label}</div>
     ${m.items.map(it=>`<a href="${it.h}">${it.t}</a>`).join('')}</div>`
    :`<div class="mgroup"><a href="${m.href}">${m.label}</a></div>`).join('')}
   <div class="mcta">
-   <a class="nav-login" href="login.html">Login</a>
-      <a class="nav-login" href="get-started.html">Get Started</a>
-      </div>
+    <a class="pill pill-soft pill-sm" href="login.html">Login</a>
+      <a class="pill pill-gold pill-sm" href="marketplace.html">Find an Advisor</a>
+  </div>
 </div>`;
 
 
