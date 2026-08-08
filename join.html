@@ -715,7 +715,7 @@ function drawApp(){
   const bars=Array.from({length:STEPS},(_,i)=>`<i class="${i<=APP.step?'on':''}"></i>`).join('');
   let inner='';
   if(APP.step===0){
-    inner=`<div class="fstep-lbl">Step 1 of 3 · About you</div>
+    inner=`<div class="fstep-lbl">Step 1 of 4 · About you</div>
       <h2>Let's start with the basics</h2>
       <div class="fld" id="f-name"><label>Full name<input id="i-name" type="text" value="${APP.name}" autocomplete="name"></label>
         <span class="msg">Please enter your name.</span></div>
@@ -732,7 +732,7 @@ function drawApp(){
       <p class="fine">We'll never share your details or add you to a mailing list.</p>`;
   }
   if(APP.step===1){
-    inner=`<div class="fstep-lbl">Step 2 of 3 · Your work</div>
+    inner=`<div class="fstep-lbl">Step 2 of 4 · Your work</div>
       <h2>What are you strongest at?</h2>
       <p class="sub">Pick everything that genuinely applies — this shapes who we match you with.</p>
       <div class="fld" id="f-specs"><label>Specialties</label>
@@ -773,7 +773,7 @@ function drawApp(){
       <button class="pill pill-gold" id="next">Continue</button></div>`;
 }
   if(APP.step===3){
-    inner=`<div class="fstep-lbl">Step 3 of 3 · In your words</div>
+    inner=`<div class="fstep-lbl">Step 4 of 4 · In your words</div>
       <h2>How you help matters</h2>
       <p class="sub">The way you explain things counts as much as what you know.</p>
       <div class="fld" id="f-pitch">
