@@ -795,9 +795,21 @@ function drawApp(){
     stash();
     if(!validate())return;
     if(APP.step<STEPS-1){APP.step++;drawApp();}
-    else{APP.done=true;drawApp();
-      document.querySelector('.apply-in').scrollIntoView({behavior:'smooth',block:'center'});}
-  });
+   else{
+      APP.done=true;drawApp();
+      document.querySelector('.apply-in').scrollIntoView({behavior:'smooth',block:'center'});
+    GT_AUTH.SB.from('advisor_applications').insert({
+        full_name:APP.name, email:APP.email, phone:APP.phone, area:APP.area,
+        yrs:parseInt(APP.yrs,10)||null, rate:parseInt(APP.rate,10)||null,
+        specs:APP.specs, certs:APP.certs, cert_other:APP.certOther,
+        modes:APP.modes, pitch:APP.pitch
+      }).then(({error})=>{
+        if(!error) return;
+        console.warn('[GT] application not saved:', error.message);
+        try{ localStorage.setItem('greylockPendingApplication', JSON.stringify(APP)); }catch(e){}
+      });
+    }
+    });
 }
 function v(id){const el=document.getElementById(id);return el?el.value.trim():'';}
 function stash(){
@@ -812,6 +824,9 @@ function bad(id,cond){
   if(f)f.classList.toggle('err',!cond);
   return cond;
 }
+
+
+
 function validate(){
   let ok=true;
   if(APP.step===0){
@@ -825,7 +840,7 @@ function validate(){
     ok=bad('f-yrs',APP.yrs!=='')&&ok;
     ok=bad('f-rate',APP.rate!=='')&&ok;
   }
-  if(APP.step===2)ok=bad('f-pitch',APP.pitch.length>=25)&&ok;
+if(APP.step===3)ok=bad('f-pitch',APP.pitch.length>=25)&&ok;
   return ok;
 }
 drawApp();
@@ -859,15 +874,17 @@ document.querySelectorAll('.fq-q').forEach(b=>b.addEventListener('click',()=>
 
 /* ================= sticky CTA ================= */
 const scta=document.getElementById('scta');
-let closed=false;
-document.getElementById('sctaX').addEventListener('click',()=>{closed=true;scta.classList.remove('on');});
-addEventListener('scroll',()=>{
-  if(closed)return;
-  const past=window.scrollY>window.innerHeight*.9;
-  const atEnd=window.scrollY+window.innerHeight>document.body.scrollHeight-220;
-  scta.classList.toggle('on',past&&!atEnd);
-},{passive:true});
-
+const sctaX=document.getElementById('sctaX');
+if(scta&&sctaX){
+  let closed=false;
+  sctaX.addEventListener('click',()=>{closed=true;scta.classList.remove('on');});
+  addEventListener('scroll',()=>{
+    if(closed)return;
+    const past=window.scrollY>window.innerHeight*.9;
+    const atEnd=window.scrollY+window.innerHeight>document.body.scrollHeight-220;
+    scta.classList.toggle('on',past&&!atEnd);
+  },{passive:true});
+}
 
 const io=new IntersectionObserver(es=>es.forEach(e=>{
   if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}

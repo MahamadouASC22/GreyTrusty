@@ -625,7 +625,6 @@ const P = {
 const F={meet:'',spec:'',avail:'',pers:'',rate:999,offer:'',sort:'match'};
 
 let GT_ME=null;
-(async()=>{ try{ GT_ME = await GT_AUTH.session(); }catch(e){} })();
 
 const QKEY='greylockQuiz';
 
@@ -807,7 +806,6 @@ if(s.id==='account'){
       <p class="q-sub">We'll save these answers to your account, so your matches and
         notes are waiting for you next time.</p></div></div>`;
     qNext.textContent='See my matches';
-    GT_AUTH.saveQuiz({P,F});
     return;
   }
   /* ...form markup unchanged... */
@@ -969,13 +967,17 @@ if(bud){
 
 
   }
-function completeMatches(){
-  saveQuiz();                                    // ← writes here…
+
+  async function completeMatches(){
   document.getElementById('quiz').style.display='none';
   if(P.need.length===1 && !F.spec) F.spec=P.need[0];
-  if(P.logi==='remote') F.meet='remote';         // ← …but F changes here
+  if(P.logi==='remote') F.meet='remote';
   if(P.logi==='onsite' && P.regionStatus==='available') F.meet='onsite';
+  saveQuiz();
   buildFilters();update();
+
+  const r = GT_ME ? await GT_AUTH.saveQuiz({P,F}) : {ok:false,error:'Not signed in.'};
+  if(!r.ok){ GT_AUTH.stashQuiz({P,F}); console.warn('[GT] quiz not saved:', r.error); }
 }
 
 
@@ -1374,9 +1376,37 @@ function renderBook(a){
       if(needsAddress())ok=check('bAddr','mAddr',B.address.length>=6)&&ok;
       if(!ok)return;
       B.done=true;renderBook(a);
+      saveBooking(a);
     });
   }
 }
+async function saveBooking(a){
+  const { error } = await GT_AUTH.SB.from('bookings').insert({
+    client_id : GT_ME ? GT_ME.id : null,
+    advisor_id: a.id,
+    kind      : B.mode==='intro' ? 'intro' : 'session',
+    mode      : B.meet==='onsite' ? 'In-person' : 'Video call',
+    starts_at : toISO(B.date, B.time),
+    day_label : dLabel(new Date(B.date)),
+    time_label: B.time,
+    name:B.name, email:B.email, phone:B.phone,
+    address: B.meet==='onsite' ? B.address : null,
+    notes:B.notes
+  });
+  if(error){ console.warn('[GT] booking not saved:', error.message); return; }
+  if(GT_ME) GT_AUTH.chooseAdvisor(a.id);
+}
+
+function toISO(date,time){
+  if(!date||!time) return null;
+  const d=new Date(date);
+  const m=/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i.exec(time);
+  if(!m) return null;
+  let h=+m[1]%12; if(/PM/i.test(m[3])) h+=12;
+  d.setHours(h,+m[2],0,0);
+  return d.toISOString();
+}
+
 function val(id){const el=document.getElementById(id);return el?el.value.trim():'';}
 function check(id,msg,pass){
   const el=document.getElementById(id),m=document.getElementById(msg);
@@ -1393,33 +1423,51 @@ function amark(id,msg,pass){
   return pass;
 }
 
-document.getElementById('redoQuiz').addEventListener('click',()=>{
-try{ QSTORE.removeItem(QKEY); }catch(e){}
+
+function hideQuiz(){ document.getElementById('quiz').style.display='none'; }
+function showQuiz(){ step=0; document.getElementById('quiz').style.display='flex'; renderStep(); }
+
+function openFromLink(){
+  const bookId = qs.get('book') || hp.get('book');
+  if(!bookId) return;
+  const adv  = A.find(x => String(x.id) === String(bookId));
+  const kind = qs.get('kind') || hp.get('kind');
+  if(adv) setTimeout(() => openBook(adv.id, kind==='intro'?'intro':'session'), 80);
+}
+
+document.getElementById('redoQuiz').addEventListener('click', async ()=>{
+  try{ QSTORE.removeItem(QKEY); }catch(e){}
   Object.assign(P,{need:[],urgency:null,reasons:[],style:null,learn:null,personality:null,
-    working:[],goals:[],zip:'',region:null,zipState:null,logi:null,budget:100});
+    working:[],goals:[],zip:'',logi:null,budget:100,regionStatus:null});
   Object.assign(F,{meet:'',spec:'',avail:'',pers:'',rate:999,offer:'',sort:'match'});
-  step=0;document.getElementById('quiz').style.display='flex';renderStep();
+  if(GT_ME){ try{ await GT_AUTH.saveQuiz(null); }catch(e){} }
+  showQuiz();
 });
 
-if(RETURNING){
-  loadQuiz();
-  document.getElementById('quiz').style.display = 'none';
-  buildFilters(); update();
+(async function boot(){
+  try{ GT_ME = await GT_AUTH.session(); }catch(e){ GT_ME = null; }
 
- const bookId = qs.get('book') || hp.get('book');
-  if(bookId){
-    const adv = A.find(x => String(x.id) === String(bookId));
-    const kind = qs.get('kind') || hp.get('kind');
-    if(adv) setTimeout(() => openBook(adv.id, kind==='intro'?'intro':'session'), 80);
+  if(GT_ME && GT_ME.quiz && GT_ME.quiz.P){
+    Object.assign(P, GT_ME.quiz.P);
+    Object.assign(F, GT_ME.quiz.F || {});
+    saveQuiz();
+    hideQuiz(); buildFilters(); update(); openFromLink();
+    history.replaceState({}, '', 'marketplace.html');
+    return;
   }
-   history.replaceState({}, '', 'marketplace.html');
-}else{
+
+  if(RETURNING){
+    loadQuiz();
+    hideQuiz(); buildFilters(); update(); openFromLink();
+    history.replaceState({}, '', 'marketplace.html');
+    return;
+  }
+
   try{ QSTORE.removeItem(QKEY); }catch(e){}
-  try{ localStorage.removeItem(QKEY); }catch(e){}   // clears the stuck old entries
-  step = 0;
-  document.getElementById('quiz').style.display = 'flex';
-  renderStep();
-}
+  try{ localStorage.removeItem(QKEY); }catch(e){}
+  showQuiz();
+})();
+
 </script>
 </body>
 </html>

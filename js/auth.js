@@ -16,14 +16,22 @@ const GT_AUTH = (function(){
 
 
 async function profileFor(user){
+    const meta = user.user_metadata || {};
+    const fallback = meta.full_name || meta.name || user.email.split('@')[0];
     const { data, error } = await SB
       .from('profiles').select('*').eq('id', user.id).maybeSingle();
     if(error || !data){
-      return { id:user.id, email:user.email, role:'client', name:user.email.split('@')[0],
-               photo:'', advisorId:null, quiz:null, incomplete:true };
+      return { id:user.id, email:user.email, role:'client', name:fallback,
+               photo:'', advisorId:null, quiz:null, availability:null, incomplete:true };
     }
-    return { id:user.id, email:user.email, role:data.role, name:data.full_name,
-             photo:data.photo_url, advisorId:data.advisor_id, quiz:data.quiz };
+    // profile exists but the name never landed — repair it once
+    if(!data.full_name && meta.full_name){
+      SB.from('profiles').update({ full_name: meta.full_name }).eq('id', user.id);
+    }
+    return { id:user.id, email:user.email, role:data.role,
+             name: data.full_name || fallback,
+             photo:data.photo_url, advisorId:data.advisor_id,
+             quiz:data.quiz, availability:data.availability };
   }
 
   async function signIn(email, password){
@@ -38,17 +46,11 @@ async function profileFor(user){
   async function signUp(email, password, fullName){
     const { data, error } = await SB.auth.signUp({
       email: String(email).trim(), password,
-      options:{ data:{ full_name: fullName } }
-    });
-    if(error) return { ok:false, error: friendly(error.message) };
-    if(data.user){
-      await SB.from('profiles').insert({
-        id: data.user.id, role:'client', full_name: fullName
-      });
-    }
-    // email confirmation on? then there is no session yet
-return { ok:true, needsConfirm: !data.session, user: data.user };  }
-
+options:{ data:{ full_name: fullName },
+                emailRedirectTo: location.origin + '/login.html' }    });
+  if(error) return { ok:false, error: friendly(error.message) };
+    return { ok:true, needsConfirm: !data.session, user: data.user };
+  }
 
   async function signOut(){ await SB.auth.signOut(); }
 
@@ -94,23 +96,43 @@ async function currentUser(){
     const { data:{ session } } = await SB.auth.getSession();
     return session ? session.user : null;
   }
-
-  async function saveQuiz(quiz){
+async function saveQuiz(quiz){
     const u = await currentUser();
     if(!u) return { ok:false, error:'Not signed in.' };
-    const { error } = await SB.from('profiles')
-      .update({ quiz }).eq('id', u.id);
-    return error ? { ok:false, error:error.message } : { ok:true };
+    const { data, error } = await SB.from('profiles')
+      .upsert({ id:u.id, quiz }, { onConflict:'id' })
+      .select('id');
+    if(error) return { ok:false, error:error.message };
+    if(!data || !data.length) return { ok:false, error:'No profile row for this user.' };
+    return { ok:true };
   }
 
   async function chooseAdvisor(advisorId){
     const u = await currentUser();
     if(!u) return { ok:false, error:'Not signed in.' };
-    const { error } = await SB.from('profiles')
-      .update({ advisor_id: advisorId }).eq('id', u.id);
-    return error ? { ok:false, error:error.message } : { ok:true };
+    const { data, error } = await SB.from('profiles')
+      .upsert({ id:u.id, advisor_id: advisorId }, { onConflict:'id' })
+      .select('id');
+    if(error) return { ok:false, error:error.message };
+    if(!data || !data.length) return { ok:false, error:'No profile row for this user.' };
+    return { ok:true };
+  }
+
+  const PENDING = 'greylockPendingQuiz';
+
+  function stashQuiz(quiz){
+    try{ localStorage.setItem(PENDING, JSON.stringify(quiz)); }catch(e){}
+  }
+
+  async function flushPendingQuiz(){
+    let raw=null;
+    try{ raw = localStorage.getItem(PENDING); }catch(e){ return; }
+    if(!raw) return;
+    if(!await currentUser()) return;
+    const r = await saveQuiz(JSON.parse(raw));
+    if(r.ok){ try{ localStorage.removeItem(PENDING); }catch(e){} }
+    else console.warn('[GT] quiz flush failed:', r.error);
   }
 
 return { signIn, signUp, signOut, session, reset, require, initials, home, SB,
-           saveQuiz, chooseAdvisor, currentUser };})();
-
+           saveQuiz, chooseAdvisor, currentUser, stashQuiz, flushPendingQuiz };})();

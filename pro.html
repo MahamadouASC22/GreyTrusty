@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Your practice — Greylock Trust</title>
+<title>Advisor dashboard preview — Greylock Trust</title>
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -17,13 +17,16 @@
 body{background:var(--bg);}
 .dash{max-width:1300px;margin:0 auto;padding:calc(88px + 1vw) 24px 80px;}
 
-/* ---------- boot / loading ---------- */
-.boot{min-height:60vh;display:flex;align-items:center;justify-content:center;
-  flex-direction:column;gap:14px;color:var(--muted);font-size:14px;}
-.boot .sp{width:26px;height:26px;border-radius:50%;border:2px solid var(--line-2);
-  border-top-color:var(--gold);animation:spin .8s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg);}}
-.shell{display:none;} body.ready .shell{display:block;} body.ready .boot{display:none;}
+/* ---------- preview banner ---------- */
+.pv{max-width:1300px;margin:0 auto;padding:0 24px;}
+.pv-in{display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  background:var(--gold-wash);border:1px solid var(--gold-line);border-radius:14px;
+  padding:13px 18px;margin-bottom:20px;}
+.pv-in b{font-size:13.5px;color:var(--gold-deep);}
+.pv-in span{font-size:13px;color:var(--body-c);}
+.pv-in .who{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.pv-in select{font-family:var(--f);font-size:13px;font-weight:600;color:var(--ink);
+  border:1px solid var(--gold-line);border-radius:999px;padding:8px 13px;background:#fff;}
 
 /* ---------- greeting ---------- */
 .greet{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:20px;}
@@ -44,7 +47,7 @@ body{background:var(--bg);}
 .pill-soft:hover{border-color:var(--ink);}
 .pill-ink{background:var(--ink);color:#fff;} .pill-ink:hover{background:var(--ink-2);}
 
-/* ---------- next up band (the one loud thing) ---------- */
+/* ---------- next up band ---------- */
 .next{position:relative;overflow:hidden;border-radius:20px;margin-bottom:20px;
   background:linear-gradient(150deg,var(--ink-deep),var(--ink));color:#fff;
   padding:24px 26px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
@@ -86,11 +89,10 @@ body{background:var(--bg);}
 @media(max-width:1040px){.cols{grid-template-columns:1fr;}}
 .card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;margin-bottom:20px;}
 .card:last-child{margin-bottom:0;}
-@media(max-width:640px){.card{padding:18px;}.dash{padding:78px 14px 60px;}}
+@media(max-width:640px){.card{padding:18px;}.dash{padding:78px 14px 60px;}.pv{padding:0 14px;}}
 .ch{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;}
 .ch h2{font-family:var(--serif);font-weight:400;font-size:21px;color:var(--ink);letter-spacing:-.02em;}
 .ch .more{margin-left:auto;font-size:13px;font-weight:600;color:var(--gold-deep);}
-.ch .more:hover{text-decoration:underline;text-underline-offset:3px;}
 
 /* ---------- tabs ---------- */
 .tabs{display:flex;gap:4px;background:var(--chipbg);border-radius:999px;padding:4px;
@@ -208,103 +210,89 @@ body{background:var(--bg);}
 <body class="nav-dark">
 <div id="nav"></div>
 
-<main class="dash">
-  <div class="boot" id="boot"><div class="sp"></div><span>Opening your practice…</span></div>
-
-  <div class="shell">
-    <div class="greet" id="greet"></div>
-    <div id="nextUp"></div>
-    <div class="strip" id="strip"></div>
-    <div class="cols">
-      <div>
-        <section class="card">
-          <div class="tabs" id="tabs"></div>
-          <div id="apptList"></div>
-        </section>
-
-        <section class="card">
-          <div class="ch"><h2>New matches</h2>
-            <span class="more" id="matchNote"></span></div>
-          <div id="matchList"></div>
-        </section>
-
-        <section class="card">
-          <div class="ch"><h2>Your week</h2>
-            <span class="saved" id="savedFlag">Saved</span></div>
-          <div class="avail" id="avail"></div>
-          <div class="togs" id="togs"></div>
-        </section>
-      </div>
-
-      <aside>
-        <div class="mini pay" id="pay"></div>
-        <div class="mini" id="profileCard"></div>
-        <div class="mini" id="tasks"></div>
-      </aside>
+<div class="pv" style="padding-top:calc(88px + 1vw)">
+  <div class="pv-in">
+    <b>Preview</b>
+    <span>No sign-in, no database. Everything here is sample data and resets on reload.</span>
+    <div class="who">
+      <span style="font-size:12.5px;color:var(--muted)">Viewing as</span>
+      <select id="whoSel"></select>
     </div>
-    <p class="src" id="srcNote"></p>
   </div>
+</div>
+
+<main class="dash" style="padding-top:0">
+  <div class="greet" id="greet"></div>
+  <div id="nextUp"></div>
+  <div class="strip" id="strip"></div>
+  <div class="cols">
+    <div>
+      <section class="card">
+        <div class="tabs" id="tabs"></div>
+        <div id="apptList"></div>
+      </section>
+
+      <section class="card">
+        <div class="ch"><h2>New matches</h2>
+          <span class="more" id="matchNote"></span></div>
+        <div id="matchList"></div>
+      </section>
+
+      <section class="card">
+        <div class="ch"><h2>Your week</h2>
+          <span class="saved" id="savedFlag">Saved</span></div>
+        <div class="avail" id="avail"></div>
+        <div class="togs" id="togs"></div>
+      </section>
+    </div>
+
+    <aside>
+      <div class="mini pay" id="pay"></div>
+      <div class="mini" id="profileCard"></div>
+      <div class="mini" id="tasks"></div>
+    </aside>
+  </div>
+  <p class="src">Preview only — figures and clients are illustrative.</p>
 </main>
 
 <div class="sheet" id="sheet"><div class="sheet-in" id="sheetIn"></div></div>
 
 <div id="footer"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/data.js"></script>
-<script src="js/auth.js"></script>
 <script src="js/nav.js"></script>
 <script>
 'use strict';
 
-let me=null, S=null, AV=null, BOOKINGS=null, tab='upcoming';
+let me=null, AV=null, tab='upcoming';
 
 const DAYS=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 const HOUR_OPTS=['Off','9–1','9–5','9–7','12–5','10–2'];
 
-/* ---------------- boot ---------------- */
-(async function boot(){
-  const s = await GT_AUTH.require('advisor','provider-portal.html');
-  if(!s) return;
-  S = s;
+/* advisor switcher — see the page as any of the demo advisors */
+const sel=document.getElementById('whoSel');
+sel.innerHTML=A.map(x=>`<option value="${x.id}">${x.name}</option>`).join('');
+sel.addEventListener('change',()=>setAdvisor(+sel.value));
 
-  const base = A.find(x=>String(x.id)===String(s.advisorId)) || A[0];
-  me = {...base};
-  if(s.name)  me.name  = s.name;
-  if(s.photo) me.photo = s.photo;
-
-  AV = normaliseAvail(s.availability);
-  document.body.classList.add('ready');
-  render();
-  loadBookings();
-})();
-
-function normaliseAvail(saved){
-  const base = {
+function setAdvisor(id){
+  me = A.find(x=>x.id===id) || A[0];
+  AV = {
     hours:{Mon:'9–5',Tue:'9–5',Wed:'9–5',Thu:'9–7',Fri:'9–3',
            Sat:me.weekends?'10–2':'Off',Sun:'Off'},
     flags:{intro:!!me.intro,evenings:!!me.evenings,weekends:!!me.weekends,
            checkins:!!me.checkins,business:!!me.business,manual:false}
   };
-  if(!saved || typeof saved!=='object') return base;
-  return {hours:{...base.hours,...(saved.hours||{})},
-          flags:{...base.flags,...(saved.flags||{})}};
+  render();
 }
 
-async function saveAvail(){
-  const flag=document.getElementById('savedFlag');
-  try{
-    const { error } = await GT_AUTH.SB.from('profiles')
-      .update({ availability: AV }).eq('id', S.id);
-    if(error) throw error;
-    flag.textContent='Saved'; flag.classList.add('on');
-  }catch(e){
-    flag.textContent='Could not save — check your connection'; flag.classList.add('on');
-  }
-  setTimeout(()=>flag.classList.remove('on'),2200);
+function flash(msg){
+  const f=document.getElementById('savedFlag');
+  f.textContent=msg||'Saved (preview — not stored)';
+  f.classList.add('on');
+  setTimeout(()=>f.classList.remove('on'),1800);
 }
 
-/* ---------------- bookings ---------------- */
-const DEMO=[
+/* ---------------- sample bookings ---------------- */
+const APPTS=[
  {when:['Wed','30','9:30 AM'],nm:'Margaret Hale',need:'Wi-Fi dead zones upstairs',
   mode:'In-person',kind:'Session',dur:'2 hrs',addr:'14 Chapel St',tab:'upcoming',repeat:true},
  {when:['Wed','30','1:00 PM'],nm:'Owen Brady',need:'Laptop very slow to start',
@@ -315,42 +303,28 @@ const DEMO=[
   mode:'In-person',kind:'Session',dur:'2 hrs',addr:'8 Elm Road',tab:'upcoming'},
  {when:['Fri','1','11:00 AM'],nm:'Ronald Keane',need:'Printer offline again',
   mode:'In-person',kind:'Session',dur:'1 hr',addr:'22 Mill Lane',tab:'upcoming',repeat:true},
+ {when:['Mon','4','9:30 AM'],nm:'Aisha Mensah',need:'Backup review and credit freeze',
+  mode:'Video call',kind:'Session',dur:'1.5 hrs',tab:'upcoming'},
  {when:['Tue','29','10:00 AM'],nm:'Dana Whitfield',need:'Smart doorbell setup',
   mode:'In-person',kind:'Session',dur:'1.5 hrs',tab:'past',paid:'$112.50'},
  {when:['Mon','28','2:00 PM'],nm:'Tom Reilly',need:'Password manager rollout',
   mode:'Video call',kind:'Session',dur:'2 hrs',tab:'past',paid:'$150.00'},
  {when:['Fri','25','9:00 AM'],nm:'Helen Cross',need:'Intro call — considering ongoing support',
   mode:'Video call',kind:'Intro call',dur:'20 min',tab:'past',paid:'Free'},
+ {when:['Sat','2','10:00 AM'],nm:'Cormac Bailey',need:'Two laptops and a new printer',
+  mode:'In-person',kind:'Session',dur:'2 hrs',addr:'5 Union St',tab:'requests'},
 ];
-let usingDemo=true;
 
-async function loadBookings(){
-  try{
-    const { data, error } = await GT_AUTH.SB.from('bookings')
-      .select('*').eq('advisor_id', me.id).order('starts_at',{ascending:true});
-    if(error) throw error;
-    if(!data || !data.length) return;           // keep demo data until real bookings exist
-    usingDemo=false;
-    const now=new Date();
-    BOOKINGS = data.map(b=>{
-      const d = b.starts_at ? new Date(b.starts_at) : null;
-      return {
-        when: d ? [DOW[d.getDay()], String(d.getDate()),
-                   d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})]
-                : [(b.day_label||'').split(' ')[0]||'—', '', b.time_label||''],
-        nm: b.name || 'Client',
-        need: b.notes || 'No notes yet',
-        mode: b.mode,
-        kind: b.kind==='intro' ? 'Intro call' : 'Session',
-        dur:  b.kind==='intro' ? '20 min' : '1 hr',
-        addr: b.mode==='In-person' ? b.address : '',
-        tab:  b.status==='pending' ? 'requests' : (d && d < now ? 'past' : 'upcoming')
-      };
-    });
-    render();
-  }catch(e){ /* stay on demo data */ }
-}
-function appts(){ return BOOKINGS || DEMO; }
+const MATCHES=[
+ {pct:96,nm:'Jonathan A.',need:'Whole-house Wi-Fi is unreliable; wants someone patient who will explain it.',
+  meta:'4 mi away · In person preferred · up to $90/hr'},
+ {pct:91,nm:'Beatrice L.',need:'Recently scammed by a phone call; wants accounts locked down properly.',
+  meta:'Video call · this week · up to $95/hr'},
+ {pct:88,nm:'The Okafor family',need:'Four devices, two teenagers, no backups anywhere.',
+  meta:'7 mi away · weekends only · up to $80/hr'},
+ {pct:84,nm:'Dominic R.',need:'Small business — shared drive and staff device security.',
+  meta:'In person or video · no rush · up to $100/hr'},
+];
 
 /* ---------------- render ---------------- */
 function render(){
@@ -358,9 +332,6 @@ function render(){
   drawTabs(); drawAppts(); drawMatches();
   drawAvail(); drawTogs();
   drawPay(); drawProfile(); drawTasks();
-  document.getElementById('srcNote').textContent = usingDemo
-    ? 'Showing sample clients until your first real booking comes in. Availability changes are saved to your account.'
-    : 'Live from your Greylock Trust account.';
 }
 
 function drawGreeting(){
@@ -380,26 +351,22 @@ function drawGreeting(){
       <a class="pill pill-soft" href="advisor.html?id=${me.id}#a=${me.id}">View public profile</a>
       <button class="pill pill-gold" id="jumpHours">Edit your week</button>
     </div>`;
-  document.getElementById('jumpHours').addEventListener('click',()=>{
-    document.getElementById('avail').scrollIntoView({behavior:'smooth',block:'center'});
-  });
+  document.getElementById('jumpHours').addEventListener('click',()=>
+    document.getElementById('avail').scrollIntoView({behavior:'smooth',block:'center'}));
 }
 
 function drawNext(){
-  const up=appts().filter(x=>x.tab==='upcoming');
+  const up=APPTS.filter(x=>x.tab==='upcoming');
   const el=document.getElementById('nextUp');
   if(!up.length){
-    el.innerHTML=`<div class="next quiet">
-      <div>
-        <div class="lbl">Next up</div>
-        <div class="cd">Nothing booked <em>yet.</em></div>
-        <p class="det">Open more hours below, or turn on free intro calls — advisors who offer
-          them get booked roughly twice as often in their first month.</p>
-      </div></div>`;
+    el.innerHTML=`<div class="next quiet"><div>
+      <div class="lbl">Next up</div>
+      <div class="cd">Nothing booked <em>yet.</em></div>
+      <p class="det">Open more hours below, or turn on free intro calls.</p>
+    </div></div>`;
     return;
   }
-  const n=up[0];
-  const virt = n.mode!=='In-person';
+  const n=up[0], virt=n.mode!=='In-person';
   el.innerHTML=`<div class="next">
     <div>
       <div class="lbl">Next up</div>
@@ -415,15 +382,14 @@ function drawNext(){
 }
 
 function drawStrip(){
-  const list=appts();
-  const up=list.filter(x=>x.tab==='upcoming');
-  const sessions=up.filter(x=>x.kind==='Session').length;
-  const intros=up.filter(x=>x.kind==='Intro call').length;
+  const up=APPTS.filter(x=>x.tab==='upcoming');
   document.getElementById('strip').innerHTML=`
     <div class="stat"><div class="k">This week</div>
-      <div class="v">${sessions}</div><div class="n">booked sessions</div></div>
+      <div class="v">${up.filter(x=>x.kind==='Session').length}</div>
+      <div class="n">booked sessions</div></div>
     <div class="stat"><div class="k">Intro calls</div>
-      <div class="v">${intros}</div><div class="n">free, 20 minutes each</div></div>
+      <div class="v">${up.filter(x=>x.kind==='Intro call').length}</div>
+      <div class="n">free, 20 minutes each</div></div>
     <div class="stat gold"><div class="k">New matches</div>
       <div class="v">${MATCHES.length}</div><div class="n">clients you ranked highly for</div></div>
     <div class="stat"><div class="k">Your rating</div>
@@ -432,9 +398,8 @@ function drawStrip(){
 }
 
 function drawTabs(){
-  const list=appts();
-  const up=list.filter(x=>x.tab==='upcoming').length;
-  const rq=list.filter(x=>x.tab==='requests').length;
+  const up=APPTS.filter(x=>x.tab==='upcoming').length;
+  const rq=APPTS.filter(x=>x.tab==='requests').length;
   document.getElementById('tabs').innerHTML=`
     <button class="tab ${tab==='upcoming'?'on':''}" data-t="upcoming">Upcoming${up?`<span class="badge">${up}</span>`:''}</button>
     <button class="tab ${tab==='past'?'on':''}" data-t="past">Past</button>
@@ -445,15 +410,15 @@ function drawTabs(){
 }
 
 function drawAppts(){
-  const list=appts().filter(x=>x.tab===tab);
+  const list=APPTS.filter(x=>x.tab===tab);
   const el=document.getElementById('apptList');
   if(!list.length){
     el.innerHTML=`<div class="empty">${
       tab==='requests'
-        ? 'No pending requests. With <b>manual approval</b> switched on below, new bookings land here before they reach your calendar.'
+        ? 'No pending requests. With <b>manual approval</b> switched on below, new bookings land here first.'
         : tab==='past'
-          ? 'Nothing finished yet. Past sessions and what you earned from them appear here.'
-          : 'Your calendar is clear. Open more hours in <b>Your week</b> to get found sooner.'
+          ? 'Nothing finished yet. Past sessions and what you earned appear here.'
+          : 'Your calendar is clear. Open more hours in <b>Your week</b>.'
     }</div>`;
     return;
   }
@@ -483,17 +448,6 @@ function drawAppts(){
     </div>`).join('');
 }
 
-/* ---------------- matches ---------------- */
-const MATCHES=[
- {pct:96,nm:'Jonathan A.',need:'Whole-house Wi-Fi is unreliable; wants someone patient who will explain it.',
-  meta:'4 mi away · In person preferred · up to $90/hr'},
- {pct:91,nm:'Beatrice L.',need:'Recently scammed by a phone call; wants accounts locked down properly.',
-  meta:'Video call · this week · up to $95/hr'},
- {pct:88,nm:'The Okafor family',need:'Four devices, two teenagers, no backups anywhere.',
-  meta:'7 mi away · weekends only · up to $80/hr'},
- {pct:84,nm:'Dominic R.',need:'Small business — shared drive and staff device security.',
-  meta:'In person or video · no rush · up to $100/hr'},
-];
 function drawMatches(){
   document.getElementById('matchNote').textContent='Matched to your specialties';
   document.getElementById('matchList').innerHTML=MATCHES.map(m=>{
@@ -511,7 +465,6 @@ function drawMatches(){
     </div>`;}).join('');
 }
 
-/* ---------------- availability ---------------- */
 function drawAvail(){
   document.getElementById('avail').innerHTML=DAYS.map(d=>{
     const h=AV.hours[d]||'Off';
@@ -536,7 +489,7 @@ function openDayEditor(day){
     AV.hours[day]=b.dataset.h;
     if(day==='Sat') AV.flags.weekends = b.dataset.h!=='Off';
     sheet.classList.remove('on');
-    drawAvail(); drawTogs(); saveAvail();
+    drawAvail(); drawTogs(); flash();
   }));
   document.getElementById('closeSheet').addEventListener('click',()=>sheet.classList.remove('on'));
 }
@@ -564,14 +517,12 @@ function drawTogs(){
     const k=b.dataset.k;
     AV.flags[k]=!AV.flags[k];
     if(k==='weekends') AV.hours.Sat = AV.flags.weekends ? '10–2' : 'Off';
-    drawAvail(); drawTogs(); saveAvail();
+    drawAvail(); drawTogs(); flash();
   }));
 }
 
-/* ---------------- rail ---------------- */
 function drawPay(){
-  const done=appts().filter(x=>x.tab==='past').length || 6;
-  const gross=done*me.rate*1.6, fee=gross*.15, net=gross-fee;
+  const gross=6*me.rate*1.6, fee=gross*.15, net=gross-fee;
   document.getElementById('pay').innerHTML=`
     <h3>Next payout</h3>
     <div class="amt">$${net.toFixed(0)}</div>
@@ -607,17 +558,20 @@ function drawProfile(){
 }
 
 function drawTasks(){
-  const up=appts().filter(x=>x.tab==='upcoming');
-  const rows=[];
-  if(up[0]) rows.push(`Confirm details with <b>${up[0].nm}</b> before ${up[0].when[0]}`);
-  rows.push(`Reply to <b>${MATCHES[1].nm}</b> — new match, ${MATCHES[1].pct}% fit`);
-  rows.push('Complete the Q3 security briefing (30 min, counts toward continuing education)');
+  const up=APPTS.filter(x=>x.tab==='upcoming');
   document.getElementById('tasks').innerHTML=`
     <h3>Needs you</h3>
-    ${rows.map(r=>`<div class="task"><span class="dot"></span><span>${r}</span></div>`).join('')}
+    <div class="task"><span class="dot"></span><span>Confirm details with
+      <b>${up[0].nm}</b> before ${up[0].when[0]}</span></div>
+    <div class="task"><span class="dot"></span><span>Reply to <b>${MATCHES[1].nm}</b> —
+      new match, ${MATCHES[1].pct}% fit</span></div>
+    <div class="task"><span class="dot"></span><span>Complete the Q3 security briefing
+      (30 min, counts toward continuing education)</span></div>
     <div class="task done"><span class="dot"></span><span>Upload updated insurance certificate</span></div>
     <div class="task done"><span class="dot"></span><span>Set August blackout dates</span></div>`;
 }
+
+setAdvisor(A[0].id);
 </script>
 </body>
 </html>

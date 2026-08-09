@@ -129,7 +129,7 @@ async function paintAuth(){
   try{ s = await GT_AUTH.session(); }catch(e){ return; }
   if(!s) return;
 
-  const first=(s.name||'').split(' ')[0] || 'Account';
+  GT_AUTH.flushPendingQuiz();
   const home=GT_AUTH.home(s);
   const av = s.photo
     ? `<img src="${s.photo}" alt="">`
@@ -137,13 +137,35 @@ async function paintAuth(){
 
   const area=document.getElementById('authArea');
   if(area) area.innerHTML=
-    `<a class="nav-acct" href="${home}">${av}<span>${first}</span></a>
-     <button class="nav-login" id="signOut">Sign out</button>`;
+    `<div class="acct-wrap" id="acctWrap">
+       <button class="nav-acct" id="acctBtn" aria-expanded="false">
+         ${av}<span>Profile</span>
+         <svg class="cv" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4"
+           stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+       </button>
+       <div class="acct-drop">
+         <div class="acct-me">
+           <b>${s.name}</b>
+           <span>${s.email}</span>
+         </div>
+         <a href="${home}">Dashboard</a>
+         <button id="signOut">Logout</button>
+       </div>
+     </div>`;
 
   const m=document.getElementById('mAuth');
   if(m) m.innerHTML=
     `<a class="pill pill-soft pill-sm" href="${home}">Your dashboard</a>
      <button class="pill pill-gold pill-sm" id="signOutM">Sign out</button>`;
+
+const wrap=document.getElementById('acctWrap');
+  const btn=document.getElementById('acctBtn');
+  if(btn) btn.addEventListener('click',e=>{
+    e.stopPropagation();
+    const on=wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded',on?'true':'false');
+  });
+  document.addEventListener('click',()=>{ if(wrap) wrap.classList.remove('open'); });
 
   ['signOut','signOutM'].forEach(id=>{
     const b=document.getElementById(id);
