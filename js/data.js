@@ -410,7 +410,7 @@ const PERSONALITIES=[
 const FUTURES=[
 'Home networking',
 'Smart home security',
-'Cybersecurity',
+'Account Security',
 'AI tools',
 'New computers',
 'Phone setup',

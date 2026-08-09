@@ -14,6 +14,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/site.css">
 <style>
+.acct{display:grid;gap:12px;max-width:380px;margin:26px auto 0;text-align:left;}
+.acct label{font-size:12.5px;font-weight:700;color:var(--ink);display:block;}
+.acct input{width:100%;margin-top:6px;padding:12px 14px;font-size:15px;font-family:var(--f);
+  border:1px solid var(--line-2);border-radius:12px;background:#fff;color:var(--body-c);}
+.acct input:focus{outline:none;border-color:var(--gold);}
+.acct input.err{border-color:#B4452F;}
+.amsg{display:none;font-size:11.5px;color:#B4452F;margin-top:4px;}
+.amsg.on{display:block;}
+.anote{font-size:12.5px;color:var(--faint);text-align:center;margin-top:6px;line-height:1.6;}
+.anote a{color:var(--gold-deep);font-weight:600;}
+
 .q-inner{
   max-width:1100px;width:100%;text-align:center;
   animation:qin .25s ease both;
@@ -613,6 +624,8 @@ const P = {
 };
 const F={meet:'',spec:'',avail:'',pers:'',rate:999,offer:'',sort:'match'};
 
+let GT_ME=null;
+(async()=>{ try{ GT_ME = await GT_AUTH.session(); }catch(e){} })();
 
 const QKEY='greylockQuiz';
 
@@ -649,7 +662,7 @@ const STEPS=[
         ['week','Sometime this week'],['weeks','In the coming weeks'],['whenever','No rush \u2014 planning ahead']]},
  {id:'reasons',multi:true,h:'Why are you looking for an <em class="g">IT professional?</em>',
   sub:'Select all that apply',
-  opts:['Ongoing support','Someone I can trust','Cybersecurity','Purchase advice',
+  opts:['Ongoing support','Someone I can trust','Privacy and data protection','Purchase advice',
         'Learning over time','My business','My family']},
  {id:'style',h:'Which best <em class="g">describes</em> you?',sub:'There\u2019s no wrong answer',skip:true,
   opts:[['enjoy','I enjoy learning technology'],['must','I learn only when I have to'],
@@ -687,7 +700,7 @@ const STEPS=[
 {
  id:'regionResult'
 },
- {id:'done'},
+{id:'account'},
 ];
 let step=0;
 const qBody=document.getElementById('qBody'),qBar=document.getElementById('qBar'),
@@ -704,7 +717,7 @@ Math.min(
 
 
 qBar.style.width = progress + "%";  qBack.style.visibility=step===0?'hidden':'visible';
-  qNext.textContent=s.id==='done'?'See my matches':(step===0?'Let\u2019s begin':'Next');
+  qNext.textContent = step===0 ? 'Let\u2019s begin' : 'Next';
   if(s.id==='welcome'){
     qBody.innerHTML=`<div class="wel"><div>
       <h2>Technology help that <em>fits you</em> \u2014 not the other way around.</h2>
@@ -734,8 +747,10 @@ qBar.style.width = progress + "%";  qBack.style.visibility=step===0?'hidden':'vi
           <div class="rt2"><b>Book in one motion</b></div>
           <div class="rs">Pick a time from their calendar without leaving the page.</div></div></div>
       </div></div></div>`;
-    return;
+      return;
   }
+
+
 if(s.id==='regionResult'){
   const available = P.regionStatus==='available';
   const wantedOnsite = P.logi==='onsite';
@@ -780,10 +795,68 @@ if(s.id==='regionResult'){
           <div class="rs">The filter at the top of your results switches between virtual and in-person.</div></div></div>
       </div>
     </div></div>`;
-  qNext.textContent="See my matches";
+qNext.textContent="Next";
   return;
 }
  
+if(s.id==='account'){
+  qNext.textContent='Skip \u2014 see my matches';
+  if(GT_ME){
+    qBody.innerHTML=`<div class="wel"><div>
+      <h2>You're signed in as <em>${GT_ME.name}.</em></h2>
+      <p class="q-sub">We'll save these answers to your account, so your matches and
+        notes are waiting for you next time.</p></div></div>`;
+    qNext.textContent='See my matches';
+    GT_AUTH.saveQuiz({P,F});
+    return;
+  }
+  /* ...form markup unchanged... */
+    qBody.innerHTML=`<div class="wel"><div>
+    <h2>Save your matches to an <em>account?</em></h2>
+    <p class="q-sub">Optional, but this is the only place to create one \u2014 an account keeps
+      your answers, your booking history, and the notes your advisor writes after each visit.</p>
+    <form class="acct" id="acctForm" novalidate>
+      <div><label>Full name<input id="aName" type="text" autocomplete="name"></label>
+        <span class="amsg" id="amName">Please enter your name.</span></div>
+      <div><label>Email<input id="aEmail" type="email" autocomplete="email"></label>
+        <span class="amsg" id="amEmail">Enter a valid email address.</span></div>
+      <div><label>Password<input id="aPw" type="password" autocomplete="new-password"
+        placeholder="At least 8 characters"></label>
+        <span class="amsg" id="amPw">Use at least 8 characters.</span></div>
+      <button class="pill pill-gold" type="submit" id="aGo"
+        style="width:100%;padding:14px;margin-top:4px">Create account &amp; see matches</button>
+      <p class="anote" id="aNote">Already have one? <a href="login.html">Sign in</a></p>
+    </form></div></div>`;
+
+  document.getElementById('acctForm').addEventListener('submit', async e=>{
+    e.preventDefault();
+    const nm=val2('aName'), em=val2('aEmail'), pw=val2('aPw');
+    let ok=true;
+    ok=amark('aName','amName',nm.length>=2)&&ok;
+    ok=amark('aEmail','amEmail',/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em))&&ok;
+    ok=amark('aPw','amPw',pw.length>=8)&&ok;
+    if(!ok)return;
+
+    const note=document.getElementById('aNote'), go=document.getElementById('aGo');
+    go.disabled=true; note.style.color='var(--muted)'; note.textContent='Creating your account…';
+
+    const r = await GT_AUTH.signUp(em, pw, nm);
+    if(!r.ok){ note.textContent=r.error; note.style.color='#B4452F'; go.disabled=false; return; }
+
+   if(r.needsConfirm){
+      note.style.color='var(--gold-deep)';
+      note.textContent='Check your inbox to confirm, then sign in. Your matches are ready below.';
+      go.disabled=false;
+      setTimeout(completeMatches, 1600);
+      return;
+    }
+    GT_ME = await GT_AUTH.session();
+    await GT_AUTH.saveQuiz({P,F});
+    completeMatches();
+  });
+  return;
+}
+
   let html=`<h2>${s.h}</h2><p class="q-sub">${s.sub}</p>`;
 if(s.zip){
  html+=`
@@ -934,19 +1007,19 @@ qNext.addEventListener('click',()=>{
     }
 
 
-    // Final screen
-    if(s.id === "done"){
-        completeMatches();
-        return;
-    }
+   
 
-
-    // Region result page
+// Region result page
     if(s.id === "regionResult"){
-        completeMatches();
+        step++;
+        renderStep();
         return;
     }
 
+    if(s.id === "account"){
+        completeMatches();
+        return;
+    }
 
     if(s.zip){
 
@@ -961,9 +1034,9 @@ qNext.addEventListener('click',()=>{
     }
 
 
-    if(step < STEPS.length-1){
-    if(s.id === "logi" && P.logi === "remote"){   // was: !== "onsite"
-        step += 2;                                 // virtual skips region + result
+ if(step < STEPS.length-1){
+    if(s.id === "logi" && P.logi === "remote"){
+        step += 2;                                 // ← leave as-is
     }else{
         step++;
     }
@@ -979,9 +1052,8 @@ document.getElementById('skipAll').addEventListener('click',finish);
 function previousStep(){
   let prev = step - 1;
   while(prev >= 0){
-    // The ZIP step is only shown when the user did NOT pick virtual-only,
-    // so it's the only step that ever gets skipped going backwards.
-    if(STEPS[prev].id === 'region' && P.logi === 'remote'){ prev--; continue; }
+    const id = STEPS[prev].id;
+    if(P.logi === 'remote' && (id === 'region' || id === 'regionResult')){ prev--; continue; }
     break;
   }
   return prev;
@@ -1033,8 +1105,7 @@ function score(a){
   if(P.reasons.includes('Learning over time')&&a.personality==='Patient teacher')s+=5;
   if(P.reasons.includes('My business')&&a.business)s+=6;
   if(P.reasons.includes('My family')&&a.futures.includes('Family tech support'))s+=5;
-  if(P.reasons.includes('Cybersecurity')&&a.specs.includes('Cybersecurity'))s+=5;
-  if(P.working.includes('evenings')&&a.evenings)s+=3;
+if(P.reasons.includes('Privacy and data protection')&&a.specs.includes('Data Protection'))s+=5;  if(P.working.includes('evenings')&&a.evenings)s+=3;
   if(P.working.includes('weekends')&&a.weekends)s+=3;
   if(P.working.includes('checkins')&&a.checkins)s+=4;
   P.goals.forEach(g=>{if(a.futures.includes(g))s+=2;});
@@ -1313,6 +1384,15 @@ function check(id,msg,pass){
   if(m)m.classList.toggle('on',!pass);
   return pass;
 }
+
+function val2(id){const e=document.getElementById(id);return e?e.value.trim():'';}
+function amark(id,msg,pass){
+  const e=document.getElementById(id),m=document.getElementById(msg);
+  if(e)e.classList.toggle('err',!pass);
+  if(m)m.classList.toggle('on',!pass);
+  return pass;
+}
+
 document.getElementById('redoQuiz').addEventListener('click',()=>{
 try{ QSTORE.removeItem(QKEY); }catch(e){}
   Object.assign(P,{need:[],urgency:null,reasons:[],style:null,learn:null,personality:null,

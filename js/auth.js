@@ -15,18 +15,16 @@ const SB = supabase.createClient(
 const GT_AUTH = (function(){
 
 
-  async function profileFor(user){
+async function profileFor(user){
     const { data, error } = await SB
       .from('profiles').select('*').eq('id', user.id).maybeSingle();
     if(error || !data){
-      // signed in but no profile row yet — treat as a client
-      return { email:user.email, role:'client', name:user.email.split('@')[0],
-               photo:'', advisorId:null, incomplete:true };
+      return { id:user.id, email:user.email, role:'client', name:user.email.split('@')[0],
+               photo:'', advisorId:null, quiz:null, incomplete:true };
     }
-    return { email:user.email, role:data.role, name:data.full_name,
-             photo:data.photo_url, advisorId:data.advisor_id };
+    return { id:user.id, email:user.email, role:data.role, name:data.full_name,
+             photo:data.photo_url, advisorId:data.advisor_id, quiz:data.quiz };
   }
-
 
   async function signIn(email, password){
     const { data, error } = await SB.auth.signInWithPassword({
@@ -49,8 +47,7 @@ const GT_AUTH = (function(){
       });
     }
     // email confirmation on? then there is no session yet
-    return { ok:true, needsConfirm: !data.session };
-  }
+return { ok:true, needsConfirm: !data.session, user: data.user };  }
 
 
   async function signOut(){ await SB.auth.signOut(); }
@@ -93,6 +90,27 @@ const GT_AUTH = (function(){
   function home(s){ return s && s.role==='advisor' ? 'provider-dashboard.html' : 'client-dashboard.html'; }
 
 
-  return { signIn, signUp, signOut, session, reset, require, initials, home, SB };
-})();
+async function currentUser(){
+    const { data:{ session } } = await SB.auth.getSession();
+    return session ? session.user : null;
+  }
+
+  async function saveQuiz(quiz){
+    const u = await currentUser();
+    if(!u) return { ok:false, error:'Not signed in.' };
+    const { error } = await SB.from('profiles')
+      .update({ quiz }).eq('id', u.id);
+    return error ? { ok:false, error:error.message } : { ok:true };
+  }
+
+  async function chooseAdvisor(advisorId){
+    const u = await currentUser();
+    if(!u) return { ok:false, error:'Not signed in.' };
+    const { error } = await SB.from('profiles')
+      .update({ advisor_id: advisorId }).eq('id', u.id);
+    return error ? { ok:false, error:error.message } : { ok:true };
+  }
+
+return { signIn, signUp, signOut, session, reset, require, initials, home, SB,
+           saveQuiz, chooseAdvisor, currentUser };})();
 
