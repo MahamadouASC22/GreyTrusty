@@ -53,24 +53,24 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--gold);ba
       <p style="font-size:12.5px;color:var(--faint);text-align:center;margin-top:12px">
         Advisors applying for the first time should <a href="join.html" style="color:var(--gold-deep);font-weight:600">apply here</a>.</p>    </div>
   </div>
-</section><div id="footer"></div>
+</section>
+<div id="footer"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/data.js"></script>
 <script src="js/auth.js"></script>
 <script src="js/nav.js"></script>
 <script>
-const tc=document.getElementById('tabClient'),tp=document.getElementById('tabPro');
-tc.addEventListener('click',()=>{tc.classList.add('on');tp.classList.remove('on');});
-tp.addEventListener('click',()=>{tp.classList.add('on');tc.classList.remove('on');});
-
-
-document.getElementById('loginForm').addEventListener('submit',e=>{
+document.getElementById('loginForm').addEventListener('submit', async e=>{
   e.preventDefault();
-  const f=e.target;
-  const r=GT_AUTH.signIn(f.email.value,f.pw.value);
-  const msg=document.getElementById('loginMsg');
-  if(!r.ok){ msg.textContent=r.error; msg.style.color='#B4452F'; return; }
-  location.href=GT_AUTH.home(r.session);      // advisor→provider dash, client→client dash
+  const f=e.target, msg=document.getElementById('loginMsg');
+  const btn=f.querySelector('button[type=submit]');
+  btn.disabled=true; msg.style.color='var(--muted)'; msg.textContent='Signing you in…';
+
+  const r = await GT_AUTH.signIn(f.email.value, f.pw.value);
+  if(!r.ok){ msg.textContent=r.error; msg.style.color='#B4452F'; btn.disabled=false; return; }
+
+  const next = new URLSearchParams(location.search).get('next');
+  location.href = next || GT_AUTH.home(r.session);
 });
 </script>
 </body>

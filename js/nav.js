@@ -34,9 +34,10 @@ const navHTML=`
         </li>`:`
         <li class="nav-item"><a class="nav-link" href="${m.href}">${m.label}</a></li>`).join('')}
       </ul>
-    <a class="nav-login" href="login.html">Login</a>
-      <a class="pill pill-gold pill-sm" href="marketplace.html">Find an Advisor</a>
-      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
+   <span id="authArea">
+        <a class="nav-login" href="login.html">Login</a>
+      </span>
+      <a class="pill pill-gold pill-sm" href="marketplace.html">Find an Advisor</a>   <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
     <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
     </div>
@@ -46,11 +47,10 @@ const navHTML=`
   ${MENU.map(m=>m.items?`<div class="mgroup"><div class="mtitle">${m.label}</div>
     ${m.items.map(it=>`<a href="${it.h}">${it.t}</a>`).join('')}</div>`
    :`<div class="mgroup"><a href="${m.href}">${m.label}</a></div>`).join('')}
-  <div class="mcta">
+  <div class="mcta" id="mAuth">
     <a class="pill pill-soft pill-sm" href="login.html">Login</a>
-      <a class="pill pill-gold pill-sm" href="marketplace.html">Find an Advisor</a>
-  </div>
-</div>`;
+    <a class="pill pill-gold pill-sm" href="marketplace.html">Find an Advisor</a>
+  </div>`;
 
 
 const footHTML=`
@@ -121,6 +121,37 @@ function mount(){
     }),{threshold:.1,rootMargin:'0px 0px -50px 0px'});
     targets.forEach(t=>io.observe(t));
   }
+  paintAuth();
+}
+async function paintAuth(){
+  if(typeof GT_AUTH==='undefined') return;
+  let s=null;
+  try{ s = await GT_AUTH.session(); }catch(e){ return; }
+  if(!s) return;
+
+  const first=(s.name||'').split(' ')[0] || 'Account';
+  const home=GT_AUTH.home(s);
+  const av = s.photo
+    ? `<img src="${s.photo}" alt="">`
+    : `<span class="ini">${GT_AUTH.initials(s.name||s.email)}</span>`;
+
+  const area=document.getElementById('authArea');
+  if(area) area.innerHTML=
+    `<a class="nav-acct" href="${home}">${av}<span>${first}</span></a>
+     <button class="nav-login" id="signOut">Sign out</button>`;
+
+  const m=document.getElementById('mAuth');
+  if(m) m.innerHTML=
+    `<a class="pill pill-soft pill-sm" href="${home}">Your dashboard</a>
+     <button class="pill pill-gold pill-sm" id="signOutM">Sign out</button>`;
+
+  ['signOut','signOutM'].forEach(id=>{
+    const b=document.getElementById(id);
+    if(b) b.addEventListener('click', async ()=>{
+      await GT_AUTH.signOut();
+      location.href='index.html';
+    });
+  });
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount);
 else mount();

@@ -204,13 +204,13 @@ footer{background:#fff;border-top:1px solid var(--line);padding:56px 0 34px;marg
 }
 .mnav .mcta a.pill{width:100%;}
 
-
-.nav-cta-mobile{display:none;}
-@media(max-width:1060px){
-  .nav-cta-desktop{display:none;}
-  .nav-cta-mobile{display:inline-flex;}
-}
-@media(max-width:420px){
-  .nav-cta-mobile{padding:10px 14px;font-size:13px;}
-}
-
+/* ---- signed-in nav chip ---- */
+.nav-acct{display:inline-flex;align-items:center;gap:9px;padding:6px 14px 6px 6px;
+  border:1px solid var(--line-2);border-radius:999px;background:#fff;
+  font-size:14.5px;font-weight:600;color:var(--ink);white-space:nowrap;}
+.nav-acct:hover{border-color:var(--ink);}
+.nav-acct img,.nav-acct .ini{width:30px;height:30px;border-radius:50%;flex:none;object-fit:cover;}
+.nav-acct .ini{background:var(--ink);color:var(--gold);display:flex;align-items:center;
+  justify-content:center;font-size:12px;font-weight:700;letter-spacing:.02em;}
+#authArea{display:inline-flex;align-items:center;gap:12px;}
+@media(max-width:1060px){#authArea{display:none;}}
