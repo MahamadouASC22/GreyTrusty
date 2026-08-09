@@ -62,11 +62,21 @@ options:{ data:{ full_name: fullName },
   }
 
 
-  async function reset(email){
+ async function reset(email){
     const { error } = await SB.auth.resetPasswordForEmail(String(email).trim(), {
-      redirectTo: location.origin + '/login.html'
+      redirectTo: location.origin + '/reset.html'
     });
     return error ? { ok:false, error:error.message } : { ok:true };
+  }
+
+  async function updatePassword(password){
+    const { error } = await SB.auth.updateUser({ password });
+    if(error){
+      if(/session/i.test(error.message))
+        return { ok:false, error:'That reset link has expired. Request a new one.' };
+      return { ok:false, error:error.message };
+    }
+    return { ok:true };
   }
 
 

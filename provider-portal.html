@@ -154,7 +154,7 @@ function draw(){
       </div>
       <div class="rowline">
         <label><input type="checkbox"> Keep me signed in</label>
-        <a href="#" id="forgot">Forgot password?</a>
+<a href="reset.html">Forgot password?</a>
       </div>
       <button class="pill pill-ink sign" type="submit">Sign in</button>
     </form>
@@ -171,7 +171,7 @@ function draw(){
       <a href="login.html">Sign in here</a></p>`;
 
 
-  document.getElementById('forgot').addEventListener('click',e=>{
+document.getElementById('forgot').addEventListener('click',e=>{
  showNote('Password resets aren\u2019t set up yet.');
 });
 document.getElementById('form').addEventListener('submit', async e=>{

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Reset your password — Greylock Trust</title>
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<style>
+:root{ --serif:'Fraunces',Georgia,serif; }
+.page{min-height:70vh;display:flex;align-items:center;justify-content:center;
+  padding:calc(96px + 2vw) 22px 80px;}
+.box{width:100%;max-width:440px;}
+.box .head{text-align:center;margin-bottom:24px;}
+.box h1{font-family:var(--serif);font-weight:300;font-size:clamp(28px,4vw,38px);
+  color:var(--ink);letter-spacing:-.03em;line-height:1.08;}
+.box h1 em{font-style:italic;color:var(--gold-deep);font-weight:400;}
+.box .lede{font-size:14.5px;color:var(--muted);margin-top:12px;line-height:1.7;}
+.card2{background:#fff;border:1px solid var(--line);border-radius:22px;
+  box-shadow:0 26px 64px rgba(30,49,69,.11);padding:clamp(24px,3vw,32px);}
+.fld{margin-bottom:14px;}
+.fld label{font-size:12.5px;font-weight:700;color:var(--ink);display:block;}
+.fld input{width:100%;margin-top:6px;padding:13px 15px;font-size:15px;font-family:var(--f);
+  border:1px solid var(--line-2);border-radius:12px;background:var(--bg);color:var(--body-c);}
+.fld input:focus{outline:none;border-color:var(--gold);background:#fff;}
+.fld.err input{border-color:#B4452F;}
+.fld .msg{display:none;font-size:11.5px;color:#B4452F;margin-top:5px;}
+.fld.err .msg{display:block;}
+.hint{font-size:12px;color:var(--faint);margin-top:6px;line-height:1.55;}
+.go{width:100%;padding:14px;font-size:15px;margin-top:8px;}
+.note{margin-top:14px;font-size:13px;text-align:center;line-height:1.65;color:var(--muted);}
+.back{margin-top:20px;text-align:center;font-size:13px;color:var(--muted);}
+.back a{color:var(--gold-deep);font-weight:600;}
+.tick{width:56px;height:56px;border-radius:50%;background:var(--gold-wash);
+  border:1px solid var(--gold-line);color:var(--gold-deep);font-size:25px;display:flex;
+  align-items:center;justify-content:center;margin:0 auto 16px;}
+.done{text-align:center;}
+.done h3{font-family:var(--serif);font-weight:400;font-size:21px;color:var(--ink);margin-bottom:9px;}
+.done p{font-size:14.5px;color:var(--muted);line-height:1.7;}
+.spin{width:24px;height:24px;border-radius:50%;border:2px solid var(--line-2);
+  border-top-color:var(--gold);animation:sp .8s linear infinite;margin:20px auto;}
+@keyframes sp{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body class="nav-dark">
+<div id="nav"></div>
+
+<main class="page">
+  <div class="box">
+    <div class="head" id="head"></div>
+    <div class="card2" id="card"><div class="spin"></div></div>
+    <p class="back"><a href="login.html">Back to sign in</a></p>
+  </div>
+</main>
+
+<div id="footer"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/nav.js"></script>
+<script>
+'use strict';
+
+const head = document.getElementById('head');
+const card = document.getElementById('card');
+
+/* Did we arrive from a recovery email? Supabase puts the token in the hash
+   (implicit flow) or a ?code= param (PKCE). Either way supabase-js has
+   already exchanged it by the time we check for a session. */
+function cameFromEmail(){
+  const h = location.hash || '';
+  const q = location.search || '';
+  return /type=recovery/.test(h) || /type=recovery/.test(q) || /[?&]code=/.test(q);
+}
+
+function note(msg, color){
+  const p = document.getElementById('note');
+  if(!p) return;
+  p.textContent = msg;
+  p.style.color = color || 'var(--muted)';
+}
+
+function mark(id, pass){
+  const f = document.getElementById(id);
+  if(f) f.classList.toggle('err', !pass);
+  return pass;
+}
+
+function val(id){
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+/* ---------- 1. ask for the email ---------- */
+function drawRequest(){
+  head.innerHTML = `
+    <h1>Reset your <em>password.</em></h1>
+    <p class="lede">Enter the email on your account and we'll send you a link to set a new one.
+      The link works once and expires after an hour.</p>`;
+  card.innerHTML = `
+    <form id="reqForm" novalidate>
+      <div class="fld" id="f-email">
+        <label>Email<input id="i-email" type="email" autocomplete="email"
+          placeholder="you@example.com"></label>
+        <span class="msg">Enter a valid email address.</span>
+      </div>
+      <button class="pill pill-ink go" type="submit" id="reqGo">Send reset link</button>
+      <p class="note" id="note"></p>
+    </form>`;
+
+  document.getElementById('reqForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const em = val('i-email');
+    if(!mark('f-email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em))) return;
+
+    const go = document.getElementById('reqGo');
+    go.disabled = true;
+    note('Sending…');
+
+    const r = await GT_AUTH.reset(em);
+    go.disabled = false;
+
+    /* Always show the same message. Confirming whether an address has an
+       account would let anyone test emails against your user list. */
+    card.innerHTML = `
+      <div class="done">
+        <div class="tick">✓</div>
+        <h3>Check your inbox</h3>
+        <p>If there's a Greylock Trust account for <b>${em}</b>, a reset link is on its way.
+           It can take a minute, and it may land in spam.</p>
+      </div>`;
+    if(!r.ok) console.warn('[GT] reset email failed:', r.error);
+  });
+}
+
+/* ---------- 2. set the new password ---------- */
+function drawSet(){
+  head.innerHTML = `
+    <h1>Choose a new <em>password.</em></h1>
+    <p class="lede">Pick something you don't use anywhere else. You'll be signed in
+      straight after.</p>`;
+  card.innerHTML = `
+    <form id="setForm" novalidate>
+      <div class="fld" id="f-pw">
+        <label>New password<input id="i-pw" type="password" autocomplete="new-password"
+          placeholder="At least 8 characters"></label>
+        <span class="msg">Use at least 8 characters.</span>
+        <p class="hint">A short phrase of a few unrelated words is easier to remember
+          and harder to guess than a scrambled word.</p>
+      </div>
+      <div class="fld" id="f-pw2">
+        <label>Confirm new password<input id="i-pw2" type="password"
+          autocomplete="new-password"></label>
+        <span class="msg">Both passwords need to match.</span>
+      </div>
+      <button class="pill pill-ink go" type="submit" id="setGo">Save new password</button>
+      <p class="note" id="note"></p>
+    </form>`;
+
+  document.getElementById('setForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const pw = val('i-pw'), pw2 = val('i-pw2');
+    let ok = true;
+    ok = mark('f-pw', pw.length >= 8) && ok;
+    ok = mark('f-pw2', pw !== '' && pw === pw2) && ok;
+    if(!ok) return;
+
+    const go = document.getElementById('setGo');
+    go.disabled = true;
+    note('Saving…');
+
+    const r = await GT_AUTH.updatePassword(pw);
+    if(!r.ok){
+      note(r.error, '#B4452F');
+      go.disabled = false;
+      return;
+    }
+
+    const s = await GT_AUTH.session();
+    card.innerHTML = `
+      <div class="done">
+        <div class="tick">✓</div>
+        <h3>Password changed</h3>
+        <p>You're signed in. Taking you to your dashboard…</p>
+      </div>`;
+    setTimeout(() => { location.href = GT_AUTH.home(s); }, 1400);
+  });
+}
+
+/* ---------- 3. the link didn't work ---------- */
+function drawExpired(){
+  head.innerHTML = `
+    <h1>That link has <em>expired.</em></h1>
+    <p class="lede">Reset links work once and last an hour. Request a fresh one and
+      it'll be with you in a moment.</p>`;
+  card.innerHTML = `
+    <button class="pill pill-ink go" id="again" style="margin-top:0">Send a new link</button>`;
+  document.getElementById('again').addEventListener('click', drawRequest);
+}
+
+/* ---------- boot ---------- */
+(async function boot(){
+  if(!cameFromEmail()){
+    drawRequest();
+    return;
+  }
+  /* Give supabase-js a moment to exchange the token in the URL for a session. */
+  let s = null;
+  for(let i = 0; i < 10 && !s; i++){
+    try{ s = await GT_AUTH.currentUser(); }catch(e){}
+    if(!s) await new Promise(r => setTimeout(r, 200));
+  }
+  if(s) drawSet();
+  else   drawExpired();
+
+  /* Tidy the token out of the address bar so it isn't shoulder-surfed
+     or left in history. */
+  history.replaceState({}, '', 'reset.html');
+})();
+</script>
+</body>
+</html>
