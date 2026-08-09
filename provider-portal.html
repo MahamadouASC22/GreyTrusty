@@ -3,250 +3,117 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
-<title>Your practice — Greylock Trust</title>
+<title>Advisor Portal — Greylock Trust</title>
+<meta name="description" content="Sign in to the Greylock Trust provider portal to manage your calendar, clients, profile, and payouts.">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/site.css">
 <style>
 :root{ --serif:'Fraunces',Georgia,serif; }
-body{background:var(--bg);}
-.dash{max-width:1300px;margin:0 auto;padding:calc(88px + 1vw) 24px 80px;}
+.page{min-height:100vh;display:flex;align-items:center;
+  padding:calc(96px + 2vw) 22px clamp(60px,7vw,90px);
+  background:radial-gradient(900px 560px at 84% 8%,rgba(195,144,60,.14),transparent 60%),
+             radial-gradient(780px 520px at 8% 92%,rgba(92,122,153,.13),transparent 62%),
+             linear-gradient(165deg,#FFFFFF,#F7FAFC 48%,var(--frost));}
+.shell{max-width:1080px;margin:0 auto;width:100%;
+  display:grid;grid-template-columns:1fr 452px;gap:clamp(28px,5vw,66px);align-items:center;}
+@media(max-width:900px){.shell{grid-template-columns:1fr;gap:34px;}}
 
-/* ---------- boot / loading ---------- */
-.boot{min-height:60vh;display:flex;align-items:center;justify-content:center;
-  flex-direction:column;gap:14px;color:var(--muted);font-size:14px;}
-.boot .sp{width:26px;height:26px;border-radius:50%;border:2px solid var(--line-2);
-  border-top-color:var(--gold);animation:spin .8s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg);}}
-.shell{display:none;} body.ready .shell{display:block;} body.ready .boot{display:none;}
 
-/* ---------- greeting ---------- */
-.greet{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:20px;}
-.greet .who{display:flex;align-items:center;gap:16px;min-width:0;}
-.greet img,.greet .fb{width:60px;height:60px;border-radius:16px;object-fit:cover;flex:none;}
-.greet .fb{background:var(--ink);color:var(--gold);display:flex;align-items:center;
-  justify-content:center;font-size:21px;font-weight:600;}
-.greet h1{font-family:var(--serif);font-weight:300;font-size:clamp(25px,3.2vw,37px);
-  color:var(--ink);letter-spacing:-.03em;line-height:1.06;}
-.greet h1 em{font-style:italic;color:var(--gold-deep);font-weight:400;}
-.greet .sub{font-size:13.5px;color:var(--muted);margin-top:5px;}
-.greet .act{margin-left:auto;display:flex;gap:9px;flex-wrap:wrap;}
-@media(max-width:640px){.greet .act{margin-left:0;width:100%;}.greet .act .pill{flex:1;}}
-.pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;
-  font-weight:600;font-size:13.5px;padding:11px 18px;transition:all .18s ease;}
-.pill-gold{background:var(--gold);color:#fff;} .pill-gold:hover{background:var(--gold-deep);}
-.pill-soft{border:1px solid var(--line-2);color:var(--ink);background:#fff;}
-.pill-soft:hover{border-color:var(--ink);}
-.pill-ink{background:var(--ink);color:#fff;} .pill-ink:hover{background:var(--ink-2);}
+.intro{
+  align-self:flex-start;
+  padding-top:40px;
+}
 
-/* ---------- next up band (the one loud thing) ---------- */
-.next{position:relative;overflow:hidden;border-radius:20px;margin-bottom:20px;
-  background:linear-gradient(150deg,var(--ink-deep),var(--ink));color:#fff;
-  padding:24px 26px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
-.next::after{content:"";position:absolute;right:-80px;top:-90px;width:280px;height:280px;
-  border-radius:50%;background:radial-gradient(circle,rgba(195,144,60,.30),transparent 66%);}
-.next>*{position:relative;z-index:1;}
-.next .lbl{font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--gold-line);margin-bottom:9px;}
-.next .cd{font-family:var(--serif);font-weight:300;font-size:clamp(23px,3vw,32px);
-  letter-spacing:-.03em;line-height:1.1;color:#fff;}
-.next .cd em{font-style:italic;color:var(--gold);}
-.next .det{font-size:14px;color:rgba(255,255,255,.72);margin-top:9px;line-height:1.6;}
-.next .det b{color:#fff;font-weight:600;}
-.next .go{margin-left:auto;display:flex;gap:9px;flex-wrap:wrap;}
-.next .go .pill-light{background:rgba(255,255,255,.14);color:#fff;
-  border:1px solid rgba(255,255,255,.3);}
-.next .go .pill-light:hover{background:rgba(255,255,255,.24);}
-@media(max-width:760px){.next{padding:20px;}.next .go{margin-left:0;width:100%;}
-  .next .go .pill{flex:1;}}
-.next.quiet{background:#fff;color:var(--body-c);border:1px solid var(--line);}
-.next.quiet::after{display:none;}
-.next.quiet .lbl{color:var(--faint);}
-.next.quiet .cd{color:var(--ink);} .next.quiet .cd em{color:var(--gold-deep);}
-.next.quiet .det{color:var(--muted);} .next.quiet .det b{color:var(--ink);}
 
-/* ---------- status strip ---------- */
-.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
-@media(max-width:900px){.strip{grid-template-columns:1fr 1fr;}}
-.stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px;}
-.stat .k{font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);}
-.stat .v{font-size:27px;font-weight:700;color:var(--ink);line-height:1;margin:9px 0 4px;}
-.stat .v small{font-size:13px;font-weight:600;color:var(--muted);}
-.stat .n{font-size:12.5px;color:var(--muted);}
-.stat.gold{background:var(--gold-wash);border-color:var(--gold-line);}
-.stat.gold .v{color:var(--gold-deep);}
-
-/* ---------- layout ---------- */
-.cols{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:20px;align-items:start;}
-@media(max-width:1040px){.cols{grid-template-columns:1fr;}}
-.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;margin-bottom:20px;}
-.card:last-child{margin-bottom:0;}
-@media(max-width:640px){.card{padding:18px;}.dash{padding:78px 14px 60px;}}
-.ch{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;}
-.ch h2{font-family:var(--serif);font-weight:400;font-size:21px;color:var(--ink);letter-spacing:-.02em;}
-.ch .more{margin-left:auto;font-size:13px;font-weight:600;color:var(--gold-deep);}
-.ch .more:hover{text-decoration:underline;text-underline-offset:3px;}
-
-/* ---------- tabs ---------- */
-.tabs{display:flex;gap:4px;background:var(--chipbg);border-radius:999px;padding:4px;
-  margin-bottom:18px;overflow-x:auto;}
-.tab{border-radius:999px;padding:10px 16px;font-size:13.5px;font-weight:700;color:var(--muted);
-  white-space:nowrap;}
-.tab.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(30,49,69,.09);}
-.tab .badge{display:inline-block;margin-left:6px;background:var(--gold);color:#fff;
-  border-radius:999px;font-size:10.5px;padding:1px 7px;}
-
-/* ---------- appointment rows ---------- */
-.appt{display:flex;gap:16px;align-items:center;padding:15px 0;border-bottom:1px solid var(--line);}
-.appt:last-child{border-bottom:none;}
-.appt .when{width:76px;flex:none;text-align:center;background:var(--bg);border:1px solid var(--line);
-  border-radius:12px;padding:9px 4px;}
-.appt .when .d{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);}
-.appt .when .n{font-size:20px;font-weight:700;color:var(--ink);line-height:1.1;}
-.appt .when .t{font-size:11.5px;color:var(--muted);}
-.appt .who2{min-width:0;}
-.appt .nm{font-size:15.5px;font-weight:700;color:var(--ink);}
-.appt .meta{font-size:13px;color:var(--muted);margin-top:3px;}
-.appt .tags{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap;}
-.tg{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
-  background:var(--chipbg);border-radius:999px;padding:4px 9px;color:var(--muted);}
-.tg.gold{background:var(--gold-wash);color:var(--gold-deep);}
-.tg.ink{background:var(--ink);color:#fff;}
-.appt .go{margin-left:auto;flex:none;display:flex;gap:7px;}
-.appt .go .pill{padding:9px 14px;font-size:12.5px;}
-@media(max-width:640px){.appt{flex-wrap:wrap;gap:12px;}
-  .appt .go{margin-left:0;width:100%;}.appt .go .pill{flex:1;}}
-
-/* ---------- matches ---------- */
-.match{display:flex;gap:14px;align-items:flex-start;padding:15px 0;border-bottom:1px solid var(--line);}
-.match:last-child{border-bottom:none;}
-.match .ring{width:50px;height:50px;flex:none;position:relative;}
-.match .ring svg{width:50px;height:50px;transform:rotate(-90deg);}
-.match .ring .bgc{stroke:var(--line);} .match .ring .arc{stroke:var(--gold);stroke-linecap:round;}
-.match .ring b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  font-size:12.5px;font-weight:700;color:var(--ink);}
-.match .nm{font-size:15px;font-weight:700;color:var(--ink);}
-.match .need{font-size:13.5px;color:var(--body-c);margin-top:3px;line-height:1.6;}
-.match .meta{font-size:12.5px;color:var(--faint);margin-top:5px;}
-.match .go{margin-left:auto;flex:none;}
-@media(max-width:640px){.match{flex-wrap:wrap;}.match .go{margin-left:66px;}}
-
-/* ---------- availability ---------- */
-.avail{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;}
-.day{border:1px solid var(--line);border-radius:12px;padding:11px 6px;text-align:center;
-  background:#fff;transition:all .18s ease;width:100%;}
-.day .dw{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);}
-.day .hrs{font-size:12.5px;font-weight:700;color:var(--ink);margin-top:6px;line-height:1.35;}
-.day.off{background:var(--bg);} .day.off .hrs{color:var(--faint);font-weight:600;}
-.day.on{border-color:var(--gold);background:var(--gold-wash);}
-.day.on .hrs{color:var(--gold-deep);}
-.day:hover{border-color:var(--ink);}
-@media(max-width:640px){.avail{grid-template-columns:repeat(4,1fr);}}
-.togs{display:grid;gap:11px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line);}
-.tog{display:flex;align-items:center;gap:12px;}
-.tog .lab{font-size:14px;font-weight:600;color:var(--ink);}
-.tog .lab small{display:block;font-size:12px;font-weight:400;color:var(--muted);margin-top:1px;}
-.sw{margin-left:auto;width:44px;height:25px;border-radius:99px;background:var(--line-2);
-  position:relative;flex:none;transition:background .22s ease;}
-.sw::after{content:"";position:absolute;top:3px;left:3px;width:19px;height:19px;border-radius:50%;
-  background:#fff;transition:transform .22s ease;box-shadow:0 2px 6px rgba(30,49,69,.2);}
-.sw.on{background:var(--gold);} .sw.on::after{transform:translateX(19px);}
-.saved{font-size:12px;font-weight:600;color:var(--gold-deep);opacity:0;transition:opacity .3s ease;}
-.saved.on{opacity:1;}
-
-/* ---------- day editor ---------- */
-.sheet{position:fixed;inset:0;z-index:900;display:none;align-items:center;justify-content:center;
-  background:rgba(18,34,51,.44);padding:20px;}
-.sheet.on{display:flex;}
-.sheet-in{background:#fff;border-radius:20px;padding:24px;width:100%;max-width:360px;
-  box-shadow:0 30px 70px rgba(30,49,69,.28);}
-.sheet-in h3{font-family:var(--serif);font-weight:400;font-size:21px;color:var(--ink);margin-bottom:4px;}
-.sheet-in p{font-size:13.5px;color:var(--muted);margin-bottom:16px;}
-.hopts{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.hopt{border:1px solid var(--line-2);border-radius:12px;padding:12px 6px;font-size:13.5px;
-  font-weight:700;color:var(--ink);background:#fff;}
-.hopt:hover{border-color:var(--gold);}
-.hopt.on{background:var(--gold);border-color:var(--gold);color:#fff;}
-
-/* ---------- right rail ---------- */
-.mini{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;margin-bottom:18px;}
-.mini h3{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+/* left column */
+.intro .k{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.84);
+  border:1px solid var(--line-2);border-radius:999px;padding:8px 15px;font-size:12.5px;
+  font-weight:600;color:var(--ink);margin-bottom:22px;}
+.intro .k i{width:7px;height:7px;border-radius:50%;background:var(--gold);}
+.intro h1{font-family:var(--serif);font-weight:300;color:var(--ink);
+  font-size:clamp(34px,5vw,60px);line-height:1.02;letter-spacing:-.035em;}
+.intro h1 em{font-style:italic;color:var(--gold-deep);font-weight:400;}
+.intro p{font-size:16.5px;color:var(--body-c);line-height:1.75;margin-top:18px;max-width:42ch;}
+.inside{margin-top:28px;padding-top:24px;border-top:1px solid var(--line);}
+.inside .t{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
   color:var(--faint);margin-bottom:14px;}
-.pay{background:linear-gradient(155deg,var(--ink-deep),var(--ink));color:#fff;position:relative;
-  overflow:hidden;border:none;}
-.pay::after{content:"";position:absolute;right:-70px;top:-70px;width:220px;height:220px;border-radius:50%;
-  background:radial-gradient(circle,rgba(195,144,60,.28),transparent 66%);}
-.pay>*{position:relative;z-index:1;}
-.pay h3{color:var(--gold-line);}
-.pay .amt{font-size:34px;font-weight:700;line-height:1;}
-.pay .sub{font-size:12.5px;color:rgba(255,255,255,.6);margin-top:5px;}
-.pay .rows{margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.16);}
-.pay .r{display:flex;justify-content:space-between;font-size:13.5px;padding:5px 0;
-  color:rgba(255,255,255,.78);} .pay .r b{color:#fff;}
-.prof-row{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--line);
-  font-size:14px;color:var(--body-c);}
-.prof-row:last-child{border-bottom:none;}
-.prof-row b{color:var(--ink);margin-left:auto;font-weight:700;}
-.bar{height:7px;background:var(--chipbg);border-radius:99px;overflow:hidden;margin:12px 0 8px;}
-.bar i{display:block;height:100%;background:var(--gold);border-radius:99px;}
-.task{display:flex;gap:11px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line);
-  font-size:14px;color:var(--body-c);line-height:1.55;}
-.task:last-child{border-bottom:none;}
-.task .dot{width:8px;height:8px;transform:rotate(45deg);background:var(--gold);flex:none;margin-top:6px;}
-.task.done{color:var(--faint);text-decoration:line-through;}
-.task.done .dot{background:var(--line-2);}
-.empty{text-align:center;padding:26px 10px;color:var(--muted);font-size:14px;line-height:1.7;}
-.empty b{color:var(--ink);}
-.src{font-size:11.5px;color:var(--faint);text-align:center;margin-top:22px;}
+.inside ul{list-style:none;display:grid;gap:11px;}
+.inside li{display:flex;gap:12px;font-size:14.5px;color:var(--body-c);line-height:1.55;}
+.inside li i{width:8px;height:8px;transform:rotate(45deg);background:var(--gold);flex:none;margin-top:6px;}
+
+
+/* card */
+.card2{background:#fff;border:1px solid var(--line);border-radius:22px;
+  box-shadow:0 26px 64px rgba(30,49,69,.11);padding:clamp(26px,3vw,34px);}
+.card2 h2{font-family:var(--serif);font-weight:400;font-size:25px;color:var(--ink);
+  letter-spacing:-.02em;}
+.card2 .sub{font-size:14px;color:var(--muted);margin-top:6px;margin-bottom:22px;}
+.fld{margin-bottom:14px;}
+.fld label{font-size:12.5px;font-weight:700;color:var(--ink);display:block;}
+.fld input{width:100%;margin-top:6px;padding:13px 15px;font-size:15px;font-family:var(--f);
+  border:1px solid var(--line-2);border-radius:12px;background:var(--bg);color:var(--body-c);}
+.fld input:focus{outline:none;border-color:var(--gold);background:#fff;}
+.fld.err input{border-color:#B4452F;}
+.fld .msg{display:none;font-size:11.5px;color:#B4452F;margin-top:5px;}
+.fld.err .msg{display:block;}
+.rowline{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-top:4px;font-size:13px;flex-wrap:wrap;}
+.rowline label{display:flex;align-items:center;gap:8px;font-weight:500;color:var(--muted);
+  font-size:13px;}
+.rowline input{width:auto;margin:0;}
+.rowline a{color:var(--gold-deep);font-weight:600;}
+.rowline a:hover{text-decoration:underline;text-underline-offset:3px;}
+.sign{width:100%;padding:14px;font-size:15px;margin-top:20px;}
+.note{margin-top:14px;font-size:11.5px;color:var(--faint);text-align:center;line-height:1.6;}
+.divide{display:flex;align-items:center;gap:12px;margin:24px 0;color:var(--faint);font-size:12px;}
+.divide::before,.divide::after{content:"";flex:1;height:1px;background:var(--line);}
+.join{background:var(--gold-wash);border:1px solid var(--gold-line);border-radius:16px;
+  padding:18px 20px;text-align:center;}
+.join b{display:block;font-size:15px;color:var(--ink);margin-bottom:5px;}
+.join p{font-size:13.5px;color:var(--body-c);line-height:1.6;margin-bottom:14px;}
+.join .pill{width:100%;padding:12px;font-size:14px;}
+.pill-gold{background:var(--gold);color:#fff;font-weight:600;}
+.pill-gold:hover{background:var(--gold-deep);}
+.pill-ink{background:var(--ink);color:#fff;font-weight:600;}
+.pill-ink:hover{background:var(--ink-2);}
+.pill-soft{border:1px solid var(--line-2);color:var(--ink);background:#fff;font-weight:600;}
+.pill-soft:hover{border-color:var(--ink);}
+.help{margin-top:22px;text-align:center;font-size:13px;color:var(--muted);}
+.help a{color:var(--gold-deep);font-weight:600;}
+/* signed-in confirmation */
+.ok{text-align:center;padding:10px 4px;}
+.ok .tick{width:58px;height:58px;border-radius:50%;background:var(--gold-wash);
+  border:1px solid var(--gold-line);color:var(--gold-deep);font-size:26px;display:flex;
+  align-items:center;justify-content:center;margin:0 auto 16px;}
+.ok h3{font-family:var(--serif);font-weight:400;font-size:22px;color:var(--ink);margin-bottom:9px;}
+.ok p{font-size:14.5px;color:var(--muted);line-height:1.7;}
 </style>
 </head>
 <body class="nav-dark">
 <div id="nav"></div>
 
-<main class="dash">
-  <div class="boot" id="boot"><div class="sp"></div><span>Opening your practice…</span></div>
 
+<main class="page">
   <div class="shell">
-    <div class="greet" id="greet"></div>
-    <div id="nextUp"></div>
-    <div class="strip" id="strip"></div>
-    <div class="cols">
-      <div>
-        <section class="card">
-          <div class="tabs" id="tabs"></div>
-          <div id="apptList"></div>
-        </section>
 
-        <section class="card">
-          <div class="ch"><h2>New matches</h2>
-            <span class="more" id="matchNote"></span></div>
-          <div id="matchList"></div>
-        </section>
 
-        <section class="card">
-          <div class="ch"><h2>Your week</h2>
-            <span class="saved" id="savedFlag">Saved</span></div>
-          <div class="avail" id="avail"></div>
-          <div class="togs" id="togs"></div>
-        </section>
+    <div class="intro">
+      <h1>Your practice,<br><em>in one place.</em></h1>
+      <p>Access everything you'll need to start your day, provide help, and protect your clients with your login information</p>
       </div>
 
-      <aside>
-        <div class="mini pay" id="pay"></div>
-        <div class="mini" id="profileCard"></div>
-        <div class="mini" id="tasks"></div>
-      </aside>
-    </div>
-    <p class="src" id="srcNote"></p>
+
+    <div class="card2" id="card"></div>
+
+
   </div>
 </main>
 
-<div class="sheet" id="sheet"><div class="sheet-in" id="sheetIn"></div></div>
 
 <div id="footer"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -255,369 +122,87 @@ body{background:var(--bg);}
 <script src="js/nav.js"></script>
 <script>
 'use strict';
+const S={email:'',pw:'',done:false};
 
-let me=null, S=null, AV=null, BOOKINGS=null, tab='upcoming';
 
-const DAYS=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-const HOUR_OPTS=['Off','9–1','9–5','9–7','12–5','10–2'];
-
-/* ---------------- boot ---------------- */
-(async function boot(){
-  const s = await GT_AUTH.require('advisor','provider-portal.html');
-  if(!s) return;
-  S = s;
-
-  const base = A.find(x=>String(x.id)===String(s.advisorId)) || A[0];
-  me = {...base};
-  if(s.name)  me.name  = s.name;
-  if(s.photo) me.photo = s.photo;
-
-  AV = normaliseAvail(s.availability);
-  document.body.classList.add('ready');
-  render();
-  loadBookings();
-})();
-
-function normaliseAvail(saved){
-  const base = {
-    hours:{Mon:'9–5',Tue:'9–5',Wed:'9–5',Thu:'9–7',Fri:'9–3',
-           Sat:me.weekends?'10–2':'Off',Sun:'Off'},
-    flags:{intro:!!me.intro,evenings:!!me.evenings,weekends:!!me.weekends,
-           checkins:!!me.checkins,business:!!me.business,manual:false}
-  };
-  if(!saved || typeof saved!=='object') return base;
-  return {hours:{...base.hours,...(saved.hours||{})},
-          flags:{...base.flags,...(saved.flags||{})}};
-}
-
-async function saveAvail(){
-  const flag=document.getElementById('savedFlag');
-  try{
-    const { error } = await GT_AUTH.SB.from('profiles')
-      .update({ availability: AV }).eq('id', S.id);
-    if(error) throw error;
-    flag.textContent='Saved'; flag.classList.add('on');
-  }catch(e){
-    flag.textContent='Could not save — check your connection'; flag.classList.add('on');
-  }
-  setTimeout(()=>flag.classList.remove('on'),2200);
-}
-
-/* ---------------- bookings ---------------- */
-const DEMO=[
- {when:['Wed','30','9:30 AM'],nm:'Margaret Hale',need:'Wi-Fi dead zones upstairs',
-  mode:'In-person',kind:'Session',dur:'2 hrs',addr:'14 Chapel St',tab:'upcoming',repeat:true},
- {when:['Wed','30','1:00 PM'],nm:'Owen Brady',need:'Laptop very slow to start',
-  mode:'Video call',kind:'Session',dur:'1 hr',tab:'upcoming'},
- {when:['Thu','31','9:00 AM'],nm:'Priya Nandra',need:'Wants to talk about home security',
-  mode:'Video call',kind:'Intro call',dur:'20 min',tab:'upcoming'},
- {when:['Thu','31','3:00 PM'],nm:'The Whitfields',need:'New router plus four devices',
-  mode:'In-person',kind:'Session',dur:'2 hrs',addr:'8 Elm Road',tab:'upcoming'},
- {when:['Fri','1','11:00 AM'],nm:'Ronald Keane',need:'Printer offline again',
-  mode:'In-person',kind:'Session',dur:'1 hr',addr:'22 Mill Lane',tab:'upcoming',repeat:true},
- {when:['Tue','29','10:00 AM'],nm:'Dana Whitfield',need:'Smart doorbell setup',
-  mode:'In-person',kind:'Session',dur:'1.5 hrs',tab:'past',paid:'$112.50'},
- {when:['Mon','28','2:00 PM'],nm:'Tom Reilly',need:'Password manager rollout',
-  mode:'Video call',kind:'Session',dur:'2 hrs',tab:'past',paid:'$150.00'},
- {when:['Fri','25','9:00 AM'],nm:'Helen Cross',need:'Intro call — considering ongoing support',
-  mode:'Video call',kind:'Intro call',dur:'20 min',tab:'past',paid:'Free'},
-];
-let usingDemo=true;
-
-async function loadBookings(){
-  try{
-    const { data, error } = await GT_AUTH.SB.from('bookings')
-      .select('*').eq('advisor_id', me.id).order('starts_at',{ascending:true});
-    if(error) throw error;
-    if(!data || !data.length) return;           // keep demo data until real bookings exist
-    usingDemo=false;
-    const now=new Date();
-    BOOKINGS = data.map(b=>{
-      const d = b.starts_at ? new Date(b.starts_at) : null;
-      return {
-        when: d ? [DOW[d.getDay()], String(d.getDate()),
-                   d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})]
-                : [(b.day_label||'').split(' ')[0]||'—', '', b.time_label||''],
-        nm: b.name || 'Client',
-        need: b.notes || 'No notes yet',
-        mode: b.mode,
-        kind: b.kind==='intro' ? 'Intro call' : 'Session',
-        dur:  b.kind==='intro' ? '20 min' : '1 hr',
-        addr: b.mode==='In-person' ? b.address : '',
-        tab:  b.status==='pending' ? 'requests' : (d && d < now ? 'past' : 'upcoming')
-      };
-    });
-    render();
-  }catch(e){ /* stay on demo data */ }
-}
-function appts(){ return BOOKINGS || DEMO; }
-
-/* ---------------- render ---------------- */
-function render(){
-  drawGreeting(); drawNext(); drawStrip();
-  drawTabs(); drawAppts(); drawMatches();
-  drawAvail(); drawTogs();
-  drawPay(); drawProfile(); drawTasks();
-  document.getElementById('srcNote').textContent = usingDemo
-    ? 'Showing sample clients until your first real booking comes in. Availability changes are saved to your account.'
-    : 'Live from your Greylock Trust account.';
-}
-
-function drawGreeting(){
-  const first=me.name.split(' ')[0];
-  const hour=new Date().getHours();
-  const part=hour<12?'Good morning':hour<18?'Good afternoon':'Good evening';
-  document.getElementById('greet').innerHTML=`
-    <div class="who">
-      <img src="${me.photo}" alt=""
-        onerror="this.outerHTML='<div class=&quot;fb&quot;>${initials(me.name)}</div>'">
-      <div>
-        <h1>${part}, <em>${first}.</em></h1>
-        <p class="sub">${me.title} · $${me.rate}/hour · Profile live and accepting bookings</p>
-      </div>
-    </div>
-    <div class="act">
-      <a class="pill pill-soft" href="advisor.html?id=${me.id}#a=${me.id}">View public profile</a>
-      <button class="pill pill-gold" id="jumpHours">Edit your week</button>
+function draw(){
+  const c=document.getElementById('card');
+  if(S.done){
+    c.innerHTML=`<div class="ok">
+      <div class="tick">✓</div>
+      <h3>Signed in</h3>
+      <p>This is a demo sign-in, so there's no dashboard behind it yet — connect Supabase Auth and
+         this is where advisors will land.</p>
+      <button class="pill pill-soft" style="width:100%;padding:12px;margin-top:18px"
+        onclick="S.done=false;draw()">Back to sign in</button>
     </div>`;
-  document.getElementById('jumpHours').addEventListener('click',()=>{
-    document.getElementById('avail').scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  c.innerHTML=`
+    <h2>Provider sign in</h2>
+    <p class="sub">Welcome back. Use the email address on your advisor account.</p>
+    <form id="form" novalidate>
+      <div class="fld" id="f-email">
+        <label>Email<input id="i-email" type="email" value="${S.email}" autocomplete="email"
+          placeholder="you@example.com"></label>
+        <span class="msg">Enter a valid email address.</span>
+      </div>
+      <div class="fld" id="f-pw">
+        <label>Password<input id="i-pw" type="password" value="${S.pw}" autocomplete="current-password"
+          placeholder="••••••••"></label>
+        <span class="msg">Enter your password.</span>
+      </div>
+      <div class="rowline">
+        <label><input type="checkbox"> Keep me signed in</label>
+        <a href="#" id="forgot">Forgot password?</a>
+      </div>
+      <button class="pill pill-ink sign" type="submit">Sign in</button>
+    </form>
+<p class="note" id="pNote"></p>
+
+
+    <div class="divide">Don't have an account yet?</div>
+
+
+   
+
+
+    <p class="help">Looking for a client account instead?
+      <a href="login.html">Sign in here</a></p>`;
+
+
+  document.getElementById('forgot').addEventListener('click',e=>{
+ showNote('Password resets aren\u2019t set up yet.');
+});
+document.getElementById('form').addEventListener('submit', async e=>{
+    e.preventDefault();
+    S.email=val('i-email');S.pw=val('i-pw');
+    let ok=true;
+    ok=mark('f-email',/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(S.email))&&ok;
+    ok=mark('f-pw',S.pw.length>=1)&&ok;
+    if(!ok)return;
+
+    const btn=e.target.querySelector('button[type=submit]');
+    btn.disabled=true;
+
+    const r = await GT_AUTH.signIn(S.email,S.pw);
+    if(!r.ok){ showNote(r.error,'#B4452F'); btn.disabled=false; return; }
+    if(r.session.role!=='advisor'){
+      await GT_AUTH.signOut();
+      showNote('That\u2019s a client account. Use the client sign-in instead.','#B4452F');
+      btn.disabled=false; return;
+    }
+    location.href='provider-dashboard.html';
   });
 }
-
-function drawNext(){
-  const up=appts().filter(x=>x.tab==='upcoming');
-  const el=document.getElementById('nextUp');
-  if(!up.length){
-    el.innerHTML=`<div class="next quiet">
-      <div>
-        <div class="lbl">Next up</div>
-        <div class="cd">Nothing booked <em>yet.</em></div>
-        <p class="det">Open more hours below, or turn on free intro calls — advisors who offer
-          them get booked roughly twice as often in their first month.</p>
-      </div></div>`;
-    return;
-  }
-  const n=up[0];
-  const virt = n.mode!=='In-person';
-  el.innerHTML=`<div class="next">
-    <div>
-      <div class="lbl">Next up</div>
-      <div class="cd">${n.when[0]} ${n.when[1]} at <em>${n.when[2]}</em></div>
-      <p class="det"><b>${n.nm}</b> · ${n.need}<br>
-        ${n.kind} · ${n.dur} · ${virt?'Video call':'In person'}${n.addr?' · '+n.addr:''}</p>
-    </div>
-    <div class="go">
-      <button class="pill pill-light">Open notes</button>
-      <button class="pill pill-gold">${virt?'Join call':'Get directions'}</button>
-    </div>
-  </div>`;
+function val(id){const el=document.getElementById(id);return el?el.value.trim():'';}
+function mark(id,pass){
+  const f=document.getElementById(id);
+  if(f)f.classList.toggle('err',!pass);
+  return pass;
 }
-
-function drawStrip(){
-  const list=appts();
-  const up=list.filter(x=>x.tab==='upcoming');
-  const sessions=up.filter(x=>x.kind==='Session').length;
-  const intros=up.filter(x=>x.kind==='Intro call').length;
-  document.getElementById('strip').innerHTML=`
-    <div class="stat"><div class="k">This week</div>
-      <div class="v">${sessions}</div><div class="n">booked sessions</div></div>
-    <div class="stat"><div class="k">Intro calls</div>
-      <div class="v">${intros}</div><div class="n">free, 20 minutes each</div></div>
-    <div class="stat gold"><div class="k">New matches</div>
-      <div class="v">${MATCHES.length}</div><div class="n">clients you ranked highly for</div></div>
-    <div class="stat"><div class="k">Your rating</div>
-      <div class="v">${me.rating.toFixed(1)}<small>/5</small></div>
-      <div class="n">across ${me.reviews} reviews</div></div>`;
-}
-
-function drawTabs(){
-  const list=appts();
-  const up=list.filter(x=>x.tab==='upcoming').length;
-  const rq=list.filter(x=>x.tab==='requests').length;
-  document.getElementById('tabs').innerHTML=`
-    <button class="tab ${tab==='upcoming'?'on':''}" data-t="upcoming">Upcoming${up?`<span class="badge">${up}</span>`:''}</button>
-    <button class="tab ${tab==='past'?'on':''}" data-t="past">Past</button>
-    <button class="tab ${tab==='requests'?'on':''}" data-t="requests">Requests${rq?`<span class="badge">${rq}</span>`:''}</button>`;
-  document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
-    tab=b.dataset.t; drawTabs(); drawAppts();
-  }));
-}
-
-function drawAppts(){
-  const list=appts().filter(x=>x.tab===tab);
-  const el=document.getElementById('apptList');
-  if(!list.length){
-    el.innerHTML=`<div class="empty">${
-      tab==='requests'
-        ? 'No pending requests. With <b>manual approval</b> switched on below, new bookings land here before they reach your calendar.'
-        : tab==='past'
-          ? 'Nothing finished yet. Past sessions and what you earned from them appear here.'
-          : 'Your calendar is clear. Open more hours in <b>Your week</b> to get found sooner.'
-    }</div>`;
-    return;
-  }
-  el.innerHTML=list.map(x=>`
-    <div class="appt">
-      <div class="when"><div class="d">${x.when[0]}</div><div class="n">${x.when[1]}</div>
-        <div class="t">${x.when[2]}</div></div>
-      <div class="who2">
-        <div class="nm">${x.nm}</div>
-        <div class="meta">${x.need}</div>
-        <div class="tags">
-          <span class="tg ${x.kind==='Intro call'?'gold':''}">${x.kind}</span>
-          <span class="tg">${x.mode==='In-person'?'In person':'Video call'}</span>
-          <span class="tg">${x.dur}</span>
-          ${x.addr?`<span class="tg">${x.addr}</span>`:''}
-          ${x.repeat?'<span class="tg ink">Returning</span>':''}
-          ${x.paid?`<span class="tg gold">${x.paid}</span>`:''}
-        </div>
-      </div>
-      <div class="go">
-        ${x.tab==='requests'
-          ? '<button class="pill pill-soft">Decline</button><button class="pill pill-gold">Accept</button>'
-          : x.tab==='upcoming'
-            ? '<button class="pill pill-soft">Notes</button><button class="pill pill-ink">Open</button>'
-            : '<button class="pill pill-soft">Notes</button>'}
-      </div>
-    </div>`).join('');
-}
-
-/* ---------------- matches ---------------- */
-const MATCHES=[
- {pct:96,nm:'Jonathan A.',need:'Whole-house Wi-Fi is unreliable; wants someone patient who will explain it.',
-  meta:'4 mi away · In person preferred · up to $90/hr'},
- {pct:91,nm:'Beatrice L.',need:'Recently scammed by a phone call; wants accounts locked down properly.',
-  meta:'Video call · this week · up to $95/hr'},
- {pct:88,nm:'The Okafor family',need:'Four devices, two teenagers, no backups anywhere.',
-  meta:'7 mi away · weekends only · up to $80/hr'},
- {pct:84,nm:'Dominic R.',need:'Small business — shared drive and staff device security.',
-  meta:'In person or video · no rush · up to $100/hr'},
-];
-function drawMatches(){
-  document.getElementById('matchNote').textContent='Matched to your specialties';
-  document.getElementById('matchList').innerHTML=MATCHES.map(m=>{
-    const R=21,C=2*Math.PI*R,off=C*(1-m.pct/100);
-    return `<div class="match">
-      <div class="ring"><svg viewBox="0 0 50 50">
-        <circle class="bgc" cx="25" cy="25" r="${R}" fill="none" stroke-width="3.5"/>
-        <circle class="arc" cx="25" cy="25" r="${R}" fill="none" stroke-width="3.5"
-          stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}"/></svg>
-        <b>${m.pct}</b></div>
-      <div><div class="nm">${m.nm}</div>
-        <div class="need">${m.need}</div>
-        <div class="meta">${m.meta}</div></div>
-      <div class="go"><button class="pill pill-soft">Respond</button></div>
-    </div>`;}).join('');
-}
-
-/* ---------------- availability ---------------- */
-function drawAvail(){
-  document.getElementById('avail').innerHTML=DAYS.map(d=>{
-    const h=AV.hours[d]||'Off';
-    return `<button class="day ${h==='Off'?'off':'on'}" data-day="${d}">
-      <div class="dw">${d}</div><div class="hrs">${h}</div></button>`;
-  }).join('');
-  document.querySelectorAll('.day').forEach(b=>
-    b.addEventListener('click',()=>openDayEditor(b.dataset.day)));
-}
-
-function openDayEditor(day){
-  const sheet=document.getElementById('sheet');
-  document.getElementById('sheetIn').innerHTML=`
-    <h3>${day}</h3>
-    <p>Pick the hours you're willing to be booked. Clients only ever see open hours.</p>
-    <div class="hopts">${HOUR_OPTS.map(h=>
-      `<button class="hopt ${AV.hours[day]===h?'on':''}" data-h="${h}">${h}</button>`).join('')}</div>
-    <button class="pill pill-soft" id="closeSheet"
-      style="width:100%;margin-top:16px;padding:12px">Done</button>`;
-  sheet.classList.add('on');
-  document.querySelectorAll('.hopt').forEach(b=>b.addEventListener('click',()=>{
-    AV.hours[day]=b.dataset.h;
-    if(day==='Sat') AV.flags.weekends = b.dataset.h!=='Off';
-    sheet.classList.remove('on');
-    drawAvail(); drawTogs(); saveAvail();
-  }));
-  document.getElementById('closeSheet').addEventListener('click',()=>sheet.classList.remove('on'));
-}
-document.getElementById('sheet').addEventListener('click',e=>{
-  if(e.target.id==='sheet') e.currentTarget.classList.remove('on');
-});
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape') document.getElementById('sheet').classList.remove('on');
-});
-
-const TOGS=[
- ['intro','Offer free 20-minute intro calls','Shown as a gold badge on your profile'],
- ['evenings','Available evenings','Adds 6pm and 7pm slots on weekdays'],
- ['weekends','Available weekends','Opens Saturday bookings'],
- ['checkins','Offer recurring check-ins','Clients can book you quarterly'],
- ['business','Take small-business work','Appears in the business support filter'],
- ['manual','Approve bookings manually','New bookings arrive as requests first'],
-];
-function drawTogs(){
-  document.getElementById('togs').innerHTML=TOGS.map(([k,t,s])=>`
-    <div class="tog"><div class="lab">${t}<small>${s}</small></div>
-      <button class="sw ${AV.flags[k]?'on':''}" data-k="${k}" role="switch"
-        aria-checked="${!!AV.flags[k]}" aria-label="${t}"></button></div>`).join('');
-  document.querySelectorAll('.sw').forEach(b=>b.addEventListener('click',()=>{
-    const k=b.dataset.k;
-    AV.flags[k]=!AV.flags[k];
-    if(k==='weekends') AV.hours.Sat = AV.flags.weekends ? '10–2' : 'Off';
-    drawAvail(); drawTogs(); saveAvail();
-  }));
-}
-
-/* ---------------- rail ---------------- */
-function drawPay(){
-  const done=appts().filter(x=>x.tab==='past').length || 6;
-  const gross=done*me.rate*1.6, fee=gross*.15, net=gross-fee;
-  document.getElementById('pay').innerHTML=`
-    <h3>Next payout</h3>
-    <div class="amt">$${net.toFixed(0)}</div>
-    <div class="sub">Friday, for the week ending Thursday</div>
-    <div class="rows">
-      <div class="r"><span>Billed to clients</span><b>$${gross.toFixed(0)}</b></div>
-      <div class="r"><span>Platform fee (15%)</span><b>−$${fee.toFixed(0)}</b></div>
-      <div class="r"><span>This month so far</span><b>$${(net*3.2).toFixed(0)}</b></div>
-      <div class="r"><span>Payout method</span><b>•••• 4417</b></div>
-    </div>
-    <button class="pill pill-gold" style="width:100%;margin-top:18px">View statements</button>`;
-}
-
-function drawProfile(){
-  const checks=[
-    ['Headshot', !!me.photo],
-    ['Biography', !!(me.bio && me.bio.length>60)],
-    ['Specialties', me.specs.length>0, `${me.specs.length} listed`],
-    ['Qualifications', true, '4 listed'],
-    ['Short intro video', false],
-  ];
-  const pct=Math.round(checks.filter(c=>c[1]).length/checks.length*100);
-  document.getElementById('profileCard').innerHTML=`
-    <h3>Profile strength</h3>
-    <div style="font-size:24px;font-weight:700;color:var(--ink)">${pct}%</div>
-    <div class="bar"><i style="width:${pct}%"></i></div>
-    <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px">Stronger profiles appear
-      higher for the clients they genuinely fit.</p>
-    ${checks.map(([t,ok,note])=>`
-      <div class="prof-row" ${ok?'':'style="color:var(--gold-deep)"'}>${t}
-        <b ${ok?'':'style="color:var(--gold-deep)"'}>${ok?(note||'Added'):'To do'}</b></div>`).join('')}
-    <button class="pill pill-soft" style="width:100%;margin-top:16px">Edit profile</button>`;
-}
-
-function drawTasks(){
-  const up=appts().filter(x=>x.tab==='upcoming');
-  const rows=[];
-  if(up[0]) rows.push(`Confirm details with <b>${up[0].nm}</b> before ${up[0].when[0]}`);
-  rows.push(`Reply to <b>${MATCHES[1].nm}</b> — new match, ${MATCHES[1].pct}% fit`);
-  rows.push('Complete the Q3 security briefing (30 min, counts toward continuing education)');
-  document.getElementById('tasks').innerHTML=`
-    <h3>Needs you</h3>
-    ${rows.map(r=>`<div class="task"><span class="dot"></span><span>${r}</span></div>`).join('')}
-    <div class="task done"><span class="dot"></span><span>Upload updated insurance certificate</span></div>
-    <div class="task done"><span class="dot"></span><span>Set August blackout dates</span></div>`;
-}
+draw();
 </script>
 </body>
 </html>
+
