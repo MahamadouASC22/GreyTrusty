@@ -802,13 +802,19 @@ function drawApp(){
         full_name:APP.name, email:APP.email, phone:APP.phone, area:APP.area,
         yrs:parseInt(APP.yrs,10)||null, rate:parseInt(APP.rate,10)||null,
         specs:APP.specs, certs:APP.certs, cert_other:APP.certOther,
-        modes:APP.modes, pitch:APP.pitch
+        modes:APP.modes, pitch:APP.pitch, status:'new'
+
       }).then(({error})=>{
         if(!error) return;
-        console.warn('[GT] application not saved:', error.message);
+        console.error('[GT] application not saved:', error);
         try{ localStorage.setItem('greylockPendingApplication', JSON.stringify(APP)); }catch(e){}
+        const c=document.getElementById('fcard');
+        if(c) c.insertAdjacentHTML('beforeend',
+          `<p style="font-size:13px;color:#B4452F;text-align:center;margin-top:14px">
+             We couldn't file that automatically. Please email
+             <b>team@greylocktrust.com</b> and we'll pick it up from there.</p>`);
       });
-    }
+     }
     });
 }
 function v(id){const el=document.getElementById(id);return el?el.value.trim():'';}

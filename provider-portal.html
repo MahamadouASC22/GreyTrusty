@@ -170,10 +170,6 @@ function draw(){
     <p class="help">Looking for a client account instead?
       <a href="login.html">Sign in here</a></p>`;
 
-
-document.getElementById('forgot').addEventListener('click',e=>{
- showNote('Password resets aren\u2019t set up yet.');
-});
 document.getElementById('form').addEventListener('submit', async e=>{
     e.preventDefault();
     S.email=val('i-email');S.pw=val('i-pw');
@@ -187,19 +183,31 @@ document.getElementById('form').addEventListener('submit', async e=>{
 
     const r = await GT_AUTH.signIn(S.email,S.pw);
     if(!r.ok){ showNote(r.error,'#B4452F'); btn.disabled=false; return; }
+
     if(r.session.role!=='advisor'){
       await GT_AUTH.signOut();
       showNote('That\u2019s a client account. Use the client sign-in instead.','#B4452F');
       btn.disabled=false; return;
     }
-    location.href='provider-dashboard.html';
-  });
+    if(!r.session.advisor){
+      showNote('Your advisor profile isn\u2019t set up yet — we\u2019ll email you when it is.','#B4452F');
+      btn.disabled=false; return;
+    }
+    
+const next = new URLSearchParams(location.search).get('next');
+    location.href = next || 'provider-dashboard.html';  });
 }
 function val(id){const el=document.getElementById(id);return el?el.value.trim():'';}
 function mark(id,pass){
   const f=document.getElementById(id);
   if(f)f.classList.toggle('err',!pass);
   return pass;
+}
+function showNote(msg,color){
+  const p=document.getElementById('pNote');
+  if(!p) return;
+  p.textContent=msg;
+  p.style.color=color||'var(--muted)';
 }
 draw();
 </script>

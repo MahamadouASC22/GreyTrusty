@@ -193,7 +193,7 @@ body{background:var(--bg);}
       <div class="mini" id="tasks"></div>
     </aside>
   </div>
-  <p class="demo">Demo dashboard — figures and clients are illustrative. Connect Supabase to make it live.</p>
+<p class="demo">Bookings are live. Payouts and client matching are not wired up yet.</p>
 </main>
 
 
@@ -205,209 +205,229 @@ body{background:var(--bg);}
 <script>
 'use strict';
 
+const $ = id => document.getElementById(id);
 
-/* signed-in advisor (demo): Marcus, or ?id= */
-let me=null;
-(async()=>{
-  const s = await GT_AUTH.require('advisor','provider-portal.html');
-  if(!s) return;
-  me = A.find(x=>String(x.id)===String(s.advisorId)) || A[0];
-  render();   // wrap the existing body in a render() function
-})();
-const first=me.name.split(' ')[0];
-const hour=new Date().getHours();
-const partOfDay=hour<12?'Good morning':hour<18?'Good afternoon':'Good evening';
+(async function boot(){
+  const r = await GT_AUTH.requireAdvisor();
+  if(!r) return;                       // already redirecting to the portal
 
-
-/* ---------------- greeting ---------------- */
-document.getElementById('greet').innerHTML=`
-  <div class="who">
-    <img src="${me.photo}" alt="" onerror="this.outerHTML='<div class=&quot;fb&quot;>${initials(me.name)}</div>'">
-    <div>
-      <h1>${partOfDay}, <em>${first}.</em></h1>
-      <p class="sub">${me.title} · $${me.rate}/hour · Profile live and accepting bookings</p>
-    </div>
-  </div>
-  <div class="act">
-    <a class="pill pill-soft" href="advisor.html?id=${me.id}">View public profile</a>
-    <a class="pill pill-gold" href="#" id="addTime">Add availability</a>
-  </div>`;
-
-
-/* ---------------- status strip ---------------- */
-const WEEK={sessions:6,intros:3,hours:11.5,newMatches:4};
-document.getElementById('strip').innerHTML=`
-  <div class="stat"><div class="k">This week</div>
-    <div class="v">${WEEK.sessions}</div><div class="n">booked sessions</div></div>
-  <div class="stat"><div class="k">Intro calls</div>
-    <div class="v">${WEEK.intros}</div><div class="n">free, 20 minutes each</div></div>
-  <div class="stat gold"><div class="k">New matches</div>
-    <div class="v">${WEEK.newMatches}</div><div class="n">clients you ranked highly for</div></div>
-  <div class="stat"><div class="k">Your rating</div>
-    <div class="v">${me.rating.toFixed(1)}<small>/5</small></div>
-    <div class="n">across ${me.reviews} reviews</div></div>`;
-
-
-/* ---------------- appointments ---------------- */
-const APPTS=[
- {when:['Wed','30','9:30 AM'],nm:'Margaret Hale',need:'Wi-Fi dead zones upstairs',
-  mode:'In person',kind:'Session',dur:'2 hrs',addr:'14 Chapel St',tab:'upcoming',repeat:true},
- {when:['Wed','30','1:00 PM'],nm:'Owen Brady',need:'Laptop very slow to start',
-  mode:'Virtual',kind:'Session',dur:'1 hr',tab:'upcoming'},
- {when:['Thu','31','9:00 AM'],nm:'Priya Nandra',need:'Wants to talk about home security',
-  mode:'Virtual',kind:'Intro call',dur:'20 min',tab:'upcoming'},
- {when:['Thu','31','3:00 PM'],nm:'The Whitfields',need:'New router plus four devices',
-  mode:'In person',kind:'Session',dur:'2 hrs',addr:'8 Elm Road',tab:'upcoming'},
- {when:['Fri','1','11:00 AM'],nm:'Ronald Keane',need:'Printer offline again',
-  mode:'In person',kind:'Session',dur:'1 hr',addr:'22 Mill Lane',tab:'upcoming',repeat:true},
- {when:['Mon','4','9:30 AM'],nm:'Aisha Mensah',need:'Backup review and credit freeze',
-  mode:'Virtual',kind:'Session',dur:'1.5 hrs',tab:'upcoming'},
- {when:['Tue','29','10:00 AM'],nm:'Dana Whitfield',need:'Smart doorbell setup',
-  mode:'In person',kind:'Session',dur:'1.5 hrs',tab:'past',paid:'$112.50'},
- {when:['Mon','28','2:00 PM'],nm:'Tom Reilly',need:'Password manager rollout',
-  mode:'Virtual',kind:'Session',dur:'2 hrs',tab:'past',paid:'$150.00'},
- {when:['Fri','25','9:00 AM'],nm:'Helen Cross',need:'Intro call — considering ongoing support',
-  mode:'Virtual',kind:'Intro call',dur:'20 min',tab:'past',paid:'Free'},
-];
-let tab='upcoming';
-function drawTabs(){
-  const up=APPTS.filter(x=>x.tab==='upcoming').length;
-  document.getElementById('tabs').innerHTML=`
-    <button class="tab ${tab==='upcoming'?'on':''}" data-t="upcoming">Upcoming<span class="badge">${up}</span></button>
-    <button class="tab ${tab==='past'?'on':''}" data-t="past">Past</button>
-    <button class="tab ${tab==='requests'?'on':''}" data-t="requests">Requests</button>`;
-  document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
-    tab=b.dataset.t;drawTabs();drawAppts();}));
-}
-function drawAppts(){
-  const list=APPTS.filter(x=>x.tab===tab);
-  const el=document.getElementById('apptList');
-  if(tab==='requests'){
-    el.innerHTML=`<div class="empty">No pending requests. New bookings appear here first when you
-      have <b>manual approval</b> switched on.</div>`;return;
+  if(r.blocked){
+    document.querySelector('.dash').innerHTML = `
+      <div class="card" style="max-width:560px;margin:0 auto;text-align:center">
+        <h2 style="font-family:var(--serif);font-weight:400;font-size:22px;
+                   color:var(--ink);margin-bottom:10px">Almost there</h2>
+        <p style="font-size:14.5px;color:var(--muted);line-height:1.7">
+          You're signed in as <b>${r.session.email}</b>, but there's no advisor
+          profile attached to this account yet. If you've just been approved,
+          we're still building your page — you'll get an email the moment it's live.</p>
+        <a class="pill pill-soft" href="index.html"
+           style="margin-top:18px">Back to the site</a>
+      </div>`;
+    return;
   }
-  el.innerHTML=list.map(x=>`
-    <div class="appt">
-      <div class="when"><div class="d">${x.when[0]}</div><div class="n">${x.when[1]}</div>
-        <div class="t">${x.when[2]}</div></div>
-      <div class="who2">
-        <div class="nm">${x.nm}</div>
-        <div class="meta">${x.need}</div>
-        <div class="tags">
-          <span class="tg ${x.kind==='Intro call'?'gold':''}">${x.kind}</span>
-          <span class="tg">${x.mode}</span>
-          <span class="tg">${x.dur}</span>
-          ${x.addr?`<span class="tg">${x.addr}</span>`:''}
-          ${x.repeat?'<span class="tg ink">Returning</span>':''}
-          ${x.paid?`<span class="tg gold">${x.paid}</span>`:''}
+
+  render(r.advisor);
+})();
+
+
+async function render(me){
+  const first = (me.name||'').split(' ')[0];
+  const hour  = new Date().getHours();
+  const part  = hour<12?'Good morning':hour<18?'Good afternoon':'Good evening';
+  const specs = me.specs || [];
+
+  /* ---------------- greeting ---------------- */
+  $('greet').innerHTML = `
+    <div class="who">
+      ${me.photo_url
+        ? `<img src="${me.photo_url}" alt="">`
+        : `<div class="fb">${GT_AUTH.initials(me.name)}</div>`}
+      <div>
+        <h1>${part}, <em>${first}.</em></h1>
+        <p class="sub">${me.title||'Privacy Advisor'} · $${me.rate}/hour ·
+          ${me.published?'Profile live and accepting bookings':'Profile not published yet'}</p>
+      </div>
+    </div>
+    <div class="act">
+      <a class="pill pill-soft" href="advisor.html?id=${me.id}#a=${me.id}">View public profile</a>
+      <a class="pill pill-gold" href="#" id="addTime">Add availability</a>
+    </div>`;
+
+  /* ---------------- real bookings ---------------- */
+  let rows = [];
+  const { data, error } = await GT_AUTH.SB.from('bookings')
+    .select('*').eq('advisor_id', me.id).order('day', { ascending:true });
+  if(error) console.warn('[GT] bookings load failed:', error.message);
+  else rows = data || [];
+
+  const today = ymdLocal(new Date());
+  const upcoming = rows.filter(b => b.day && b.day >= today && b.status !== 'cancelled');
+  const past     = rows.filter(b => !b.day || b.day < today || b.status === 'cancelled');
+
+  /* ---------------- status strip ---------------- */
+  const weekEnd = ymdLocal(new Date(Date.now() + 7*864e5));
+  const thisWeek = upcoming.filter(b => b.day <= weekEnd);
+  $('strip').innerHTML = `
+    <div class="stat"><div class="k">Next 7 days</div>
+      <div class="v">${thisWeek.filter(b=>b.kind!=='intro').length}</div>
+      <div class="n">booked sessions</div></div>
+    <div class="stat"><div class="k">Intro calls</div>
+      <div class="v">${thisWeek.filter(b=>b.kind==='intro').length}</div>
+      <div class="n">free, 20 minutes each</div></div>
+    <div class="stat gold"><div class="k">All upcoming</div>
+      <div class="v">${upcoming.length}</div><div class="n">on your calendar</div></div>
+    <div class="stat"><div class="k">Your rating</div>
+      <div class="v">${Number(me.rating||0).toFixed(1)}<small>/5</small></div>
+      <div class="n">across ${me.reviews||0} reviews</div></div>`;
+
+  /* ---------------- appointments ---------------- */
+  let tab = 'upcoming';
+
+  function drawTabs(){
+    $('tabs').innerHTML = `
+      <button class="tab ${tab==='upcoming'?'on':''}" data-t="upcoming">Upcoming<span class="badge">${upcoming.length}</span></button>
+      <button class="tab ${tab==='past'?'on':''}" data-t="past">Past</button>`;
+    document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
+      tab=b.dataset.t; drawTabs(); drawAppts();
+    }));
+  }
+
+  function when(b){
+    if(!b.day) return ['—','', b.slot||''];
+    const [y,m,d] = b.day.split('-').map(Number);
+    const dt = new Date(y, m-1, d);          // local, avoids the UTC day shift
+    return [DOW[dt.getDay()], String(d), b.slot || ''];
+  }
+
+  function drawAppts(){
+    const list = tab==='upcoming' ? upcoming : past;
+    if(!list.length){
+      $('apptList').innerHTML = `<div class="empty">${tab==='upcoming'
+        ? 'Nothing booked yet. New bookings land here the moment a client confirms.'
+        : 'No past appointments yet.'}</div>`;
+      return;
+    }
+    $('apptList').innerHTML = list.map(b=>{
+      const w = when(b);
+      return `
+      <div class="appt">
+        <div class="when"><div class="d">${w[0]}</div><div class="n">${w[1]}</div>
+          <div class="t">${w[2]}</div></div>
+        <div class="who2">
+          <div class="nm">${esc(b.name || 'Client')}</div>
+          <div class="meta">${esc(b.notes || 'No notes provided')}</div>
+          <div class="tags">
+            <span class="tg ${b.kind==='intro'?'gold':''}">${b.kind==='intro'?'Intro call':'Session'}</span>
+            <span class="tg">${esc(b.mode||'')}</span>
+            ${b.address?`<span class="tg">${esc(b.address)}</span>`:''}
+            ${b.status==='cancelled'?'<span class="tg ink">Cancelled</span>':''}
+          </div>
         </div>
-      </div>
-      <div class="go">
-        ${x.tab==='upcoming'
-          ?'<button class="pill pill-soft">Notes</button><button class="pill pill-ink">Open</button>'
-          :'<button class="pill pill-soft">Notes</button>'}
-      </div>
-    </div>`).join('');
+        <div class="go">
+          <a class="pill pill-soft" href="mailto:${encodeURIComponent(b.email||'')}">Email</a>
+          ${tab==='upcoming'?`<button class="pill pill-ink" data-cancel="${b.id}">Cancel</button>`:''}
+        </div>
+      </div>`;
+    }).join('');
+
+    document.querySelectorAll('[data-cancel]').forEach(btn=>
+      btn.addEventListener('click', async ()=>{
+        if(!confirm('Cancel this booking? The client is not emailed automatically.')) return;
+        btn.disabled = true;
+        const { error } = await GT_AUTH.SB.from('bookings')
+          .update({ status:'cancelled' }).eq('id', btn.dataset.cancel);
+        if(error){ alert('Could not cancel: '+error.message); btn.disabled=false; return; }
+        location.reload();
+      }));
+  }
+  drawTabs(); drawAppts();
+
+  /* ---------------- availability (from your own row) ---------------- */
+  const WK=[['Mon','9–5'],['Tue','9–5'],['Wed','9–5'],['Thu',me.evenings?'9–7':'9–5'],
+            ['Fri','9–3'],['Sat',me.weekends?'10–2':'Off'],['Sun','Off']];
+  $('avail').innerHTML = WK.map(([d,h])=>`
+    <div class="day ${h==='Off'?'off':'on'}"><div class="dw">${d}</div>
+      <div class="hrs">${h}</div></div>`).join('');
+
+  const TOGS=[
+   ['intro','Offer free 20-minute intro calls','Shown as a gold badge on your profile',me.intro],
+   ['evenings','Available evenings','Adds 6pm and 7pm slots on weekdays',me.evenings],
+   ['weekends','Available weekends','Opens Saturday bookings',me.weekends],
+   ['checkins','Offer recurring check-ins','Clients can book you quarterly',me.checkins],
+   ['business','Take small-business work','Appears in the business support filter',me.business],
+  ];
+  $('togs').innerHTML = TOGS.map(([k,t,s,on])=>`
+    <div class="tog"><div class="lab">${t}<small>${s}</small></div>
+      <button class="sw ${on?'on':''}" data-k="${k}" aria-label="${t}"></button></div>`).join('');
+
+  document.querySelectorAll('.sw').forEach(b=>b.addEventListener('click', async ()=>{
+    const on = !b.classList.contains('on');
+    b.classList.toggle('on', on);
+    const { error } = await GT_AUTH.SB.from('advisors')
+      .update({ [b.dataset.k]: on }).eq('id', me.id);
+    if(error){ b.classList.toggle('on', !on); alert('Could not save: '+error.message); }
+  }));
+
+  /* ---------------- earnings (real bookings, your real rate) ---------------- */
+  const billable = past.filter(b => b.kind !== 'intro' && b.status !== 'cancelled').length;
+  const gross = billable * me.rate, fee = gross*.15, net = gross-fee;
+  $('pay').innerHTML = `
+    <h3>Earned so far</h3>
+    <div class="amt">$${net.toFixed(0)}</div>
+    <div class="sub">${billable} completed session${billable===1?'':'s'} · payouts not yet automated</div>
+    <div class="rows">
+      <div class="r"><span>Billed to clients</span><b>$${gross.toFixed(0)}</b></div>
+      <div class="r"><span>Platform fee (15%)</span><b>−$${fee.toFixed(0)}</b></div>
+      <div class="r"><span>Your rate</span><b>$${me.rate}/hr</b></div>
+    </div>`;
+
+  /* ---------------- profile strength ---------------- */
+  const checks = [
+    ['Headshot', !!me.photo_url],
+    ['Biography', !!(me.bio && me.bio.length>60)],
+    ['Specialties', specs.length>0],
+    ['Hourly rate', !!me.rate],
+    ['Published', me.published],
+  ];
+  const pct = Math.round(checks.filter(c=>c[1]).length/checks.length*100);
+  $('profileCard').innerHTML = `
+    <h3>Profile strength</h3>
+    <div style="font-size:24px;font-weight:700;color:var(--ink)">${pct}%</div>
+    <div class="bar"><i style="width:${pct}%"></i></div>
+    <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px">Stronger profiles appear
+      higher for the clients they genuinely fit.</p>
+    ${checks.map(([t,ok])=>`<div class="prof-row"${ok?'':' style="color:var(--gold-deep)"'}>${t}
+      <b${ok?'':' style="color:var(--gold-deep)"'}>${ok?'Added':'To do'}</b></div>`).join('')}
+    <p style="font-size:12px;color:var(--faint);margin-top:14px;line-height:1.6">
+      Profile copy is written and verified by Greylock. Email us to request a change.</p>`;
+
+  /* ---------------- needs you ---------------- */
+  const soon = upcoming.slice(0,3);
+  $('tasks').innerHTML = `<h3>Needs you</h3>` + (soon.length
+    ? soon.map(b=>`<div class="task"><span class="dot"></span><span>Prepare for
+        <b>${esc(b.name||'your client')}</b> — ${esc(b.day_label||'')} ${esc(b.time_label||'')}</span></div>`).join('')
+    : `<div class="task"><span class="dot"></span><span>Nothing outstanding.</span></div>`);
+
+  document.querySelectorAll('#matchList, #matchNote').forEach(el=>el.innerHTML='');
+  const mc = document.getElementById('matchList');
+  if(mc) mc.innerHTML = `<div class="empty">Client matching isn't switched on yet.</div>`;
+
+  ['addTime','editHours'].forEach(id=>{
+    const el = $(id);
+    if(el) el.addEventListener('click', e=>{ e.preventDefault();
+      alert('Availability editing is coming — use the toggles below for now.'); });
+  });
 }
-drawTabs();drawAppts();
 
+function ymdLocal(d){
+  return d.getFullYear() + '-' +
+         String(d.getMonth()+1).padStart(2,'0') + '-' +
+         String(d.getDate()).padStart(2,'0');
+}
 
-/* ---------------- new matches ---------------- */
-const MATCHES=[
- {pct:96,nm:'Jonathan A.',need:'Whole-house Wi-Fi is unreliable; wants someone patient who will explain it.',
-  meta:'4 mi away · In person preferred · up to $90/hr'},
- {pct:91,nm:'Beatrice L.',need:'Recently scammed by a phone call; wants accounts locked down properly.',
-  meta:'Virtual · this week · up to $95/hr'},
- {pct:88,nm:'The Okafor family',need:'Four devices, two teenagers, no backups anywhere.',
-  meta:'7 mi away · weekends only · up to $80/hr'},
- {pct:84,nm:'Marcus D.',need:'Small business — shared drive and staff device security.',
-  meta:'In person or virtual · no rush · up to $100/hr'},
-];
-document.getElementById('matchNote').textContent='Matched to your specialties';
-document.getElementById('matchList').innerHTML=MATCHES.map(m=>{
-  const R=21,C=2*Math.PI*R,off=C*(1-m.pct/100);
-  return `<div class="match">
-    <div class="ring"><svg viewBox="0 0 50 50">
-      <circle class="bgc" cx="25" cy="25" r="${R}" fill="none" stroke-width="3.5"/>
-      <circle class="arc" cx="25" cy="25" r="${R}" fill="none" stroke-width="3.5"
-        stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}"/></svg>
-      <b>${m.pct}</b></div>
-    <div><div class="nm">${m.nm}</div>
-      <div class="need">${m.need}</div>
-      <div class="meta">${m.meta}</div></div>
-    <div class="go"><button class="pill pill-soft">Respond</button></div>
-  </div>`;}).join('');
-
-
-/* ---------------- availability ---------------- */
-const WK=[['Mon','9–5'],['Tue','9–5'],['Wed','9–5'],['Thu','9–7'],['Fri','9–3'],
-          ['Sat',me.weekends?'10–2':'Off'],['Sun','Off']];
-document.getElementById('avail').innerHTML=WK.map(([d,h])=>`
-  <div class="day ${h==='Off'?'off':'on'}"><div class="dw">${d}</div><div class="hrs">${h}</div></div>`).join('');
-const TOGS=[
- ['Offer free 20-minute intro calls','Shown as a gold badge on your profile',me.intro],
- ['Available evenings','Adds 6pm and 7pm slots on weekdays',me.evenings],
- ['Available weekends','Opens Saturday bookings',me.weekends],
- ['Offer recurring check-ins','Clients can book you quarterly',me.checkins],
- ['Take small-business work','Appears in the business support filter',me.business],
- ['Approve bookings manually','New bookings arrive as requests first',false],
-];
-document.getElementById('togs').innerHTML=TOGS.map(([t,s,on],i)=>`
-  <div class="tog"><div class="lab">${t}<small>${s}</small></div>
-    <button class="sw ${on?'on':''}" data-i="${i}" aria-label="${t}"></button></div>`).join('');
-document.querySelectorAll('.sw').forEach(b=>b.addEventListener('click',()=>b.classList.toggle('on')));
-
-
-/* ---------------- payouts ---------------- */
-const gross=6*me.rate*1.6, fee=gross*.15, net=gross-fee;
-document.getElementById('pay').innerHTML=`
-  <h3>Next payout</h3>
-  <div class="amt">$${net.toFixed(0)}</div>
-  <div class="sub">Friday, for the week ending Thursday</div>
-  <div class="rows">
-    <div class="r"><span>Billed to clients</span><b>$${gross.toFixed(0)}</b></div>
-    <div class="r"><span>Platform fee (15%)</span><b>−$${fee.toFixed(0)}</b></div>
-    <div class="r"><span>This month so far</span><b>$${(net*3.2).toFixed(0)}</b></div>
-    <div class="r"><span>Payout method</span><b>•••• 4417</b></div>
-  </div>
-  <a class="pill pill-gold" href="#" style="width:100%;margin-top:18px">View statements</a>`;
-
-
-/* ---------------- profile strength ---------------- */
-const filled=82;
-document.getElementById('profileCard').innerHTML=`
-  <h3>Profile strength</h3>
-  <div style="font-size:24px;font-weight:700;color:var(--ink)">${filled}%</div>
-  <div class="bar"><i style="width:${filled}%"></i></div>
-  <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px">Stronger profiles appear higher
-    for the clients they genuinely fit.</p>
-  <div class="prof-row">Headshot <b>Added</b></div>
-  <div class="prof-row">Biography <b>Added</b></div>
-  <div class="prof-row">Specialties <b>${me.specs.length} listed</b></div>
-  <div class="prof-row">Qualifications <b>4 listed</b></div>
-  <div class="prof-row" style="color:var(--gold-deep)">Add a short intro video
-    <b style="color:var(--gold-deep)">To do</b></div>
-  <a class="pill pill-soft" href="#" style="width:100%;margin-top:16px">Edit profile</a>`;
-
-
-/* ---------------- tasks ---------------- */
-document.getElementById('tasks').innerHTML=`
-  <h3>Needs you</h3>
-  <div class="task"><span class="dot"></span><span>Confirm Friday's address change with
-    <b>Ronald Keane</b></span></div>
-  <div class="task"><span class="dot"></span><span>Reply to <b>Beatrice L.</b> — new match, 91% fit</span></div>
-  <div class="task"><span class="dot"></span><span>Complete the Q3 security briefing (30 min, counts
-    toward continuing education)</span></div>
-  <div class="task done"><span class="dot"></span><span>Upload updated insurance certificate</span></div>
-  <div class="task done"><span class="dot"></span><span>Set August blackout dates</span></div>`;
-
-
-/* demo handlers */
-['addTime','editHours'].forEach(id=>{
-  const el=document.getElementById(id);
-  if(el)el.addEventListener('click',e=>{e.preventDefault();
-    alert('Demo only — availability editing is not wired up yet.');});
-});
+function esc(s){
+  return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+}
 </script>
 </body>
 </html>

@@ -73,10 +73,17 @@ const card = document.getElementById('card');
 /* Did we arrive from a recovery email? Supabase puts the token in the hash
    (implicit flow) or a ?code= param (PKCE). Either way supabase-js has
    already exchanged it by the time we check for a session. */
+
 function cameFromEmail(){
   const h = location.hash || '';
   const q = location.search || '';
-  return /type=recovery/.test(h) || /type=recovery/.test(q) || /[?&]code=/.test(q);
+  return /type=(recovery|invite|signup|magiclink)/.test(h)
+      || /type=(recovery|invite|signup|magiclink)/.test(q)
+      || /[?&]code=/.test(q);
+}
+function isInvite(){
+  return /type=invite/.test(location.hash || '') ||
+         /type=invite/.test(location.search || '');
 }
 
 function note(msg, color){
@@ -141,11 +148,14 @@ function drawRequest(){
 
 /* ---------- 2. set the new password ---------- */
 function drawSet(){
-  head.innerHTML = `
+  head.innerHTML = isInvite() ? `
+    <h1>Welcome to <em>Greylock Trust.</em></h1>
+    <p class="lede">Choose a password and your advisor dashboard is ready.
+      This link works once.</p>` : `
     <h1>Choose a new <em>password.</em></h1>
     <p class="lede">Pick something you don't use anywhere else. You'll be signed in
       straight after.</p>`;
-  card.innerHTML = `
+      card.innerHTML = `
     <form id="setForm" novalidate>
       <div class="fld" id="f-pw">
         <label>New password<input id="i-pw" type="password" autocomplete="new-password"
@@ -205,23 +215,41 @@ function drawExpired(){
 }
 
 /* ---------- boot ---------- */
-(async function boot(){
+/* ---------- boot ---------- */
+(function boot(){
+  let handled = false;
+
+  function goSet(){
+    if(handled) return;
+    handled = true;
+    drawSet();
+    history.replaceState({}, '', 'reset.html');
+  }
+
+  /* supabase-js fires this once it has exchanged the token in the URL —
+     whether it arrived as a hash fragment or a ?code= param. */
+  GT_AUTH.SB.auth.onAuthStateChange((event) => {
+    if(event === 'PASSWORD_RECOVERY' || event === 'SIGNED_IN') goSet();
+  });
+
+  /* If there's no token in the URL at all, this is someone who navigated
+     here directly — ask for their email. */
   if(!cameFromEmail()){
-    drawRequest();
+    setTimeout(() => { if(!handled) drawRequest(); }, 400);
     return;
   }
-  /* Give supabase-js a moment to exchange the token in the URL for a session. */
-  let s = null;
-  for(let i = 0; i < 10 && !s; i++){
-    try{ s = await GT_AUTH.currentUser(); }catch(e){}
-    if(!s) await new Promise(r => setTimeout(r, 200));
-  }
-  if(s) drawSet();
-  else   drawExpired();
 
-  /* Tidy the token out of the address bar so it isn't shoulder-surfed
-     or left in history. */
-  history.replaceState({}, '', 'reset.html');
+  /* Token present: give the exchange a moment, then check for a session
+     directly in case the event fired before this listener attached. */
+  (async () => {
+    for(let i = 0; i < 12 && !handled; i++){
+      let u = null;
+      try{ u = await GT_AUTH.currentUser(); }catch(e){}
+      if(u){ goSet(); return; }
+      await new Promise(r => setTimeout(r, 250));
+    }
+    if(!handled){ handled = true; drawExpired(); }
+  })();
 })();
 </script>
 </body>
