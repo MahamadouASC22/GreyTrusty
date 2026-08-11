@@ -791,30 +791,68 @@ function drawApp(){
   stash();drawApp();}));
   const back=document.getElementById('back');
   if(back)back.addEventListener('click',()=>{stash();APP.step--;drawApp();});
-  document.getElementById('next').addEventListener('click',()=>{
-    stash();
+document.getElementById('next').addEventListener('click', async ()=>{    stash();
     if(!validate())return;
     if(APP.step<STEPS-1){APP.step++;drawApp();}
-   else{
-      APP.done=true;drawApp();
-      document.querySelector('.apply-in').scrollIntoView({behavior:'smooth',block:'center'});
-    GT_AUTH.SB.from('advisor_applications').insert({
-        full_name:APP.name, email:APP.email, phone:APP.phone, area:APP.area,
-        yrs:parseInt(APP.yrs,10)||null, rate:parseInt(APP.rate,10)||null,
-        specs:APP.specs, certs:APP.certs, cert_other:APP.certOther,
-        modes:APP.modes, pitch:APP.pitch, status:'new'
 
-      }).then(({error})=>{
-        if(!error) return;
-        console.error('[GT] application not saved:', error);
-        try{ localStorage.setItem('greylockPendingApplication', JSON.stringify(APP)); }catch(e){}
-        const c=document.getElementById('fcard');
-        if(c) c.insertAdjacentHTML('beforeend',
-          `<p style="font-size:13px;color:#B4452F;text-align:center;margin-top:14px">
-             We couldn't file that automatically. Please email
-             <b>team@greylocktrust.com</b> and we'll pick it up from there.</p>`);
-      });
-     }
+   else {
+  stash();
+
+  const submitBtn = document.getElementById('next');
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Submitting…';
+
+ const { error } = await GT_AUTH.SB
+  .from('advisor_applications')
+  .insert({
+    full_name: APP.name,
+    email: APP.email,
+    phone: APP.phone,
+    area: APP.area,
+    yrs: parseInt(APP.yrs, 10) || null,
+    rate: parseInt(APP.rate, 10) || null,
+    specs: APP.specs,
+    certs: APP.certs,
+    cert_other: APP.certOther,
+    modes: APP.modes,
+    pitch: APP.pitch,
+    status: 'new'
+  });
+  
+if (error) {
+  console.error('[GT] application not saved:', error);
+
+  submitBtn.disabled = false;
+  submitBtn.textContent = 'Submit application';
+
+  const c = document.getElementById('fcard');
+
+  if (c) {
+    c.insertAdjacentHTML(
+      'beforeend',
+      `<p style="font-size:13px;color:#B4452F;text-align:center;margin-top:14px">
+        We couldn't submit your application. Please try again or email
+        <b>team@greylocktrust.com</b>.
+      </p>`
+    );
+  }
+
+  return;
+}
+
+console.log('[GT] application saved');
+
+APP.done = true;
+drawApp();
+
+ 
+
+  document.querySelector('.apply-in').scrollIntoView({
+    behavior: 'smooth',
+    block: 'center'
+  });
+}
     });
 }
 function v(id){const el=document.getElementById(id);return el?el.value.trim():'';}

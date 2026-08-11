@@ -1365,8 +1365,8 @@ function renderBook(a){
       B.name=val('bName');B.email=val('bEmail');B.phone=val('bPhone');
       B.address=val('bAddr');B.notes=val('bNotes');
       renderBook(a);}));
-    document.getElementById('bookForm').addEventListener('submit',e=>{
-      e.preventDefault();
+document.getElementById('bookForm').addEventListener('submit', async e=>{
+        e.preventDefault();
       B.name=val('bName');B.email=val('bEmail');B.phone=val('bPhone');
       B.address=val('bAddr');B.notes=val('bNotes');
       let ok=true;
@@ -1375,9 +1375,31 @@ function renderBook(a){
       ok=check('bPhone','mPhone',B.phone.replace(/[^0-9]/g,'').length>=7)&&ok;
       if(needsAddress())ok=check('bAddr','mAddr',B.address.length>=6)&&ok;
       if(!ok)return;
-      B.done=true;renderBook(a);
-      saveBooking(a);
-    });
+    const btn = document.querySelector(
+  '#bookForm button[type="submit"]'
+);
+
+if (btn) {
+  btn.disabled = true;
+  btn.textContent = 'Saving…';
+}
+
+const saved = await saveBooking(a);
+
+if (!saved) {
+  if (btn) {
+    btn.disabled = false;
+    btn.textContent =
+      B.mode === 'intro'
+        ? 'Confirm free intro call'
+        : 'Confirm booking';
+  }
+
+  return;
+}
+
+B.done = true;
+renderBook(a); });
   }
 }
 function ymd(d){                    // local date, NOT toISOString (shifts a day)
@@ -1387,57 +1409,87 @@ function ymd(d){                    // local date, NOT toISOString (shifts a day
          String(x.getDate()).padStart(2,'0');
 }
 
-async function saveBooking(a){
+async function saveBooking(a) {
   const payload = {
-    client_id : GT_ME ? GT_ME.id : null,
+    client_id: GT_ME ? GT_ME.id : null,
     advisor_id: a.id,
-    kind      : B.mode==='intro' ? 'intro' : 'session',
-    mode      : B.meet==='onsite' ? 'In-person' : 'Video call',
-    day       : ymd(B.date),
-    slot      : B.time,
-    name:B.name, email:B.email, phone:B.phone,
-    address: B.meet==='onsite' ? B.address : null,
-    notes:B.notes,
-    status:'confirmed'
+    kind: B.mode === 'intro' ? 'intro' : 'session',
+    mode: B.meet === 'onsite' ? 'In-person' : 'Video call',
+    day: ymd(B.date),
+    slot: B.time,
+    name: B.name,
+    email: B.email,
+    phone: B.phone,
+    address: B.meet === 'onsite' ? B.address : null,
+    notes: B.notes,
+    status: 'confirmed'
   };
 
-const { error } = await GT_AUTH.SB.from('bookings').insert(payload);
+  console.log('[GT] saving booking:', payload);
 
-  if(error){
+  const { error } = await GT_AUTH.SB
+  .from('bookings')
+  .insert(payload);
+
+if (error) {
+  console.error('[GT] booking not saved:', error);
+
+  bookingWarning(
+    error.code === '23505'
+      ? 'Someone just took that slot. Pick another time and we’ll get you booked.'
+      : 'We couldn’t save that booking. Please try again or email team@greylocktrust.com.'
+  );
+
+  return false;
+}
+
+  if (error) {
     console.error('[GT] booking not saved:', error);
-    bookingWarning(error.code === '23505'
-      ? 'Someone just took that slot. Pick another time and we\u2019ll get you booked.'
-      : 'We couldn\u2019t save that booking. Please email team@greylocktrust.com and we\u2019ll sort it out.');
-    return;
+
+    bookingWarning(
+      error.code === '23505'
+        ? 'Someone just took that slot. Pick another time and we’ll get you booked.'
+        : 'We couldn’t save that booking. Please try again or email team@greylocktrust.com.'
+    );
+
+    return false;
   }
 
-  if(GT_ME) GT_AUTH.chooseAdvisor(a.id);
+  console.log('[GT] booking saved:', data);
 
-  try{
-    await GT_AUTH.SB.functions.invoke('send-confirmation-email', {
-      body:{ email:B.email, name:B.name, advisor:a.name,
-             day:dLabel(new Date(B.date)), time:B.time,
-             mode:payload.mode, kind:payload.kind }
-    });
-  }catch(e){ console.warn('[GT] confirmation email failed:', e); }
+  try {
+    const { error: emailError } =
+      await GT_AUTH.SB.functions.invoke(
+        'send-confirmation-email',
+        {
+          body: {
+            booking_id: data.id,
+            email: B.email,
+            name: B.name,
+            advisor: a.name,
+            day: dLabel(new Date(B.date)),
+            time: B.time,
+            mode: payload.mode,
+            kind: payload.kind
+          }
+        }
+      );
 
-  if(error){
-    console.error('[GT] booking not saved:', error);
-    bookingWarning(error.code === '23505'
-      ? 'Someone just took that slot. Pick another time and we\u2019ll get you booked.'
-      : 'We couldn\u2019t save that booking. Please email team@greylocktrust.com and we\u2019ll sort it out.');
-    return;
+    if (emailError) {
+      console.warn(
+        '[GT] confirmation email failed:',
+        emailError
+      );
+    }
+
+  } catch (e) {
+    console.warn(
+      '[GT] confirmation email failed:',
+      e
+    );
   }
 
-  if(GT_ME) GT_AUTH.chooseAdvisor(a.id);
-
-  try{
-    await GT_AUTH.SB.functions.invoke('send-confirmation-email', {
-      body:{ booking_id:data.id, email:B.email, name:B.name, advisor:a.name,
-             day:dLabel(new Date(B.date)), time:B.time,
-             mode:payload.mode, kind:payload.kind }
-    });
-  }catch(e){ console.warn('[GT] confirmation email failed:', e); }
+  return true;
 }
 
 function bookingWarning(msg){
