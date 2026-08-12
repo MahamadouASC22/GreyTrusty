@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Welcome — Greylock Trust</title>
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<style>
+:root{ --serif:'Fraunces',Georgia,serif; }
+.page{min-height:100vh;display:flex;align-items:center;
+  padding:calc(96px + 2vw) 22px clamp(60px,7vw,90px);
+  background:radial-gradient(900px 560px at 84% 8%,rgba(195,144,60,.14),transparent 60%),
+             radial-gradient(780px 520px at 8% 92%,rgba(92,122,153,.13),transparent 62%),
+             linear-gradient(165deg,#FFFFFF,#F7FAFC 48%,var(--frost));}
+.shell{max-width:1000px;margin:0 auto;width:100%;display:grid;
+  grid-template-columns:1fr 440px;gap:clamp(28px,5vw,60px);align-items:center;}
+@media(max-width:900px){.shell{grid-template-columns:1fr;gap:32px;}}
+.intro h1{font-family:var(--serif);font-weight:300;color:var(--ink);
+  font-size:clamp(32px,4.6vw,54px);line-height:1.04;letter-spacing:-.035em;}
+.intro h1 em{font-style:italic;color:var(--gold-deep);font-weight:400;}
+.intro .lede{font-size:16.5px;color:var(--body-c);line-height:1.75;margin-top:18px;max-width:40ch;}
+.steps{margin-top:28px;padding-top:24px;border-top:1px solid var(--line);display:grid;gap:14px;}
+.step{display:flex;gap:13px;align-items:flex-start;}
+.step i{width:24px;height:24px;border-radius:50%;background:var(--gold-wash);
+  border:1px solid var(--gold-line);color:var(--gold-deep);font-size:11px;font-weight:700;
+  font-style:normal;display:flex;align-items:center;justify-content:center;flex:none;margin-top:2px;}
+.step b{display:block;font-size:14.5px;color:var(--ink);}
+.step span{font-size:13.5px;color:var(--muted);line-height:1.6;}
+.card2{background:#fff;border:1px solid var(--line);border-radius:22px;
+  box-shadow:0 26px 64px rgba(30,49,69,.11);padding:clamp(26px,3vw,34px);}
+.card2 h2{font-family:var(--serif);font-weight:400;font-size:24px;color:var(--ink);
+  letter-spacing:-.02em;}
+.card2 .sub{font-size:14px;color:var(--muted);margin-top:6px;margin-bottom:20px;line-height:1.6;}
+.fld{margin-bottom:14px;}
+.fld label{font-size:12.5px;font-weight:700;color:var(--ink);display:block;}
+.fld input{width:100%;margin-top:6px;padding:13px 15px;font-size:15px;font-family:var(--f);
+  border:1px solid var(--line-2);border-radius:12px;background:var(--bg);color:var(--body-c);}
+.fld input:focus{outline:none;border-color:var(--gold);background:#fff;}
+.fld.err input{border-color:#B4452F;}
+.fld .msg{display:none;font-size:11.5px;color:#B4452F;margin-top:5px;}
+.fld.err .msg{display:block;}
+.hint{font-size:12px;color:var(--faint);margin-top:6px;line-height:1.55;}
+.go{width:100%;padding:14px;font-size:15px;margin-top:8px;}
+.note{margin-top:14px;font-size:13px;text-align:center;line-height:1.65;color:var(--muted);}
+.spin{width:24px;height:24px;border-radius:50%;border:2px solid var(--line-2);
+  border-top-color:var(--gold);animation:sp .8s linear infinite;margin:24px auto;}
+@keyframes sp{to{transform:rotate(360deg);}}
+.done{text-align:center;}
+.tick{width:56px;height:56px;border-radius:50%;background:var(--gold-wash);
+  border:1px solid var(--gold-line);color:var(--gold-deep);font-size:25px;display:flex;
+  align-items:center;justify-content:center;margin:0 auto 16px;}
+.done h3{font-family:var(--serif);font-weight:400;font-size:21px;color:var(--ink);margin-bottom:9px;}
+.done p{font-size:14.5px;color:var(--muted);line-height:1.7;}
+</style>
+</head>
+<body class="nav-dark">
+<div id="nav"></div>
+
+<main class="page">
+  <div class="shell">
+    <div class="intro">
+      <h1>You're in.<br><em>Let's set your password.</em></h1>
+      <p class="lede">Your application was approved. One password and the advisor
+        portal is yours — your calendar, your bookings, and the hours you're
+        willing to work.</p>
+      <div class="steps">
+        <div class="step"><i>1</i><div><b>Choose a password</b>
+          <span>Something you don't use anywhere else.</span></div></div>
+        <div class="step"><i>2</i><div><b>Check your details</b>
+          <span>We wrote your profile from your application. Tell us if anything's wrong.</span></div></div>
+        <div class="step"><i>3</i><div><b>Set your hours</b>
+          <span>Evenings, weekends, intro calls — all switches you control.</span></div></div>
+      </div>
+    </div>
+
+    <div class="card2" id="card"><div class="spin"></div></div>
+  </div>
+</main>
+
+<div id="footer"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/nav.js"></script>
+<script>
+'use strict';
+
+const card = document.getElementById('card');
+
+function val(id){ const el=document.getElementById(id); return el?el.value.trim():''; }
+function mark(id,pass){
+  const f=document.getElementById(id);
+  if(f) f.classList.toggle('err',!pass);
+  return pass;
+}
+function note(msg,color){
+  const p=document.getElementById('note');
+  if(!p) return;
+  p.textContent=msg;
+  p.style.color=color||'var(--muted)';
+}
+
+/* ---------- the password form ---------- */
+function drawSet(email){
+  card.innerHTML = `
+    <h2>Choose a password</h2>
+    <p class="sub">You're setting this for <b>${email||'your account'}</b>.</p>
+    <form id="setForm" novalidate>
+      <div class="fld" id="f-pw">
+        <label>Password<input id="i-pw" type="password" autocomplete="new-password"
+          placeholder="At least 8 characters"></label>
+        <span class="msg">Use at least 8 characters.</span>
+        <p class="hint">A short phrase of a few unrelated words is easier to
+          remember and harder to guess than a scrambled word.</p>
+      </div>
+      <div class="fld" id="f-pw2">
+        <label>Confirm password<input id="i-pw2" type="password" autocomplete="new-password"></label>
+        <span class="msg">Both passwords need to match.</span>
+      </div>
+      <button class="pill pill-ink go" type="submit" id="setGo">Save and open my portal</button>
+      <p class="note" id="note"></p>
+    </form>`;
+
+  document.getElementById('setForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const pw = val('i-pw'), pw2 = val('i-pw2');
+    let ok = true;
+    ok = mark('f-pw', pw.length >= 8) && ok;
+    ok = mark('f-pw2', pw !== '' && pw === pw2) && ok;
+    if(!ok) return;
+
+    const go = document.getElementById('setGo');
+    go.disabled = true;
+    note('Saving…');
+
+    const r = await GT_AUTH.updatePassword(pw);
+    if(!r.ok){
+      note(r.error, '#B4452F');
+      go.disabled = false;
+      return;
+    }
+
+    card.innerHTML = `
+      <div class="done">
+        <div class="tick">✓</div>
+        <h3>Password saved</h3>
+        <p>Taking you to your portal…</p>
+      </div>`;
+    setTimeout(() => { location.href = 'provider-dashboard.html'; }, 1200);
+  });
+}
+
+/* ---------- the link didn't work ---------- */
+function drawExpired(){
+  card.innerHTML = `
+    <h2>That link has expired</h2>
+    <p class="sub">Invitation links work once and don't last forever. Request a
+      fresh one and it'll be with you in a moment.</p>
+    <form id="againForm" novalidate>
+      <div class="fld" id="f-email">
+        <label>Your email<input id="i-email" type="email" autocomplete="email"
+          placeholder="you@example.com"></label>
+        <span class="msg">Enter a valid email address.</span>
+      </div>
+      <button class="pill pill-ink go" type="submit" id="againGo">Send me a new link</button>
+      <p class="note" id="note"></p>
+    </form>`;
+
+  document.getElementById('againForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const em = val('i-email');
+    if(!mark('f-email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em))) return;
+
+    const go = document.getElementById('againGo');
+    go.disabled = true;
+    note('Sending…');
+
+    const r = await GT_AUTH.reset(em);
+    card.innerHTML = `
+      <div class="done">
+        <div class="tick">✓</div>
+        <h3>Check your inbox</h3>
+        <p>If there's a Greylock Trust account for <b>${em}</b>, a link to set
+           your password is on its way. It may land in spam.</p>
+      </div>`;
+    if(!r.ok) console.warn('[GT] reset email failed:', r.error);
+  });
+}
+
+/* ---------- boot ----------
+   No hash forwarding, no redirects. supabase-js exchanges whatever token is
+   in the URL; we poll briefly for the resulting session. Nothing here can
+   navigate, so this page can never loop. */
+(async function boot(){
+  let user = null;
+
+  for(let i = 0; i < 16 && !user; i++){
+    try{ user = await GT_AUTH.currentUser(); }catch(e){}
+    if(!user) await new Promise(r => setTimeout(r, 250));
+  }
+
+  /* Tidy the token out of the address bar. */
+  try{ history.replaceState({}, '', 'advisor-welcome.html'); }catch(e){}
+
+  if(user) drawSet(user.email);
+  else     drawExpired();
+})();
+</script>
+</body>
+</html>

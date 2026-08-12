@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Your profile — Greylock Trust</title>
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<style>
+:root{ --serif:'Fraunces',Georgia,serif; }
+.page{max-width:1100px;margin:0 auto;padding:calc(88px + 1vw) 24px 90px;}
+.head{margin-bottom:26px;}
+.head h1{font-family:var(--serif);font-weight:300;font-size:clamp(28px,3.6vw,44px);
+  color:var(--ink);letter-spacing:-.03em;line-height:1.05;}
+.head h1 em{font-style:italic;color:var(--gold-deep);font-weight:400;}
+.head p{font-size:15.5px;color:var(--muted);margin-top:12px;line-height:1.7;max-width:52ch;}
+
+.split{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:22px;align-items:start;}
+@media(max-width:980px){.split{grid-template-columns:1fr;}}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px;margin-bottom:18px;}
+.card h2{font-family:var(--serif);font-weight:400;font-size:21px;color:var(--ink);
+  letter-spacing:-.02em;margin-bottom:6px;}
+.card .sub{font-size:13.5px;color:var(--muted);line-height:1.65;margin-bottom:20px;}
+
+.fld{margin-bottom:16px;}
+.fld label{font-size:12.5px;font-weight:700;color:var(--ink);display:block;}
+.fld input,.fld textarea,.fld select{width:100%;margin-top:6px;padding:12px 14px;font-size:14.5px;
+  font-family:var(--f);border:1px solid var(--line-2);border-radius:12px;background:var(--bg);
+  color:var(--body-c);}
+.fld input:focus,.fld textarea:focus,.fld select:focus{outline:none;border-color:var(--gold);background:#fff;}
+.fld .hint{font-size:12px;color:var(--faint);margin-top:6px;line-height:1.55;}
+.fld .count{float:right;font-size:11.5px;color:var(--faint);font-weight:600;}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:520px){.two{grid-template-columns:1fr;}}
+
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px;}
+.chip-b{border:1px solid var(--line-2);background:#fff;border-radius:999px;padding:9px 14px;
+  font-size:13px;font-weight:600;color:var(--ink);}
+.chip-b:hover{border-color:var(--gold);}
+.chip-b.on{background:var(--gold);border-color:var(--gold);color:#fff;}
+
+/* headshot */
+.shot{display:flex;gap:20px;align-items:center;flex-wrap:wrap;}
+.shot .pv,.shot .pv-fb{width:118px;height:134px;border-radius:16px;object-fit:cover;flex:none;}
+.shot .pv-fb{background:var(--ink);color:var(--gold);display:flex;align-items:center;
+  justify-content:center;font-size:34px;font-weight:600;}
+.shot .side{flex:1;min-width:200px;}
+.shot .side p{font-size:13px;color:var(--muted);line-height:1.65;margin-top:8px;}
+input[type=file]{display:none;}
+.upbtn{border:1px solid var(--line-2);background:#fff;border-radius:999px;padding:11px 20px;
+  font-size:13.5px;font-weight:600;color:var(--ink);display:inline-flex;align-items:center;gap:8px;}
+.upbtn:hover{border-color:var(--ink);}
+
+/* rail */
+.rail{position:sticky;top:96px;}
+.mini{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;margin-bottom:18px;}
+.mini h3{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:14px;}
+.chk{display:flex;align-items:flex-start;gap:10px;padding:9px 0;font-size:13.5px;
+  color:var(--body-c);line-height:1.5;border-bottom:1px solid var(--line);}
+.chk:last-of-type{border-bottom:none;}
+.chk i{width:18px;height:18px;border-radius:50%;flex:none;font-style:normal;font-size:10px;
+  font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px;}
+.chk.ok i{background:var(--gold-wash);border:1px solid var(--gold-line);color:var(--gold-deep);}
+.chk.no i{background:#fff;border:1px solid var(--line-2);color:var(--faint);}
+.chk.no{color:var(--muted);}
+
+.pub{background:linear-gradient(155deg,var(--ink-deep),var(--ink));color:#fff;border:none;
+  position:relative;overflow:hidden;}
+.pub::after{content:"";position:absolute;right:-60px;top:-70px;width:200px;height:200px;
+  border-radius:50%;background:radial-gradient(circle,rgba(195,144,60,.28),transparent 66%);}
+.pub>*{position:relative;z-index:1;}
+.pub h3{color:var(--gold-line);}
+.pub p{font-size:13.5px;color:rgba(255,255,255,.78);line-height:1.7;}
+.pub .pill{width:100%;margin-top:16px;padding:13px;}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;
+  font-weight:600;font-size:14px;padding:12px 22px;transition:all .18s ease;}
+.pill-gold{background:var(--gold);color:#fff;} .pill-gold:hover{background:var(--gold-deep);}
+.pill-soft{border:1px solid var(--line-2);color:var(--ink);background:#fff;}
+.pill-soft:hover{border-color:var(--ink);}
+.pill-ghost{border:1px solid rgba(255,255,255,.42);color:#fff;background:none;}
+.pill-ghost:hover{background:rgba(255,255,255,.12);}
+
+.savebar{position:sticky;bottom:0;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);
+  border-top:1px solid var(--line);padding:14px 0;margin-top:8px;display:flex;
+  align-items:center;gap:12px;flex-wrap:wrap;z-index:10;}
+.savebar .msg{font-size:13px;color:var(--muted);}
+.savebar .sp{margin-left:auto;display:flex;gap:9px;}
+
+.note{font-size:13px;line-height:1.6;margin-top:10px;}
+.note.err{color:#B4452F;}
+.note.ok{color:var(--gold-deep);}
+.load{text-align:center;padding:60px 20px;color:var(--muted);font-size:14.5px;}
+</style>
+</head>
+<body class="nav-dark">
+<div id="nav"></div>
+
+<main class="page" id="page">
+  <div class="load">Loading your profile…</div>
+</main>
+
+<div id="footer"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/nav.js"></script>
+<script>
+'use strict';
+
+const PERSONALITY_OPTS = [
+  'Patient teacher','Friendly conversationalist','Efficient problem solver',
+  'Highly technical expert','Calm and reassuring'
+];
+const PLATFORM_OPTS = ['Windows','Mac','iPhone / iPad','Android'];
+const SPEC_OPTS = [
+  'Wi-Fi & Internet','Data Protection','Computers & Laptops',
+  'Phones & Tablets','Setup, Repairs & Troubleshooting','Email & Accounts'
+];
+const FUTURE_OPTS = [
+  'Home networking','Smart home security','Account security','AI tools',
+  'New computers','Phone setup','Family technology support','Data backup',
+  'Cloud storage','Privacy improvements','Technology education','Digital organization'
+];
+
+let ME = null, ADV = null, P = null, DIRTY = false;
+
+const $ = id => document.getElementById(id);
+function esc(s){
+  return String(s ?? '').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+}
+function arr(v){ return Array.isArray(v) ? v : []; }
+
+/* ---------------- boot ---------------- */
+(async function boot(){
+  const r = await GT_AUTH.requireAdvisor();
+  if(!r) return;
+
+  if(r.blocked){
+    $('page').innerHTML = `
+      <div class="card" style="max-width:560px;margin:40px auto;text-align:center">
+        <h2>Almost there</h2>
+        <p class="sub">You're signed in as <b>${esc(r.session.email)}</b>, but there's
+          no advisor profile attached to this account yet. If you've just been
+          approved, give it a moment and refresh.</p>
+        <a class="pill pill-soft" href="index.html">Back to the site</a>
+      </div>`;
+    return;
+  }
+
+  ME = r.session; ADV = r.advisor;
+
+  P = {
+    name:        ADV.name || ME.name || '',
+    title:       ADV.title || 'Privacy Advisor',
+    years:       ADV.years ?? '',
+    rate:        ADV.rate ?? '',
+    bio:         ADV.bio || '',
+    photo_url:   ADV.photo_url || '',
+    personality: ADV.personality || '',
+    specs:       arr(ADV.specs),
+    futures:     arr(ADV.futures),
+    platforms:   arr(ADV.platforms),
+    onsite:      ADV.onsite !== false,
+    remote:      ADV.remote !== false,
+    published:   ADV.published === true,
+  };
+
+  render();
+  window.addEventListener('beforeunload', e => {
+    if(DIRTY){ e.preventDefault(); e.returnValue = ''; }
+  });
+})();
+
+/* ---------------- render ---------------- */
+function render(){
+  $('page').innerHTML = `
+    <div class="head">
+      <h1>Your <em>public profile</em></h1>
+      <p>This is what someone reads before deciding whether to book you. Write it
+        in your own voice — the advisors people choose sound like people, not
+        CVs. Nothing here is visible to anyone until you publish it yourself.</p>
+    </div>
+
+    <div class="split">
+      <div>
+        <section class="card">
+          <h2>Your headshot</h2>
+          <p class="sub">A clear photo of your face, looking at the camera. This
+            does more work than anything else on the page.</p>
+          <div class="shot">
+            <div id="pvWrap"></div>
+            <div class="side">
+              <label class="upbtn" for="photoFile">Choose a photo</label>
+              <input type="file" id="photoFile" accept="image/jpeg,image/png,image/webp">
+              <p>JPG, PNG or WebP, up to 5 MB. Square or portrait works best.
+                 Avoid group shots, sunglasses, and anything taken from far away.</p>
+              <p class="note" id="photoNote"></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>The basics</h2>
+          <p class="sub">Your name as clients should see it, and what you charge.</p>
+          <div class="fld">
+            <label>Full name<input id="fName" type="text" value="${esc(P.name)}"></label>
+          </div>
+          <div class="fld">
+            <label>Title<input id="fTitle" type="text" value="${esc(P.title)}"></label>
+            <p class="hint">Most advisors keep "Privacy Advisor". Change it only if
+              something else describes you better.</p>
+          </div>
+          <div class="two">
+            <div class="fld">
+              <label>Years of experience<input id="fYears" type="number" min="0" max="60"
+                value="${esc(P.years)}"></label>
+            </div>
+            <div class="fld">
+              <label>Hourly rate ($)<input id="fRate" type="number" min="20" max="300"
+                value="${esc(P.rate)}"></label>
+              <p class="hint">You set this. Most sit between $50 and $100.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>About you</h2>
+          <p class="sub">Two or three sentences. What you help people with, and what
+            it's like to work with you.</p>
+          <div class="fld">
+            <label><span class="count" id="bioCount"></span>Biography
+              <textarea id="fBio" rows="7"
+                placeholder="I help people feel calm about the technology they use every day. Most of my work is home networks and account security — the things that quietly stop working or quietly stop being safe. I explain what I'm doing as I go, and I write it down so you don't have to remember it.">${esc(P.bio)}</textarea></label>
+            <p class="hint">At least 120 characters. Write it the way you'd say it out
+              loud to someone nervous about asking.</p>
+          </div>
+          <div class="fld">
+            <label>How would you describe your working style?</label>
+            <div class="chips" id="persChips"></div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>What you do</h2>
+          <p class="sub">Specialties decide who we show you to. Pick what you're
+            genuinely strong at, not everything you can manage.</p>
+          <div class="fld">
+            <label>Specialties</label>
+            <div class="chips" id="specChips"></div>
+          </div>
+          <div class="fld">
+            <label>You can help clients plan for</label>
+            <div class="chips" id="futChips"></div>
+            <p class="hint">Shown on your profile under "Can help you plan for".</p>
+          </div>
+          <div class="fld">
+            <label>Platforms you work with</label>
+            <div class="chips" id="platChips"></div>
+          </div>
+          <div class="fld">
+            <label>How do you meet clients?</label>
+            <div class="chips" id="modeChips"></div>
+          </div>
+        </section>
+
+        <div class="savebar">
+          <span class="msg" id="saveMsg">${DIRTY ? 'Unsaved changes' : 'All changes saved'}</span>
+          <div class="sp">
+            <a class="pill pill-soft" href="provider-dashboard.html">Back to dashboard</a>
+            <button class="pill pill-gold" id="saveBtn">Save changes</button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="rail">
+        <div class="mini" id="checklist"></div>
+        <div class="mini pub" id="pubCard"></div>
+      </aside>
+    </div>`;
+
+  drawPreview();
+  drawChips();
+  drawChecklist();
+  drawPublish();
+  wire();
+}
+
+function drawPreview(){
+  $('pvWrap').innerHTML = P.photo_url
+    ? `<img class="pv" src="${esc(P.photo_url)}" alt="Your headshot">`
+    : `<div class="pv-fb">${GT_AUTH.initials(P.name || ME.email)}</div>`;
+}
+
+function chipRow(hostId, opts, selected, onToggle){
+  const host = $(hostId);
+  host.innerHTML = opts.map(o =>
+    `<button type="button" class="chip-b ${selected.includes(o)?'on':''}" data-v="${esc(o)}">${esc(o)}</button>`
+  ).join('');
+  host.querySelectorAll('[data-v]').forEach(b => b.addEventListener('click', () => {
+    onToggle(b.dataset.v);
+    touch();
+    chipRow(hostId, opts, selected, onToggle);
+    drawChecklist(); drawPublish();
+  }));
+}
+
+function drawChips(){
+  chipRow('persChips', PERSONALITY_OPTS, P.personality ? [P.personality] : [], v => {
+    P.personality = (P.personality === v) ? '' : v;
+  });
+  chipRow('specChips', SPEC_OPTS, P.specs, v => {
+    const i = P.specs.indexOf(v);
+    i > -1 ? P.specs.splice(i,1) : P.specs.push(v);
+  });
+  chipRow('futChips', FUTURE_OPTS, P.futures, v => {
+    const i = P.futures.indexOf(v);
+    i > -1 ? P.futures.splice(i,1) : P.futures.push(v);
+  });
+  chipRow('platChips', PLATFORM_OPTS, P.platforms, v => {
+    const i = P.platforms.indexOf(v);
+    i > -1 ? P.platforms.splice(i,1) : P.platforms.push(v);
+  });
+
+  const modes = [];
+  if(P.onsite) modes.push('In person');
+  if(P.remote) modes.push('Virtually');
+  chipRow('modeChips', ['In person','Virtually'], modes, v => {
+    if(v === 'In person') P.onsite = !P.onsite;
+    else                  P.remote = !P.remote;
+  });
+}
+
+function checks(){
+  return [
+    ['A headshot',            !!P.photo_url],
+    ['Your name',             (P.name||'').trim().length >= 2],
+    ['Years of experience',   P.years !== '' && Number(P.years) >= 0],
+    ['An hourly rate',        Number(P.rate) >= 20],
+    ['A biography (120+ characters)', (P.bio||'').trim().length >= 120],
+    ['At least one specialty', P.specs.length > 0],
+    ['How you meet clients',   P.onsite || P.remote],
+  ];
+}
+
+function drawChecklist(){
+  const c = checks();
+  const doneN = c.filter(x => x[1]).length;
+  $('checklist').innerHTML = `
+    <h3>Before you publish</h3>
+    <div style="font-size:22px;font-weight:700;color:var(--ink);margin-bottom:12px">
+      ${doneN} of ${c.length}</div>
+    ${c.map(([t,ok]) => `<div class="chk ${ok?'ok':'no'}"><i>${ok?'✓':''}</i><span>${t}</span></div>`).join('')}`;
+}
+
+function drawPublish(){
+  const ready = checks().every(x => x[1]);
+  $('pubCard').innerHTML = P.published
+    ? `<h3>You're live</h3>
+       <p>Clients can find you in the marketplace and book straight into your
+          calendar. Unpublishing hides your page — it doesn't cancel anything
+          already booked.</p>
+       <a class="pill pill-ghost" href="advisor.html?id=${ADV.id}#a=${ADV.id}"
+          style="width:100%;margin-top:16px;padding:13px">View my public page</a>
+       <button class="pill pill-ghost" id="unpubBtn"
+          style="width:100%;margin-top:9px;padding:13px">Unpublish</button>`
+    : `<h3>Not published yet</h3>
+       <p>${ready
+            ? 'Everything\u2019s filled in. Publish and you\u2019ll appear in the marketplace straight away.'
+            : 'Finish the list above and this button switches on. Nobody can see your page until then.'}</p>
+       <button class="pill pill-gold" id="pubBtn" ${ready?'':'disabled'}
+         style="${ready?'':'opacity:.45;cursor:not-allowed'}">Publish my profile</button>
+       <p class="note" id="pubNote" style="color:rgba(255,255,255,.75)"></p>`;
+
+  const pub = $('pubBtn');
+  if(pub) pub.addEventListener('click', () => setPublished(true));
+  const un = $('unpubBtn');
+  if(un) un.addEventListener('click', () => {
+    if(confirm('Hide your profile from the marketplace? Bookings you already have are unaffected.'))
+      setPublished(false);
+  });
+}
+
+/* ---------------- editing ---------------- */
+function touch(){
+  DIRTY = true;
+  const m = $('saveMsg');
+  if(m){ m.textContent = 'Unsaved changes'; m.style.color = 'var(--gold-deep)'; }
+}
+
+function wire(){
+  const bind = (id, key, cast) => {
+    const el = $(id);
+    if(!el) return;
+    el.addEventListener('input', () => {
+      P[key] = cast ? cast(el.value) : el.value;
+      touch(); drawChecklist(); drawPublish();
+      if(key === 'name') drawPreview();
+      if(key === 'bio') bioCount();
+    });
+  };
+  bind('fName','name'); bind('fTitle','title');
+  bind('fYears','years'); bind('fRate','rate');
+  bind('fBio','bio');
+  bioCount();
+
+  $('saveBtn').addEventListener('click', save);
+  $('photoFile').addEventListener('change', uploadPhoto);
+}
+
+function bioCount(){
+  const n = ($('fBio') ? $('fBio').value : P.bio || '').trim().length;
+  const el = $('bioCount');
+  if(el){
+    el.textContent = n + ' / 120';
+    el.style.color = n >= 120 ? 'var(--gold-deep)' : 'var(--faint)';
+  }
+}
+
+/* ---------------- headshot upload ---------------- */
+async function uploadPhoto(e){
+  const file = e.target.files && e.target.files[0];
+  if(!file) return;
+  const note = $('photoNote');
+  note.className = 'note';
+
+  if(file.size > 5 * 1024 * 1024){
+    note.className = 'note err';
+    note.textContent = 'That file is over 5 MB. Try a smaller one.';
+    return;
+  }
+
+  note.textContent = 'Uploading…';
+
+  const ext  = (file.name.split('.').pop() || 'jpg').toLowerCase();
+  const path = `${ME.id}/headshot-${Date.now()}.${ext}`;
+
+  const { error: upErr } = await GT_AUTH.SB.storage
+    .from('headshots').upload(path, file, { upsert: true, contentType: file.type });
+
+  if(upErr){
+    console.error('[GT] headshot upload failed:', upErr);
+    note.className = 'note err';
+    note.textContent = 'That didn\u2019t upload. Try again, or email team@greylocktrust.com.';
+    return;
+  }
+
+  const { data } = GT_AUTH.SB.storage.from('headshots').getPublicUrl(path);
+  P.photo_url = data.publicUrl;
+
+  const { error: saveErr } = await GT_AUTH.SB.from('advisors')
+    .update({ photo_url: P.photo_url }).eq('id', ADV.id);
+
+  if(saveErr){
+    note.className = 'note err';
+    note.textContent = 'Uploaded, but we couldn\u2019t attach it: ' + saveErr.message;
+    return;
+  }
+
+  ADV.photo_url = P.photo_url;
+  note.className = 'note ok';
+  note.textContent = 'Headshot saved.';
+  drawPreview(); drawChecklist(); drawPublish();
+}
+
+/* ---------------- save ---------------- */
+async function save(){
+  const btn = $('saveBtn');
+  btn.disabled = true; btn.textContent = 'Saving…';
+
+  const patch = {
+    name:        (P.name||'').trim(),
+    title:       (P.title||'Privacy Advisor').trim(),
+    years:       P.years === '' ? null : parseInt(P.years,10),
+    rate:        P.rate  === '' ? null : parseInt(P.rate,10),
+    bio:         (P.bio||'').trim(),
+    personality: P.personality || null,
+    specs:       P.specs,
+    futures:     P.futures,
+    platforms:   P.platforms,
+    onsite:      !!P.onsite,
+    remote:      !!P.remote,
+  };
+
+  const { error } = await GT_AUTH.SB.from('advisors').update(patch).eq('id', ADV.id);
+
+  btn.disabled = false; btn.textContent = 'Save changes';
+  const m = $('saveMsg');
+
+  if(error){
+    console.error('[GT] profile not saved:', error);
+    m.textContent = 'Couldn\u2019t save: ' + error.message;
+    m.style.color = '#B4452F';
+    return;
+  }
+
+  Object.assign(ADV, patch);
+  DIRTY = false;
+  m.textContent = 'All changes saved';
+  m.style.color = 'var(--muted)';
+  drawChecklist(); drawPublish();
+}
+
+async function setPublished(on){
+  /* Save first: the database refuses to publish an incomplete profile, and it
+     can only judge what it already has. */
+  if(on) await save();
+
+  const { error } = await GT_AUTH.SB.from('advisors')
+    .update({ published: on }).eq('id', ADV.id);
+
+  if(error){
+    console.error('[GT] publish failed:', error);
+    const n = $('pubNote');
+    if(n){ n.className = 'note err'; n.style.color = '#FFD9CF';
+           n.textContent = error.message.replace(/^.*?:\s*/, ''); }
+    return;
+  }
+
+  P.published = on; ADV.published = on;
+  drawPublish();
+  if(on) window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

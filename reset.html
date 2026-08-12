@@ -216,40 +216,22 @@ function drawExpired(){
 
 /* ---------- boot ---------- */
 /* ---------- boot ---------- */
-(function boot(){
-  let handled = false;
-
-  function goSet(){
-    if(handled) return;
-    handled = true;
-    drawSet();
-    history.replaceState({}, '', 'reset.html');
-  }
-
-  /* supabase-js fires this once it has exchanged the token in the URL —
-     whether it arrived as a hash fragment or a ?code= param. */
-  GT_AUTH.SB.auth.onAuthStateChange((event) => {
-    if(event === 'PASSWORD_RECOVERY' || event === 'SIGNED_IN') goSet();
-  });
-
-  /* If there's no token in the URL at all, this is someone who navigated
-     here directly — ask for their email. */
+(async function boot(){
   if(!cameFromEmail()){
-    setTimeout(() => { if(!handled) drawRequest(); }, 400);
+    drawRequest();
     return;
   }
 
-  /* Token present: give the exchange a moment, then check for a session
-     directly in case the event fired before this listener attached. */
-  (async () => {
-    for(let i = 0; i < 12 && !handled; i++){
-      let u = null;
-      try{ u = await GT_AUTH.currentUser(); }catch(e){}
-      if(u){ goSet(); return; }
-      await new Promise(r => setTimeout(r, 250));
-    }
-    if(!handled){ handled = true; drawExpired(); }
-  })();
+  let user = null;
+  for(let i = 0; i < 16 && !user; i++){
+    try{ user = await GT_AUTH.currentUser(); }catch(e){}
+    if(!user) await new Promise(r => setTimeout(r, 250));
+  }
+
+  try{ history.replaceState({}, '', 'reset.html'); }catch(e){}
+
+  if(user) drawSet();
+  else     drawExpired();
 })();
 </script>
 </body>

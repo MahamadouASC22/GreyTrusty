@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Your account — Greylock Trust</title>
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
@@ -14,6 +15,8 @@
 <style>
 :root{ --serif:'Fraunces',Georgia,serif; }
 .dash{max-width:1240px;margin:0 auto;padding:calc(88px + 1vw) 24px 80px;}
+
+/* ---------- greeting ---------- */
 .greet{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:24px;}
 .greet h1{font-family:var(--serif);font-weight:300;font-size:clamp(28px,3.4vw,42px);
   color:var(--ink);letter-spacing:-.03em;line-height:1.04;}
@@ -27,18 +30,16 @@
 .pill-soft:hover{border-color:var(--ink);}
 .pill-ink{background:var(--ink);color:#fff;} .pill-ink:hover{background:var(--ink-2);}
 
-
 .cols{display:grid;grid-template-columns:minmax(0,1fr) 352px;gap:20px;align-items:start;}
 @media(max-width:1040px){.cols{grid-template-columns:1fr;}}
-.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;margin-bottom:20px;}
-.card:last-child{margin-bottom:0;}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;
+  margin-bottom:20px;position:relative;}
 .ch{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
 .ch h2{font-family:var(--serif);font-weight:400;font-size:21px;color:var(--ink);letter-spacing:-.02em;}
 .ch .more{margin-left:auto;font-size:13px;font-weight:600;color:var(--gold-deep);}
 .ch .more:hover{text-decoration:underline;text-underline-offset:3px;}
 
-
-/* next visit hero */
+/* ---------- next visit hero ---------- */
 .next{position:relative;overflow:hidden;border-radius:20px;padding:26px;margin-bottom:20px;
   background:linear-gradient(155deg,var(--ink-deep),var(--ink));color:#fff;}
 .next::after{content:"";position:absolute;right:-70px;top:-80px;width:250px;height:250px;
@@ -58,12 +59,11 @@
 .next .tg{font-size:11.5px;font-weight:700;background:rgba(255,255,255,.12);
   border-radius:999px;padding:5px 11px;color:rgba(255,255,255,.9);}
 .next .row{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px;}
-.pill-cream{background:#fff;color:var(--ink);} .pill-cream:hover{transform:translateY(-1px);}
+.pill-cream{background:#fff;color:var(--ink);}
 .pill-ghost{border:1px solid rgba(255,255,255,.42);color:#fff;}
 .pill-ghost:hover{background:rgba(255,255,255,.12);}
 
-
-/* visit rows */
+/* ---------- visit rows ---------- */
 .visit{display:flex;gap:15px;align-items:center;padding:15px 0;border-bottom:1px solid var(--line);}
 .visit:last-child{border-bottom:none;}
 .visit .when{width:74px;flex:none;text-align:center;background:var(--bg);border:1px solid var(--line);
@@ -81,8 +81,7 @@
 .visit .go .pill{padding:9px 14px;font-size:12.5px;}
 @media(max-width:640px){.visit{flex-wrap:wrap;}.visit .go{margin-left:0;width:100%;}}
 
-
-/* notes */
+/* ---------- notes ---------- */
 .note-item{border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:12px;
   background:var(--bg);}
 .note-item:last-child{margin-bottom:0;}
@@ -91,27 +90,11 @@
   color:var(--gold-deep);}
 .note-item .by{margin-left:auto;font-size:12.5px;color:var(--faint);}
 .note-item h4{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:7px;}
-.note-item ul{list-style:none;display:grid;gap:7px;}
-.note-item li{display:flex;gap:10px;font-size:14px;color:var(--body-c);line-height:1.6;}
-.note-item li i{width:7px;height:7px;transform:rotate(45deg);background:var(--gold);flex:none;margin-top:6px;}
+.note-item p{font-size:14px;color:var(--body-c);line-height:1.7;white-space:pre-wrap;}
 
-
-/* saved matches */
-.saved{display:flex;gap:13px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line);}
-.saved:last-child{border-bottom:none;}
-.saved img,.saved .fb{width:48px;height:52px;border-radius:12px;object-fit:cover;flex:none;}
-.saved .fb{background:var(--ink);color:var(--gold);display:flex;align-items:center;
-  justify-content:center;font-weight:700;font-size:16px;}
-.saved .nm{font-size:14.5px;font-weight:700;color:var(--ink);}
-.saved .tt{font-size:12.5px;color:var(--muted);margin-top:2px;}
-.saved .pct{margin-left:auto;flex:none;text-align:right;}
-.saved .pct b{font-size:15px;font-weight:700;color:var(--gold-deep);}
-.saved .pct span{display:block;font-size:9.5px;font-weight:700;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--faint);}
-
-
-/* rail cards */
-.mini{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;margin-bottom:18px;}
+/* ---------- rail cards ---------- */
+.mini{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;
+  margin-bottom:18px;position:relative;}
 .mini h3{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
   color:var(--faint);margin-bottom:14px;}
 .adv-card{text-align:center;}
@@ -120,52 +103,81 @@
   justify-content:center;font-size:28px;font-weight:600;}
 .adv-card .nm{font-family:var(--serif);font-weight:400;font-size:20px;color:var(--ink);}
 .adv-card .tt{font-size:13px;color:var(--muted);margin-top:4px;}
-.adv-card .stars{color:var(--gold);font-size:13px;letter-spacing:1.5px;margin-top:8px;}
 .adv-card .btns{display:grid;gap:8px;margin-top:16px;}
 .adv-card .btns .pill{width:100%;padding:11px;font-size:13.5px;}
 .srow{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--line);
   font-size:14px;color:var(--body-c);}
 .srow:last-child{border-bottom:none;}
 .srow b{margin-left:auto;color:var(--ink);font-weight:700;}
-.tip{background:var(--gold-wash);border:1px solid var(--gold-line);border-radius:16px;padding:20px;}
+.tip{background:var(--gold-wash);border:1px solid var(--gold-line);}
 .tip h3{color:var(--gold-deep);}
 .tip p{font-size:14px;color:var(--body-c);line-height:1.7;}
 .tip .pill{width:100%;margin-top:14px;padding:11px;font-size:13.5px;}
-.demo{font-size:11.5px;color:var(--faint);text-align:center;margin-top:24px;}
+
+/* ---------- empty states ---------- */
+.empty{text-align:center;padding:30px 16px;}
+.empty .ic{width:52px;height:52px;border-radius:50%;background:var(--gold-wash);
+  border:1px solid var(--gold-line);color:var(--gold-deep);font-size:22px;display:flex;
+  align-items:center;justify-content:center;margin:0 auto 14px;}
+.empty h4{font-family:var(--serif);font-weight:400;font-size:19px;color:var(--ink);margin-bottom:8px;}
+.empty p{font-size:14px;color:var(--muted);line-height:1.7;max-width:36ch;margin:0 auto;}
+.empty .pill{margin-top:16px;}
+
+/* ---------- layout editing ---------- */
+.editbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--gold-wash);
+  border:1px solid var(--gold-line);border-radius:16px;padding:14px 18px;margin-bottom:20px;}
+.editbar b{font-size:14px;color:var(--gold-deep);}
+.editbar span{font-size:13px;color:var(--body-c);}
+.editbar .sp{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;}
+body.editing .card,body.editing .mini,body.editing .next{
+  outline:1.5px dashed var(--gold-line);outline-offset:4px;}
+.secbar{display:none;gap:6px;position:absolute;top:10px;right:10px;z-index:3;}
+body.editing .secbar{display:flex;}
+.secbar button{width:30px;height:30px;border-radius:9px;border:1px solid var(--line-2);
+  background:#fff;color:var(--ink);font-size:14px;line-height:1;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(30,49,69,.1);}
+.secbar button:hover{border-color:var(--ink);}
+.secbar button.rm{color:#B4452F;}
+.secbar button[disabled]{opacity:.3;cursor:default;}
+.addgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;}
+.addbtn{border:1px dashed var(--line-2);background:#fff;border-radius:14px;padding:14px 16px;
+  text-align:left;}
+.addbtn:hover{border-color:var(--gold);background:var(--gold-wash);}
+.addbtn b{display:block;font-size:14px;color:var(--ink);}
+.addbtn span{font-size:12.5px;color:var(--muted);line-height:1.5;}
+
+/* ---------- tour ---------- */
+.tour-veil{position:fixed;inset:0;z-index:900;background:rgba(18,34,51,.55);
+  backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:24px;}
+.tour{background:#fff;border-radius:22px;max-width:460px;width:100%;
+  box-shadow:0 30px 80px rgba(30,49,69,.3);padding:clamp(24px,3vw,32px);}
+.tour .k{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold-deep);}
+.tour h3{font-family:var(--serif);font-weight:300;font-size:clamp(24px,3vw,30px);color:var(--ink);
+  letter-spacing:-.025em;line-height:1.14;margin:12px 0 10px;}
+.tour h3 em{font-style:italic;color:var(--gold-deep);font-weight:400;}
+.tour p{font-size:15px;color:var(--body-c);line-height:1.75;}
+.tour .dots{display:flex;gap:6px;margin:22px 0 18px;}
+.tour .dots i{height:4px;flex:1;border-radius:99px;background:var(--line);}
+.tour .dots i.on{background:var(--gold);}
+.tour .row{display:flex;gap:9px;}
+.tour .row .pill{flex:1;padding:13px;font-size:14px;}
+.tour .skip{display:block;width:100%;text-align:center;margin-top:12px;font-size:12.5px;
+  color:var(--faint);text-decoration:underline;text-underline-offset:3px;}
+.tour .skip:hover{color:var(--muted);}
+.spot{position:relative;z-index:901;box-shadow:0 0 0 4px var(--gold),0 24px 60px rgba(30,49,69,.3);
+  border-radius:20px;}
+
+.foot-note{font-size:12px;color:var(--faint);text-align:center;margin-top:24px;}
+.load{text-align:center;padding:60px 20px;color:var(--muted);font-size:14.5px;}
 </style>
 </head>
 <body class="nav-dark">
 <div id="nav"></div>
 
-
-<main class="dash">
-  <div class="greet" id="greet"></div>
-  <div class="cols">
-    <div>
-      <div id="next"></div>
-      <section class="card">
-        <div class="ch"><h2>Your visits</h2><a class="more" href="marketplace.html">Book another</a></div>
-        <div id="visits"></div>
-      </section>
-      <section class="card">
-        <div class="ch"><h2>Notes from your visits</h2><span class="more">Yours to keep</span></div>
-        <div id="notes"></div>
-      </section>
-      <section class="card">
-        <div class="ch"><h2>Saved from your questionnaire</h2>
-          <a class="more" href="marketplace.html">Retake it</a></div>
-        <div id="saved"></div>
-      </section>
-    </div>
-    <aside>
-      <div class="mini adv-card" id="advCard"></div>
-      <div class="mini" id="summary"></div>
-      <div class="mini tip" id="tip"></div>
-    </aside>
-  </div>
-  <p class="demo">Demo account — bookings and notes are illustrative. Connect Supabase to make it live.</p>
+<main class="dash" id="dash">
+  <div class="load">Loading your account…</div>
 </main>
-
 
 <div id="footer"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -174,146 +186,504 @@
 <script src="js/nav.js"></script>
 <script>
 'use strict';
-const CLIENT={name:'Margaret Hale',first:'Margaret'};
-const mine=A.find(x=>x.past)||A[0];           // their regular advisor
-const hour=new Date().getHours();
-const part=hour<12?'Good morning':hour<18?'Good afternoon':'Good evening';
 
+/* ============================================================
+   Every section the client can put on their dashboard.
+   `col` decides which column it lands in.
+   ============================================================ */
+const SECTIONS = {
+  next:    { name:'Your next visit',  col:'main', blurb:'The appointment coming up, with everything you need for it.' },
+  visits:  { name:'Your visits',      col:'main', blurb:'Everything booked and everything past.' },
+  notes:   { name:'Visit notes',      col:'main', blurb:'What your advisor wrote up afterwards. Yours to keep.' },
+  advisor: { name:'Your advisor',     col:'rail', blurb:'Who you last worked with, and a shortcut to book again.' },
+  account: { name:'Account summary',  col:'rail', blurb:'Visits, hours, and what you have spent.' },
+  next_up: { name:'What to do next',  col:'rail', blurb:'One suggestion at a time, based on where you are.' },
+};
+const DEFAULT_LAYOUT = ['next','visits','notes','advisor','account','next_up'];
 
-document.getElementById('greet').innerHTML=`
-  <div>
-    <h1>${part}, <em>${CLIENT.first}.</em></h1>
-    <p class="sub">You've had 3 visits with Greylock Trust · Member since March 2026</p>
-  </div>
-  <div class="act">
-    <a class="pill pill-soft" href="marketplace.html">Browse advisors</a>
-    <a class="pill pill-gold" href="advisor.html?id=${mine.id}">Book with ${mine.name.split(' ')[0]}</a>
-  </div>`;
-
-
-/* ---------- next visit ---------- */
-document.getElementById('next').innerHTML=`
-  <div class="next">
-    <div class="k">Your next visit</div>
-    <div class="when">Wednesday 30 July, 9:30 AM</div>
-    <div class="tags">
-      <span class="tg">Full session</span><span class="tg">In person</span>
-      <span class="tg">2 hours</span><span class="tg">14 Chapel St</span>
-    </div>
-    <div class="with">
-      <img src="${mine.photo}" alt="" onerror="this.outerHTML='<div class=&quot;fb&quot;>${initials(mine.name)}</div>'">
-      <div><div class="nm">${mine.name}</div>
-        <div class="tt">${mine.title} · $${mine.rate}/hour</div></div>
-    </div>
-    <div class="row">
-      <a class="pill pill-cream" href="#">Reschedule</a>
-      <a class="pill pill-ghost" href="#">Message ${mine.name.split(' ')[0]}</a>
-      <a class="pill pill-ghost" href="#">Cancel</a>
-    </div>
-  </div>`;
-
-
-/* ---------- visits ---------- */
-const VISITS=[
- {d:['Wed','30','9:30 AM'],nm:mine.name,what:'Wi-Fi dead zones upstairs',
-  tags:['Upcoming','In person','2 hrs'],up:true},
- {d:['Aug','12','1:00 PM'],nm:mine.name,what:'Quarterly check-in',
-  tags:['Upcoming','Virtual','1 hr','Recurring'],up:true},
- {d:['Jun','18','10:00 AM'],nm:mine.name,what:'Password manager and two-factor setup',
-  tags:['Completed','In person','$150.00']},
- {d:['May','2','2:00 PM'],nm:'Priya Raman',what:'Backup review after the new laptop',
-  tags:['Completed','Virtual','$90.00']},
- {d:['Mar','9','11:00 AM'],nm:mine.name,what:'Intro call',
-  tags:['Completed','Virtual','Free']},
+const TOUR = [
+  { k:'Welcome',    h:'This is <em>your</em> account.',
+    p:'Everything Greylock Trust holds for you lives here — your appointments, the notes your advisor writes, and nothing else. Four quick things and you\u2019re done.' },
+  { k:'Step 1 of 3', h:'Your visits, <em>in one place</em>.',
+    p:'Anything you book appears here automatically, upcoming first. You can cancel from this page, and past visits stay so you can book the same person again.', spot:'sec-visits' },
+  { k:'Step 2 of 3', h:'Notes are <em>yours to keep</em>.',
+    p:'After a visit, your advisor writes up what they did and what you agreed. It stays here permanently, so a second visit never starts from zero.', spot:'sec-notes' },
+  { k:'Step 3 of 3', h:'Arrange it <em>how you like</em>.',
+    p:'Use <b>Edit layout</b> to remove anything you don\u2019t need or move sections around. Nothing is permanent — you can add it all back later.', spot:'editAnchor' },
 ];
-document.getElementById('visits').innerHTML=VISITS.map(v=>`
-  <div class="visit">
-    <div class="when"><div class="d">${v.d[0]}</div><div class="n">${v.d[1]}</div>
-      <div class="t">${v.d[2]}</div></div>
-    <div>
-      <div class="nm">${v.nm}</div>
-      <div class="meta">${v.what}</div>
-      <div class="tags">${v.tags.map((t,i)=>
-        `<span class="tg ${i===0&&v.up?'gold':''}">${t}</span>`).join('')}</div>
+
+/* ---------------- state ---------------- */
+let ME = null;          // GT_AUTH session profile
+let LAYOUT = [];        // array of section keys
+let BOOKINGS = [];
+let NOTES = [];
+let ADVISORS = {};      // id -> row
+let EDITING = false;
+let TOUR_STEP = 0;
+
+/* ---------------- helpers ---------------- */
+const $ = id => document.getElementById(id);
+function esc(s){
+  return String(s ?? '').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+}
+function ymdLocal(d){
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+function dayParts(iso){
+  if(!iso) return ['—','',''];
+  const [y,m,d] = iso.split('-').map(Number);
+  const dt = new Date(y, m-1, d);          // local, avoids the UTC day shift
+  return [DOW[dt.getDay()], String(d), MONTHS[m-1].slice(0,3)];
+}
+function longDate(iso){
+  if(!iso) return '';
+  const [y,m,d] = iso.split('-').map(Number);
+  const dt = new Date(y, m-1, d);
+  return DOW[dt.getDay()]+' '+d+' '+MONTHS[m-1];
+}
+function advisorName(id){
+  const a = ADVISORS[id];
+  if(a) return a.name;
+  const demo = A.find(x => String(x.id) === String(id));
+  return demo ? demo.name : 'Your advisor';
+}
+function advisorPhoto(id){
+  const a = ADVISORS[id];
+  if(a && a.photo_url) return a.photo_url;
+  const demo = A.find(x => String(x.id) === String(id));
+  return demo ? demo.photo : '';
+}
+function advisorTitle(id){
+  const a = ADVISORS[id];
+  if(a) return (a.title||'Privacy Advisor') + (a.rate ? ' · $'+a.rate+'/hour' : '');
+  const demo = A.find(x => String(x.id) === String(id));
+  return demo ? demo.title+' · $'+demo.rate+'/hour' : 'Privacy Advisor';
+}
+
+/* ---------------- boot ---------------- */
+(async function boot(){
+  const s = await GT_AUTH.require(null, 'login.html');
+  if(!s) return;                       // require() is already redirecting
+
+  if(s.role === 'advisor'){
+    location.replace('provider-dashboard.html');
+    return;
+  }
+  ME = s;
+
+  /* Attach any bookings made as a guest with this email. */
+  try{ await GT_AUTH.SB.rpc('claim_my_bookings'); }catch(e){}
+
+  await loadData();
+
+  const saved = (ME.layout && Array.isArray(ME.layout.sections)) ? ME.layout.sections : null;
+  LAYOUT = (saved && saved.length) ? saved.filter(k => SECTIONS[k]) : DEFAULT_LAYOUT.slice();
+
+  render();
+
+  const seen = ME.layout && ME.layout.tour === 'done';
+  if(!seen) startTour();
+})();
+
+async function loadData(){
+  const { data: bk, error: bkErr } = await GT_AUTH.SB.from('bookings')
+    .select('*').eq('client_id', ME.id).order('day', { ascending:false });
+  if(bkErr) console.warn('[GT] bookings load failed:', bkErr.message);
+  BOOKINGS = bk || [];
+
+  const { data: nt } = await GT_AUTH.SB.from('visit_notes')
+    .select('*').eq('client_id', ME.id).order('created_at', { ascending:false });
+  NOTES = nt || [];
+
+  const ids = [...new Set(BOOKINGS.map(b => b.advisor_id).filter(Boolean))];
+  if(ids.length){
+    const { data: ad } = await GT_AUTH.SB.from('advisors').select('*').in('id', ids);
+    (ad || []).forEach(a => { ADVISORS[a.id] = a; });
+  }
+}
+
+async function saveLayout(){
+  const patch = { sections: LAYOUT, tour: (ME.layout && ME.layout.tour) || 'done' };
+  ME.layout = patch;
+  const { error } = await GT_AUTH.SB.from('profiles')
+    .update({ layout: patch }).eq('id', ME.id);
+  if(error) console.warn('[GT] layout not saved:', error.message);
+}
+
+/* ---------------- render ---------------- */
+function render(){
+  const upcoming = BOOKINGS.filter(b => b.day >= ymdLocal(new Date()) && b.status !== 'cancelled')
+                           .sort((a,b) => a.day.localeCompare(b.day));
+  const past     = BOOKINGS.filter(b => b.day < ymdLocal(new Date()) || b.status === 'cancelled');
+  const first    = (ME.name || '').split(' ')[0] || 'there';
+  const hour     = new Date().getHours();
+  const part     = hour<12 ? 'Good morning' : hour<18 ? 'Good afternoon' : 'Good evening';
+
+  const done = past.filter(b => b.status !== 'cancelled').length;
+  const sub  = BOOKINGS.length === 0
+    ? 'Your account is ready — nothing booked yet.'
+    : `${done} visit${done===1?'':'s'} with Greylock Trust · ${upcoming.length} upcoming`;
+
+  $('dash').innerHTML = `
+    <div class="greet">
+      <div>
+        <h1>${part}, <em>${esc(first)}.</em></h1>
+        <p class="sub">${sub}</p>
+      </div>
+      <div class="act" id="editAnchor">
+        <button class="pill pill-soft" id="editBtn">Edit layout</button>
+        <a class="pill pill-gold" href="marketplace.html">Book a visit</a>
+      </div>
     </div>
-    <div class="go">${v.up
-      ?'<button class="pill pill-soft">Reschedule</button><button class="pill pill-ink">Details</button>'
-      :'<button class="pill pill-soft">Receipt</button><button class="pill pill-ink">Book again</button>'}</div>
-  </div>`).join('');
+    <div id="editbar"></div>
+    <div class="cols">
+      <div id="colMain"></div>
+      <aside id="colRail"></aside>
+    </div>
+    <p class="foot-note">Only you and the advisor you booked can see anything on this page.</p>`;
 
+  drawColumns(upcoming, past);
+  drawEditBar();
 
-/* ---------- notes ---------- */
-const NOTES=[
- {dt:'18 June 2026',by:mine.name,h:'Password manager and two-factor setup',
-  li:['Your vault is Bitwarden — the master phrase is on the card in the kitchen drawer.',
-      'Two-factor is on for email and both bank accounts, using the app on your phone.',
-      'Recovery codes printed and filed with your passport.',
-      'Next time: we agreed to move the photo library off the old laptop.']},
- {dt:'2 May 2026',by:'Priya Raman',h:'Backup review after the new laptop',
-  li:['Time Machine runs nightly to the white drive on the desk.',
-      'Cloud backup is on and finished its first full run on 4 May.',
-      'We restored a test file together — it took about a minute.']},
- {dt:'9 March 2026',by:mine.name,h:'Intro call',
-  li:['Talked through the Wi-Fi in the back bedroom and the printer.',
-      'Agreed to start with the accounts rather than buying anything.']},
-];
-document.getElementById('notes').innerHTML=NOTES.map(n=>`
-  <div class="note-item">
-    <div class="top"><span class="dt">${n.dt}</span><span class="by">Written by ${n.by}</span></div>
-    <h4>${n.h}</h4>
-    <ul>${n.li.map(l=>`<li><i></i><span>${l}</span></li>`).join('')}</ul>
-  </div>`).join('');
+  $('editBtn').addEventListener('click', () => {
+    EDITING = !EDITING;
+    document.body.classList.toggle('editing', EDITING);
+    $('editBtn').textContent = EDITING ? 'Done editing' : 'Edit layout';
+    drawColumns(upcoming, past);
+    drawEditBar();
+    if(!EDITING) saveLayout();
+  });
+}
 
+function drawColumns(upcoming, past){
+  const main = $('colMain'), rail = $('colRail');
+  main.innerHTML = ''; rail.innerHTML = '';
 
-/* ---------- saved matches ---------- */
-const SAVED=[...A].filter(x=>x.id!==mine.id).slice(0,4)
-  .map((x,i)=>({...x,pct:[94,89,86,81][i]}));
-document.getElementById('saved').innerHTML=SAVED.map(s=>`
-  <a class="saved" href="advisor.html?id=${s.id}">
-    <img src="${s.photo}" alt="" onerror="this.outerHTML='<div class=&quot;fb&quot;>${initials(s.name)}</div>'">
-    <div><div class="nm">${s.name}</div>
-      <div class="tt">${s.title} · $${s.rate}/hr</div></div>
-    <div class="pct"><b>${s.pct}%</b><span>match</span></div>
-  </a>`).join('');
+  LAYOUT.forEach(key => {
+    const def = SECTIONS[key];
+    if(!def) return;
+    const host = def.col === 'rail' ? rail : main;
+    host.insertAdjacentHTML('beforeend', sectionHTML(key, upcoming, past));
+  });
 
+  if(!LAYOUT.length){
+    main.innerHTML = `<div class="card"><div class="empty">
+      <div class="ic">+</div>
+      <h4>Nothing on your dashboard</h4>
+      <p>You've removed every section. Use <b>Edit layout</b> above to put some back.</p>
+    </div></div>`;
+  }
 
-/* ---------- rail ---------- */
-document.getElementById('advCard').innerHTML=`
-  <h3>Your advisor</h3>
-  <img src="${mine.photo}" alt="" onerror="this.outerHTML='<div class=&quot;fb&quot;>${initials(mine.name)}</div>'">
-  <div class="nm">${mine.name}</div>
-  <div class="tt">${mine.title} · ${mine.yrs} years</div>
-  <div class="stars">★★★★★ <span style="color:var(--muted);letter-spacing:0">${mine.rating.toFixed(1)}</span></div>
-  <div class="btns">
-    <a class="pill pill-gold" href="advisor.html?id=${mine.id}">Book again</a>
-    <a class="pill pill-soft" href="#">Message</a>
+  wireSectionControls();
+  wireDemoLinks();
+}
+
+function secbar(key){
+  const i = LAYOUT.indexOf(key);
+  return `<div class="secbar">
+    <button data-up="${key}" ${i<=0?'disabled':''} aria-label="Move up">↑</button>
+    <button data-down="${key}" ${i>=LAYOUT.length-1?'disabled':''} aria-label="Move down">↓</button>
+    <button class="rm" data-rm="${key}" aria-label="Remove">×</button>
   </div>`;
+}
 
+function sectionHTML(key, upcoming, past){
+  const bar = secbar(key);
 
-document.getElementById('summary').innerHTML=`
-  <h3>Your account</h3>
-  <div class="srow">Visits completed <b>3</b></div>
-  <div class="srow">Hours with an advisor <b>5.5</b></div>
-  <div class="srow">Spent this year <b>$240.00</b></div>
-  <div class="srow">Saved advisors <b>${SAVED.length}</b></div>
-  <div class="srow">Payment method <b>•••• 2291</b></div>
-  <a class="pill pill-soft" href="#" style="width:100%;margin-top:14px;padding:11px;font-size:13.5px">
-    Account settings</a>`;
+  if(key === 'next'){
+    const b = upcoming[0];
+    if(!b){
+      return `<div class="card" id="sec-next">${bar}<div class="empty">
+        <div class="ic">◷</div>
+        <h4>No visit booked yet</h4>
+        <p>When you book one, it'll show up here with the time, the advisor,
+           and how you're meeting.</p>
+        <a class="pill pill-gold" href="marketplace.html">Find an advisor</a>
+      </div></div>`;
+    }
+    const photo = advisorPhoto(b.advisor_id);
+    return `<div class="next" id="sec-next">${bar}
+      <div class="k">Your next visit</div>
+      <div class="when">${longDate(b.day)}, ${esc(b.slot||'')}</div>
+      <div class="tags">
+        <span class="tg">${b.kind==='intro'?'Intro call':'Full session'}</span>
+        <span class="tg">${esc(b.mode||'')}</span>
+        ${b.address?`<span class="tg">${esc(b.address)}</span>`:''}
+      </div>
+      <div class="with">
+        ${photo ? `<img src="${esc(photo)}" alt="">`
+                : `<div class="fb">${GT_AUTH.initials(advisorName(b.advisor_id))}</div>`}
+        <div><div class="nm">${esc(advisorName(b.advisor_id))}</div>
+          <div class="tt">${esc(advisorTitle(b.advisor_id))}</div></div>
+      </div>
+      <div class="row">
+        <a class="pill pill-cream" href="marketplace.html">Book another</a>
+        <button class="pill pill-ghost" data-cancel="${b.id}">Cancel this visit</button>
+      </div>
+    </div>`;
+  }
 
+  if(key === 'visits'){
+    const all = [...upcoming, ...past];
+    const body = all.length ? all.map(b => {
+      const w = dayParts(b.day);
+      const up = b.day >= ymdLocal(new Date()) && b.status !== 'cancelled';
+      return `<div class="visit">
+        <div class="when"><div class="d">${w[2]}</div><div class="n">${w[1]}</div>
+          <div class="t">${esc(b.slot||'')}</div></div>
+        <div>
+          <div class="nm">${esc(advisorName(b.advisor_id))}</div>
+          <div class="meta">${esc(b.notes || (b.kind==='intro'?'Intro call':'Session'))}</div>
+          <div class="tags">
+            <span class="tg ${up?'gold':''}">${b.status==='cancelled'?'Cancelled':(up?'Upcoming':'Completed')}</span>
+            <span class="tg">${esc(b.mode||'')}</span>
+            <span class="tg">${b.kind==='intro'?'Free':'Session'}</span>
+          </div>
+        </div>
+        <div class="go">${up
+          ? `<button class="pill pill-soft" data-cancel="${b.id}">Cancel</button>`
+          : `<a class="pill pill-ink" href="advisor.html?id=${b.advisor_id}#a=${b.advisor_id}">Book again</a>`}</div>
+      </div>`;
+    }).join('') : `<div class="empty">
+        <div class="ic">◷</div>
+        <h4>No visits yet</h4>
+        <p>Answer a few questions and we'll show you the advisors who fit —
+           you can book straight from their profile.</p>
+        <a class="pill pill-gold" href="marketplace.html">Find an advisor</a>
+      </div>`;
 
-document.getElementById('tip').innerHTML=`
-  <h3>From your last visit</h3>
-  <p><b>${mine.name.split(' ')[0]} suggested one thing</b> — freezing your credit at all three bureaus.
-     It's free, reversible, and takes about fifteen minutes. Ask about it on Wednesday, or read it
-     through first.</p>
-  <a class="pill pill-gold" href="our-suite.html">See the suite</a>`;
+    return `<section class="card" id="sec-visits">${bar}
+      <div class="ch"><h2>Your visits</h2>
+        <a class="more" href="marketplace.html">Book another</a></div>
+      ${body}</section>`;
+  }
 
+  if(key === 'notes'){
+    const body = NOTES.length ? NOTES.map(n => `
+      <div class="note-item">
+        <div class="top">
+          <span class="dt">${esc(longDate((n.created_at||'').slice(0,10)))}</span>
+          <span class="by">Written by ${esc(advisorName(n.advisor_id))}</span>
+        </div>
+        ${n.title?`<h4>${esc(n.title)}</h4>`:''}
+        <p>${esc(n.body||'')}</p>
+      </div>`).join('') : `<div class="empty">
+        <div class="ic">✎</div>
+        <h4>No notes yet</h4>
+        <p>After a visit, your advisor writes up what they did and what you
+           agreed. It'll appear here and stay for good.</p>
+      </div>`;
 
-document.querySelectorAll('a[href="#"]').forEach(a=>a.addEventListener('click',e=>{
-  e.preventDefault();alert('Demo only — this action is not wired up yet.');}));
+    return `<section class="card" id="sec-notes">${bar}
+      <div class="ch"><h2>Visit notes</h2><span class="more">Yours to keep</span></div>
+      ${body}</section>`;
+  }
+
+  if(key === 'advisor'){
+    const recent = [...upcoming, ...past].find(b => b.advisor_id);
+    if(!recent){
+      return `<div class="mini" id="sec-advisor">${bar}
+        <h3>Your advisor</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.7">
+          You haven't worked with anyone yet. Once you book, they'll show up
+          here so you can reach them quickly.</p>
+        <a class="pill pill-soft" href="marketplace.html"
+          style="width:100%;margin-top:14px;padding:11px;font-size:13.5px">Browse advisors</a>
+      </div>`;
+    }
+    const photo = advisorPhoto(recent.advisor_id);
+    return `<div class="mini adv-card" id="sec-advisor">${bar}
+      <h3>Your advisor</h3>
+      ${photo ? `<img src="${esc(photo)}" alt="">`
+              : `<div class="fb">${GT_AUTH.initials(advisorName(recent.advisor_id))}</div>`}
+      <div class="nm">${esc(advisorName(recent.advisor_id))}</div>
+      <div class="tt">${esc(advisorTitle(recent.advisor_id))}</div>
+      <div class="btns">
+        <a class="pill pill-gold" href="advisor.html?id=${recent.advisor_id}#a=${recent.advisor_id}">Book again</a>
+        <a class="pill pill-soft" href="mailto:team@greylocktrust.com">Get in touch</a>
+      </div>
+    </div>`;
+  }
+
+  if(key === 'account'){
+    const doneN = past.filter(b => b.status !== 'cancelled').length;
+    const paid  = past.filter(b => b.status !== 'cancelled' && b.kind !== 'intro')
+                      .reduce((sum,b) => {
+                        const a = ADVISORS[b.advisor_id];
+                        return sum + (a && a.rate ? Number(a.rate) : 0);
+                      }, 0);
+    return `<div class="mini" id="sec-account">${bar}
+      <h3>Your account</h3>
+      <div class="srow">Visits completed <b>${doneN}</b></div>
+      <div class="srow">Upcoming <b>${upcoming.length}</b></div>
+      <div class="srow">Billed so far <b>$${paid.toFixed(2)}</b></div>
+      <div class="srow">Signed in as <b style="font-weight:600;font-size:12.5px">${esc(ME.email)}</b></div>
+    </div>`;
+  }
+
+  if(key === 'next_up'){
+    let title, text, cta, href;
+    if(!BOOKINGS.length){
+      title = 'Start with an intro call';
+      text  = 'Most advisors offer twenty minutes free. Describe the problem, ask anything, and decide afterwards whether to book properly.';
+      cta   = 'Find an advisor'; href = 'marketplace.html';
+    }else if(upcoming.length){
+      const b = upcoming[0];
+      title = 'Before ' + longDate(b.day);
+      text  = 'Jot down what you want to get out of the visit. Even a few lines helps your advisor use the time well.';
+      cta   = 'See the booking'; href = '#sec-next';
+    }else{
+      title = 'Book a follow-up';
+      text  = 'Anything you worked on together is covered by the original visit — you should never pay twice for one problem.';
+      cta   = 'Book again'; href = 'marketplace.html';
+    }
+    return `<div class="mini tip" id="sec-next_up">${bar}
+      <h3>What to do next</h3>
+      <p><b>${esc(title)}</b> — ${esc(text)}</p>
+      <a class="pill pill-gold" href="${href}">${esc(cta)}</a>
+    </div>`;
+  }
+
+  return '';
+}
+
+/* ---------------- section controls ---------------- */
+function wireSectionControls(){
+  document.querySelectorAll('[data-rm]').forEach(b => b.addEventListener('click', () => {
+    LAYOUT = LAYOUT.filter(k => k !== b.dataset.rm);
+    saveLayout(); render(); reopenEdit();
+  }));
+  document.querySelectorAll('[data-up]').forEach(b => b.addEventListener('click', () => {
+    const i = LAYOUT.indexOf(b.dataset.up);
+    if(i > 0){ [LAYOUT[i-1], LAYOUT[i]] = [LAYOUT[i], LAYOUT[i-1]]; saveLayout(); render(); reopenEdit(); }
+  }));
+  document.querySelectorAll('[data-down]').forEach(b => b.addEventListener('click', () => {
+    const i = LAYOUT.indexOf(b.dataset.down);
+    if(i > -1 && i < LAYOUT.length-1){
+      [LAYOUT[i+1], LAYOUT[i]] = [LAYOUT[i], LAYOUT[i+1]]; saveLayout(); render(); reopenEdit();
+    }
+  }));
+  document.querySelectorAll('[data-cancel]').forEach(b => b.addEventListener('click', async () => {
+    if(!confirm('Cancel this visit? Your advisor is not told automatically — if it\u2019s soon, drop them a line too.')) return;
+    b.disabled = true;
+    const { error } = await GT_AUTH.SB.from('bookings')
+      .update({ status:'cancelled' }).eq('id', b.dataset.cancel);
+    if(error){ alert('We couldn\u2019t cancel that: ' + error.message); b.disabled = false; return; }
+    await loadData(); render();
+  }));
+}
+
+/* keep edit mode on across a re-render */
+function reopenEdit(){
+  if(!EDITING) return;
+  document.body.classList.add('editing');
+  $('editBtn').textContent = 'Done editing';
+}
+
+function drawEditBar(){
+  const bar = $('editbar');
+  if(!EDITING){ bar.innerHTML = ''; return; }
+
+  const missing = Object.keys(SECTIONS).filter(k => !LAYOUT.includes(k));
+  bar.innerHTML = `
+    <div class="editbar">
+      <div>
+        <b>Editing your layout</b>
+        <span style="display:block;margin-top:3px">Use the arrows to move a section,
+          × to remove it. Everything saves as you go.</span>
+      </div>
+      <div class="sp">
+        <button class="pill pill-soft" id="resetLayout">Reset to default</button>
+      </div>
+    </div>
+    ${missing.length ? `<section class="card">
+      <div class="ch"><h2>Add a section</h2></div>
+      <div class="addgrid">
+        ${missing.map(k => `<button class="addbtn" data-add="${k}">
+          <b>${SECTIONS[k].name}</b><span>${SECTIONS[k].blurb}</span></button>`).join('')}
+      </div>
+    </section>` : ''}`;
+
+  const reset = $('resetLayout');
+  if(reset) reset.addEventListener('click', () => {
+    LAYOUT = DEFAULT_LAYOUT.slice(); saveLayout(); render(); reopenEdit();
+  });
+  document.querySelectorAll('[data-add]').forEach(b => b.addEventListener('click', () => {
+    LAYOUT.push(b.dataset.add); saveLayout(); render(); reopenEdit();
+  }));
+}
+
+function wireDemoLinks(){
+  document.querySelectorAll('a[href^="#sec-"]').forEach(a =>
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const el = document.querySelector(a.getAttribute('href'));
+      if(el) el.scrollIntoView({ behavior:'smooth', block:'center' });
+    }));
+}
+
+/* ---------------- guided tour ---------------- */
+function startTour(){
+  TOUR_STEP = 0;
+  drawTour();
+}
+
+function drawTour(){
+  clearSpot();
+  const s = TOUR[TOUR_STEP];
+  if(!s){ endTour(); return; }
+
+  if(s.spot){
+    const el = $(s.spot);
+    if(el){
+      el.classList.add('spot');
+      el.scrollIntoView({ behavior:'smooth', block:'center' });
+    }
+  }
+
+  let veil = $('tourVeil');
+  if(!veil){
+    veil = document.createElement('div');
+    veil.className = 'tour-veil';
+    veil.id = 'tourVeil';
+    document.body.appendChild(veil);
+  }
+
+  veil.innerHTML = `
+    <div class="tour" role="dialog" aria-modal="true" aria-label="Getting started">
+      <div class="k">${esc(s.k)}</div>
+      <h3>${s.h}</h3>
+      <p>${s.p}</p>
+      <div class="dots">${TOUR.map((_,i)=>`<i class="${i<=TOUR_STEP?'on':''}"></i>`).join('')}</div>
+      <div class="row">
+        ${TOUR_STEP>0?'<button class="pill pill-soft" id="tourBack">Back</button>':''}
+        <button class="pill pill-gold" id="tourNext">
+          ${TOUR_STEP === TOUR.length-1 ? 'Finish' : 'Next'}</button>
+      </div>
+      <button class="skip" id="tourSkip">Skip — I'll find my way around</button>
+    </div>`;
+
+  $('tourNext').addEventListener('click', () => { TOUR_STEP++; drawTour(); });
+  const back = $('tourBack');
+  if(back) back.addEventListener('click', () => { TOUR_STEP--; drawTour(); });
+  $('tourSkip').addEventListener('click', endTour);
+}
+
+function clearSpot(){
+  document.querySelectorAll('.spot').forEach(el => el.classList.remove('spot'));
+}
+
+async function endTour(){
+  clearSpot();
+  const veil = $('tourVeil');
+  if(veil) veil.remove();
+
+  const patch = { sections: LAYOUT, tour: 'done' };
+  ME.layout = patch;
+  const { error } = await GT_AUTH.SB.from('profiles')
+    .update({ layout: patch }).eq('id', ME.id);
+  if(error) console.warn('[GT] tour state not saved:', error.message);
+}
 </script>
 </body>
 </html>
-
-
-
