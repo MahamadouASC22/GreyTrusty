@@ -147,28 +147,45 @@ body.editing .secbar{display:flex;}
 .addbtn span{font-size:12.5px;color:var(--muted);line-height:1.5;}
 
 /* ---------- tour ---------- */
-body.tour-open{overflow:hidden;}
-.tour-veil{position:fixed;inset:0;z-index:900;background:rgba(18,34,51,.55);
-  backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:24px;}
-.tour{background:#fff;border-radius:22px;max-width:460px;width:100%;
-  box-shadow:0 30px 80px rgba(30,49,69,.3);padding:clamp(24px,3vw,32px);
-  position:relative;z-index:920;}
-.tour .k{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--gold-deep);}
-.tour h3{font-family:var(--serif);font-weight:300;font-size:clamp(24px,3vw,30px);color:var(--ink);
-  letter-spacing:-.025em;line-height:1.14;margin:12px 0 10px;}
-.tour h3 em{font-style:italic;color:var(--gold-deep);font-weight:400;}
-.tour p{font-size:15px;color:var(--body-c);line-height:1.75;}
-.tour .dots{display:flex;gap:6px;margin:22px 0 18px;}
-.tour .dots i{height:4px;flex:1;border-radius:99px;background:var(--line);}
-.tour .dots i.on{background:var(--gold);}
-.tour .row{display:flex;gap:9px;}
-.tour .row .pill{flex:1;padding:13px;font-size:14px;}
-.tour .skip{display:block;width:100%;text-align:center;margin-top:12px;font-size:12.5px;
-  color:var(--faint);text-decoration:underline;text-underline-offset:3px;}
-.tour .skip:hover{color:var(--muted);}
-.spot{position:relative;z-index:901;box-shadow:0 0 0 4px var(--gold),0 24px 60px rgba(30,49,69,.3);
-  border-radius:20px;}
+/* ============================================================
+   GUIDED TOUR — always above the dashboard
+   ============================================================ */
+
+body.tour-open{
+  overflow:hidden;
+}
+
+.tour-veil{
+  position:fixed;
+  inset:0;
+  z-index:99990;
+  background:rgba(18,34,51,.62);
+  backdrop-filter:blur(3px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+
+.tour{
+  background:#fff;
+  border-radius:22px;
+  max-width:460px;
+  width:100%;
+  box-shadow:0 30px 80px rgba(30,49,69,.38);
+  padding:clamp(24px,3vw,32px);
+  position:relative;
+  z-index:100000;
+}
+
+.spot{
+  position:relative;
+  z-index:1;
+  box-shadow:
+    0 0 0 3px var(--gold),
+    0 12px 40px rgba(30,49,69,.18);
+  border-radius:20px;
+}
 
 .foot-note{font-size:12px;color:var(--faint);text-align:center;margin-top:24px;}
 .load{text-align:center;padding:60px 20px;color:var(--muted);font-size:14.5px;}
@@ -314,17 +331,44 @@ async function saveLayout(){
 
 /* ---------------- render ---------------- */
 function render(){
-  const upcoming = BOOKINGS.filter(b => b.day >= ymdLocal(new Date()) && b.status !== 'cancelled')
-                           .sort((a,b) => a.day.localeCompare(b.day));
-  const past     = BOOKINGS.filter(b => b.day < ymdLocal(new Date()) || b.status === 'cancelled');
-  const first    = (ME.name || '').split(' ')[0] || 'there';
-  const hour     = new Date().getHours();
-  const part     = hour<12 ? 'Good morning' : hour<18 ? 'Good afternoon' : 'Good evening';
+  const wasEditing = EDITING;
 
-  const done = past.filter(b => b.status !== 'cancelled').length;
-  const sub  = BOOKINGS.length === 0
+  const today = ymdLocal(new Date());
+
+  const upcoming = BOOKINGS
+    .filter(b =>
+      b.day >= today &&
+      b.status !== 'cancelled'
+    )
+    .sort((a,b) =>
+      (a.day + ' ' + (a.slot || ''))
+        .localeCompare(b.day + ' ' + (b.slot || ''))
+    );
+
+  const past = BOOKINGS
+    .filter(b =>
+      b.day < today ||
+      b.status === 'cancelled'
+    );
+
+  const first = (ME.name || '').split(' ')[0] || 'there';
+
+  const hour = new Date().getHours();
+
+  const part =
+    hour < 12
+      ? 'Good morning'
+      : hour < 18
+        ? 'Good afternoon'
+        : 'Good evening';
+
+  const done = past.filter(
+    b => b.status !== 'cancelled'
+  ).length;
+
+  const sub = BOOKINGS.length === 0
     ? 'Your account is ready — nothing booked yet.'
-    : `${done} visit${done===1?'':'s'} with Greylock Trust · ${upcoming.length} upcoming`;
+    : `${done} visit${done === 1 ? '' : 's'} with Greylock Trust · ${upcoming.length} upcoming`;
 
   $('dash').innerHTML = `
     <div class="greet">
@@ -332,28 +376,58 @@ function render(){
         <h1>${part}, <em>${esc(first)}.</em></h1>
         <p class="sub">${sub}</p>
       </div>
+
       <div class="act" id="editAnchor">
-        <button class="pill pill-soft" id="editBtn">Edit layout</button>
-        <a class="pill pill-gold" href="marketplace.html">Book a visit</a>
+        <button class="pill pill-soft" id="editBtn">
+          ${wasEditing ? 'Done editing' : 'Edit layout'}
+        </button>
+
+        <a class="pill pill-gold" href="marketplace.html">
+          Book a visit
+        </a>
       </div>
     </div>
+
     <div id="editbar"></div>
+
     <div class="cols">
       <div id="colMain"></div>
       <aside id="colRail"></aside>
     </div>
-    <p class="foot-note">Only you and the advisor you booked can see anything on this page.</p>`;
+
+    <p class="foot-note">
+      Only you and the advisor you booked can see anything on this page.
+    </p>
+  `;
+
+  EDITING = wasEditing;
+
+  document.body.classList.toggle('editing', EDITING);
 
   drawColumns(upcoming, past);
   drawEditBar();
 
   $('editBtn').addEventListener('click', () => {
     EDITING = !EDITING;
-    document.body.classList.toggle('editing', EDITING);
-    $('editBtn').textContent = EDITING ? 'Done editing' : 'Edit layout';
-    drawColumns(upcoming, past);
+
+    document.body.classList.toggle(
+      'editing',
+      EDITING
+    );
+
+    $('editBtn').textContent =
+      EDITING ? 'Done editing' : 'Edit layout';
+
+    drawColumns(
+      upcoming,
+      past
+    );
+
     drawEditBar();
-    if(!EDITING) saveLayout();
+
+    if(!EDITING){
+      saveLayout();
+    }
   });
 }
 

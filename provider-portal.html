@@ -166,6 +166,7 @@ function draw(){
 
    
 
+<p class="help">Not applied yet? <a href="join.html">Apply to join</a></p>
 
     <p class="help">Looking for a client account instead?
       <a href="login.html">Sign in here</a></p>`;
@@ -184,9 +185,23 @@ document.getElementById('form').addEventListener('submit', async e=>{
     const r = await GT_AUTH.signIn(S.email,S.pw);
     if(!r.ok){ showNote(r.error,'#B4452F'); btn.disabled=false; return; }
 
-    if(r.session.role!=='advisor'){
+   if(r.session.role!=='advisor'){
+      const { data: app } = await GT_AUTH.SB
+        .from('advisor_applications')
+        .select('status')
+        .eq('user_id', r.session.id)
+        .order('created_at', { ascending:false })
+        .limit(1).maybeSingle();
+
       await GT_AUTH.signOut();
-      showNote('That\u2019s a client account. Use the client sign-in instead.','#B4452F');
+
+      if(app && (app.status === 'new' || app.status === 'reviewing')){
+        showNote('Your application is still with us — we\u2019ll email you as soon as it\u2019s been reviewed.');
+      }else if(app && app.status === 'declined'){
+        showNote('We\u2019re not able to bring you on at the moment. Get in touch if you\u2019d like to talk it through.');
+      }else{
+        showNote('That\u2019s a client account. Use the client sign-in instead.','#B4452F');
+      }
       btn.disabled=false; return;
     }
     if(!r.session.advisor){

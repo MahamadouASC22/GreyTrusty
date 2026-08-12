@@ -9,10 +9,16 @@
 
 const SB = supabase.createClient(
   'https://yltwbacfsktbtgqovnnm.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlsdHdiYWNmc2t0YnRncW92bm5tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxMjA0NTksImV4cCI6MjEwMTY5NjQ1OX0.Wmt8et2kJGbMgGXZs98TvyEjf7yQIhA0laeYHGxZb0c',   // leave your key as-is
-  { auth: { flowType: 'implicit', detectSessionInUrl: true, persistSession: true, autoRefreshToken: true } }
+  'YOUR_KEY',
+  {
+    auth: {
+      flowType: 'implicit',
+      detectSessionInUrl: true,
+      persistSession: true,
+      autoRefreshToken: true
+    }
+  }
 );
-
 /* A recovery or invite link can land on any page. Let supabase-js exchange
    the token here, then go to reset.html with NO hash — so this can never
    re-trigger and loop. */

@@ -16,9 +16,10 @@
 :root{ --serif:'Fraunces',Georgia,serif; }
 .dash{max-width:1300px;margin:0 auto;padding:calc(88px + 1vw) 24px 80px;}
 
+/* ---------- greeting ---------- */
 .greet{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:22px;}
 .greet .who{display:flex;align-items:center;gap:16px;}
-.greet img,.greet .fb{width:62px;height:62px;border-radius:16px;object-fit:cover;}
+.greet .av,.greet .fb{width:62px;height:62px;border-radius:16px;object-fit:cover;flex:none;}
 .greet .fb{background:var(--ink);color:var(--gold);display:flex;align-items:center;
   justify-content:center;font-size:22px;font-weight:600;}
 .greet h1{font-family:var(--serif);font-weight:300;font-size:clamp(26px,3.2vw,38px);
@@ -26,13 +27,18 @@
 .greet h1 em{font-style:italic;color:var(--gold-deep);font-weight:400;}
 .greet .sub{font-size:14px;color:var(--muted);margin-top:5px;}
 .greet .act{margin-left:auto;display:flex;gap:9px;flex-wrap:wrap;}
+
 .pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;
   font-weight:600;font-size:13.5px;padding:11px 18px;transition:all .18s ease;}
 .pill-gold{background:var(--gold);color:#fff;} .pill-gold:hover{background:var(--gold-deep);}
 .pill-soft{border:1px solid var(--line-2);color:var(--ink);background:#fff;}
 .pill-soft:hover{border-color:var(--ink);}
 .pill-ink{background:var(--ink);color:#fff;} .pill-ink:hover{background:var(--ink-2);}
+.pill-ghost{border:1px solid rgba(255,255,255,.42);color:#fff;background:none;}
+.pill-ghost:hover{background:rgba(255,255,255,.12);}
+.pill[disabled]{opacity:.45;cursor:not-allowed;}
 
+/* ---------- banner ---------- */
 .banner{background:var(--gold-wash);border:1px solid var(--gold-line);border-radius:16px;
   padding:16px 20px;margin-bottom:22px;display:flex;gap:14px;align-items:flex-start;}
 .banner i{width:24px;height:24px;border-radius:50%;background:#fff;border:1px solid var(--gold-line);
@@ -41,25 +47,28 @@
 .banner b{display:block;font-size:14.5px;color:var(--ink);margin-bottom:3px;}
 .banner p{font-size:13.5px;color:var(--body-c);line-height:1.65;}
 
+/* ---------- stats ---------- */
 .strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px;}
 @media(max-width:900px){.strip{grid-template-columns:1fr 1fr;}}
 @media(max-width:520px){.strip{grid-template-columns:1fr;}}
 .stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px;}
 .stat .k{font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);}
 .stat .v{font-size:27px;font-weight:700;color:var(--ink);line-height:1;margin:9px 0 4px;}
-.stat .v small{font-size:13px;font-weight:600;color:var(--muted);}
 .stat .n{font-size:12.5px;color:var(--muted);}
 .stat.gold{background:var(--gold-wash);border-color:var(--gold-line);}
 .stat.gold .v{color:var(--gold-deep);}
 
+/* ---------- columns & cards ---------- */
 .cols{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:20px;align-items:start;}
 @media(max-width:1040px){.cols{grid-template-columns:1fr;}}
 .card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;
   margin-bottom:20px;position:relative;}
-.ch{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+.ch{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;}
 .ch h2{font-family:var(--serif);font-weight:400;font-size:21px;color:var(--ink);letter-spacing:-.02em;}
 .ch .more{margin-left:auto;font-size:13px;font-weight:600;color:var(--gold-deep);}
+.ch .more:hover{text-decoration:underline;text-underline-offset:3px;}
 
+/* ---------- appointments ---------- */
 .tabs{display:flex;gap:4px;background:var(--chipbg);border-radius:999px;padding:4px;
   margin-bottom:18px;overflow-x:auto;}
 .tab{border-radius:999px;padding:10px 16px;font-size:13.5px;font-weight:700;color:var(--muted);
@@ -67,7 +76,6 @@
 .tab.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(30,49,69,.09);}
 .tab .badge{display:inline-block;margin-left:6px;background:var(--gold);color:#fff;
   border-radius:999px;font-size:10.5px;padding:1px 7px;}
-
 .appt{display:flex;gap:16px;align-items:center;padding:15px 0;border-bottom:1px solid var(--line);}
 .appt:last-child{border-bottom:none;}
 .appt .when{width:78px;flex:none;text-align:center;background:var(--bg);border:1px solid var(--line);
@@ -83,10 +91,11 @@
   background:var(--chipbg);border-radius:999px;padding:4px 9px;color:var(--muted);}
 .tg.gold{background:var(--gold-wash);color:var(--gold-deep);}
 .tg.ink{background:var(--ink);color:#fff;}
-.appt .go{margin-left:auto;flex:none;display:flex;gap:7px;}
+.appt .go{margin-left:auto;flex:none;display:flex;gap:7px;flex-wrap:wrap;}
 .appt .go .pill{padding:9px 14px;font-size:12.5px;}
 @media(max-width:640px){.appt{flex-wrap:wrap;}.appt .go{margin-left:0;width:100%;}}
 
+/* ---------- week ---------- */
 .avail{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;}
 .day{border:1px solid var(--line);border-radius:12px;padding:11px 6px;text-align:center;background:#fff;}
 .day .dw{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);}
@@ -105,6 +114,7 @@
   background:#fff;transition:transform .22s ease;box-shadow:0 2px 6px rgba(30,49,69,.2);}
 .sw.on{background:var(--gold);} .sw.on::after{transform:translateX(19px);}
 
+/* ---------- rail ---------- */
 .mini{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;
   margin-bottom:18px;position:relative;}
 .mini h3{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
@@ -131,6 +141,61 @@
 .task:last-child{border-bottom:none;}
 .task .dot{width:8px;height:8px;transform:rotate(45deg);background:var(--gold);flex:none;margin-top:6px;}
 
+/* ---------- profile editor ---------- */
+.ed-intro{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:20px;max-width:56ch;}
+.fld{margin-bottom:16px;}
+.fld label{font-size:12.5px;font-weight:700;color:var(--ink);display:block;}
+.fld input,.fld textarea{width:100%;margin-top:6px;padding:12px 14px;font-size:14.5px;
+  font-family:var(--f);border:1px solid var(--line-2);border-radius:12px;background:var(--bg);
+  color:var(--body-c);}
+.fld input:focus,.fld textarea:focus{outline:none;border-color:var(--gold);background:#fff;}
+.fld .hint{font-size:12px;color:var(--faint);margin-top:6px;line-height:1.55;}
+.fld .count{float:right;font-size:11.5px;color:var(--faint);font-weight:600;}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:560px){.two{grid-template-columns:1fr;}}
+.ed-sec{font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);margin:24px 0 12px;padding-top:20px;border-top:1px solid var(--line);}
+.ed-sec:first-of-type{margin-top:0;padding-top:0;border-top:none;}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px;}
+.chip-b{border:1px solid var(--line-2);background:#fff;border-radius:999px;padding:9px 14px;
+  font-size:13px;font-weight:600;color:var(--ink);}
+.chip-b:hover{border-color:var(--gold);}
+.chip-b.on{background:var(--gold);border-color:var(--gold);color:#fff;}
+.shot{display:flex;gap:20px;align-items:center;flex-wrap:wrap;}
+.shot .pv,.shot .pv-fb{width:112px;height:128px;border-radius:16px;object-fit:cover;flex:none;}
+.shot .pv-fb{background:var(--ink);color:var(--gold);display:flex;align-items:center;
+  justify-content:center;font-size:32px;font-weight:600;}
+.shot .side{flex:1;min-width:200px;}
+.shot .side p{font-size:12.5px;color:var(--muted);line-height:1.65;margin-top:8px;}
+input[type=file]{display:none;}
+.upbtn{border:1px solid var(--line-2);background:#fff;border-radius:999px;padding:11px 20px;
+  font-size:13.5px;font-weight:600;color:var(--ink);display:inline-flex;align-items:center;gap:8px;}
+.upbtn:hover{border-color:var(--ink);}
+.savebar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:22px;
+  padding-top:18px;border-top:1px solid var(--line);}
+.savebar .msg{font-size:13px;color:var(--muted);}
+.savebar .sp{margin-left:auto;display:flex;gap:9px;}
+.note{font-size:13px;line-height:1.6;margin-top:10px;}
+.note.err{color:#B4452F;}
+.note.ok{color:var(--gold-deep);}
+.chk{display:flex;align-items:flex-start;gap:10px;padding:9px 0;font-size:13.5px;
+  color:var(--body-c);line-height:1.5;border-bottom:1px solid var(--line);}
+.chk:last-of-type{border-bottom:none;}
+.chk i{width:18px;height:18px;border-radius:50%;flex:none;font-style:normal;font-size:10px;
+  font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px;}
+.chk.ok i{background:var(--gold-wash);border:1px solid var(--gold-line);color:var(--gold-deep);}
+.chk.no i{background:#fff;border:1px solid var(--line-2);color:var(--faint);}
+.chk.no{color:var(--muted);}
+.pub{background:linear-gradient(155deg,var(--ink-deep),var(--ink));color:#fff;border:none;
+  position:relative;overflow:hidden;}
+.pub::after{content:"";position:absolute;right:-60px;top:-70px;width:200px;height:200px;
+  border-radius:50%;background:radial-gradient(circle,rgba(195,144,60,.28),transparent 66%);}
+.pub>*{position:relative;z-index:1;}
+.pub h3{color:var(--gold-line);}
+.pub p{font-size:13.5px;color:rgba(255,255,255,.78);line-height:1.7;}
+.pub .pill{width:100%;margin-top:14px;padding:13px;}
+
+/* ---------- empty ---------- */
 .empty{text-align:center;padding:30px 16px;}
 .empty .ic{width:52px;height:52px;border-radius:50%;background:var(--gold-wash);
   border:1px solid var(--gold-line);color:var(--gold-deep);font-size:22px;display:flex;
@@ -138,23 +203,17 @@
 .empty h4{font-family:var(--serif);font-weight:400;font-size:19px;color:var(--ink);margin-bottom:8px;}
 .empty p{font-size:14px;color:var(--muted);line-height:1.7;max-width:38ch;margin:0 auto;}
 
-/* note writer */
+/* ---------- note writer sheet ---------- */
 .sheet{position:fixed;inset:0;z-index:880;background:rgba(18,34,51,.5);
   display:flex;align-items:center;justify-content:center;padding:24px;}
 .sheet-in{background:#fff;border-radius:22px;max-width:520px;width:100%;padding:clamp(22px,3vw,30px);
   box-shadow:0 30px 80px rgba(30,49,69,.3);max-height:88vh;overflow:auto;}
-.sheet-in h3{font-family:var(--serif);font-weight:400;font-size:22px;color:var(--ink);
-  margin-bottom:5px;}
+.sheet-in h3{font-family:var(--serif);font-weight:400;font-size:22px;color:var(--ink);margin-bottom:5px;}
 .sheet-in .sub{font-size:13.5px;color:var(--muted);margin-bottom:18px;}
-.sheet-in label{font-size:12.5px;font-weight:700;color:var(--ink);display:block;margin-bottom:12px;}
-.sheet-in input,.sheet-in textarea{width:100%;margin-top:6px;padding:12px 14px;font-size:14.5px;
-  font-family:var(--f);border:1px solid var(--line-2);border-radius:12px;background:var(--bg);
-  color:var(--body-c);}
-.sheet-in input:focus,.sheet-in textarea:focus{outline:none;border-color:var(--gold);background:#fff;}
 .sheet-in .row{display:flex;gap:9px;margin-top:8px;}
 .sheet-in .row .pill{flex:1;padding:13px;}
 
-/* layout editing + tour (shared vocabulary with the client dashboard) */
+/* ---------- layout editing ---------- */
 .editbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--gold-wash);
   border:1px solid var(--gold-line);border-radius:16px;padding:14px 18px;margin-bottom:20px;}
 .editbar b{font-size:14px;color:var(--gold-deep);}
@@ -174,11 +233,13 @@ body.editing .secbar{display:flex;}
 .addbtn b{display:block;font-size:14px;color:var(--ink);}
 .addbtn span{font-size:12.5px;color:var(--muted);line-height:1.5;}
 
+/* ---------- tour ---------- */
 .tour-veil{position:fixed;inset:0;z-index:900;background:rgba(18,34,51,.55);
   backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:24px;}
 .tour{background:#fff;border-radius:22px;max-width:460px;width:100%;
   box-shadow:0 30px 80px rgba(30,49,69,.3);padding:clamp(24px,3vw,32px);
   position:relative;z-index:920;}
+body.tour-open{overflow:hidden;}
 .tour .k{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep);}
 .tour h3{font-family:var(--serif);font-weight:300;font-size:clamp(24px,3vw,30px);color:var(--ink);
   letter-spacing:-.025em;line-height:1.14;margin:12px 0 10px;}
@@ -191,8 +252,10 @@ body.editing .secbar{display:flex;}
 .tour .row .pill{flex:1;padding:13px;font-size:14px;}
 .tour .skip{display:block;width:100%;text-align:center;margin-top:12px;font-size:12.5px;
   color:var(--faint);text-decoration:underline;text-underline-offset:3px;}
+.tour .skip:hover{color:var(--muted);}
 .spot{position:relative;z-index:901;box-shadow:0 0 0 4px var(--gold),0 24px 60px rgba(30,49,69,.3);
   border-radius:20px;}
+
 .load{text-align:center;padding:60px 20px;color:var(--muted);font-size:14.5px;}
 .foot-note{font-size:12px;color:var(--faint);text-align:center;margin-top:24px;}
 </style>
@@ -212,33 +275,61 @@ body.editing .secbar{display:flex;}
 <script>
 'use strict';
 
+/* ============================================================
+   Sections an advisor can arrange on their dashboard
+   ============================================================ */
 const SECTIONS = {
-  appts:   { name:'Appointments',    col:'main', blurb:'Everything booked with you, upcoming and past.' },
-  week:    { name:'Your week',       col:'main', blurb:'The hours you work and the switches that control them.' },
-  earn:    { name:'Earnings',        col:'rail', blurb:'What you have billed through Greylock so far.' },
-  profile: { name:'Profile strength',col:'rail', blurb:'What is filled in on your public page and what is missing.' },
-  todo:    { name:'Needs you',       col:'rail', blurb:'Clients to prepare for and notes still to write.' },
+  profile_edit: { name:'Your public profile', col:'main',
+                  blurb:'Headshot, bio, specialties and rate — and the publish button.' },
+  appts:        { name:'Appointments',        col:'main',
+                  blurb:'Everything booked with you, upcoming and past.' },
+  week:         { name:'Your week',           col:'main',
+                  blurb:'The hours you work and the switches that control them.' },
+  earn:         { name:'Earnings',            col:'rail',
+                  blurb:'What you have billed through Greylock so far.' },
+  strength:     { name:'Profile strength',    col:'rail',
+                  blurb:'What is filled in on your public page and what is missing.' },
+  todo:         { name:'Needs you',           col:'rail',
+                  blurb:'Clients to prepare for and notes still to write.' },
 };
-const DEFAULT_LAYOUT = ['appts','week','earn','profile','todo'];
+const DEFAULT_LAYOUT = ['profile_edit','appts','week','earn','strength','todo'];
 
 const TOUR = [
   { k:'Welcome',     h:'Your practice, <em>in one place</em>.',
-    p:'This is where your Greylock work lives. Three quick things and it\u2019s yours.' },
-  { k:'Step 1 of 3', h:'Bookings arrive <em>here</em>.',
-    p:'The moment a client confirms, they appear in Appointments. You can email them, cancel, and write up the visit afterwards.', spot:'sec-appts' },
-  { k:'Step 2 of 3', h:'Notes the client <em>keeps</em>.',
-    p:'After a visit, hit <b>Write notes</b>. What you write appears on their dashboard permanently — so a second visit never starts from zero.', spot:'sec-appts' },
-  { k:'Step 3 of 3', h:'Your hours, <em>your call</em>.',
-    p:'The switches under Your week control evenings, weekends, and whether you offer free intro calls. Change them whenever you like.', spot:'sec-week' },
+    p:'This is where your Greylock work lives. Four quick things and it\u2019s yours.' },
+  { k:'Step 1 of 3', h:'Write your <em>own profile</em>.',
+    p:'Your headshot, your words, your rate. Nobody can see it until you press publish — and you can change it any time after.', spot:'sec-profile_edit' },
+  { k:'Step 2 of 3', h:'Bookings arrive <em>here</em>.',
+    p:'The moment a client confirms, they appear in Appointments. Afterwards, hit <b>Write notes</b> — what you write lands on their dashboard and stays there for good.', spot:'sec-appts' },
+  { k:'Step 3 of 3', h:'Arrange it <em>how you like</em>.',
+    p:'Use <b>Edit layout</b> to move sections around or hide the ones you don\u2019t need. Nothing is permanent.', spot:'editAnchor' },
 ];
 
-let ME = null, ADV = null, LAYOUT = [], ROWS = [], NOTES = {};
-let EDITING = false, TAB = 'upcoming', TOUR_STEP = 0;
+/* ---------- profile editor options ---------- */
+const PERSONALITY_OPTS = ['Patient teacher','Friendly conversationalist',
+  'Efficient problem solver','Highly technical expert','Calm and reassuring'];
+const PLATFORM_OPTS = ['Windows','Mac','iPhone / iPad','Android'];
+const SPEC_OPTS = ['Wi-Fi & Internet','Data Protection','Computers & Laptops',
+  'Phones & Tablets','Setup, Repairs & Troubleshooting','Email & Accounts'];
+const FUTURE_OPTS = ['Home networking','Smart home security','Account security','AI tools',
+  'New computers','Phone setup','Family technology support','Data backup',
+  'Cloud storage','Privacy improvements','Technology education','Digital organization'];
 
+/* ---------- state ---------- */
+let ME = null;        // session profile
+let ADV = null;       // advisors row
+let P = null;         // working copy of the profile being edited
+let LAYOUT = [];
+let ROWS = [];        // bookings
+let NOTES = {};       // booking_id -> visit_note
+let EDITING = false, DIRTY = false, TAB = 'upcoming', TOUR_STEP = 0;
+
+/* ---------- helpers ---------- */
 const $ = id => document.getElementById(id);
 function esc(s){
   return String(s ?? '').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 }
+function arr(v){ return Array.isArray(v) ? v : []; }
 function ymdLocal(d){
   return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 }
@@ -255,34 +346,86 @@ function longDate(iso){
   return DOW[dt.getDay()]+' '+d+' '+MONTHS[m-1];
 }
 
-/* ---------------- boot ---------------- */
+/* ============================================================
+   BOOT
+   ============================================================ */
 (async function boot(){
   const r = await GT_AUTH.requireAdvisor();
-  if(!r) return;                        // already heading to the portal
+  if(!r) return;                       // already redirecting to the portal
 
   if(r.blocked){
-    $('dash').innerHTML = `
-      <div class="card" style="max-width:560px;margin:40px auto 0;text-align:center">
-        <h2 style="font-family:var(--serif);font-weight:400;font-size:22px;color:var(--ink);
-                   margin-bottom:10px">Almost there</h2>
-        <p style="font-size:14.5px;color:var(--muted);line-height:1.7">
-          You're signed in as <b>${esc(r.session.email)}</b>, but there's no advisor
-          profile attached to this account yet. If you've just been approved, we're
-          still writing your page — you'll get an email the moment it's live.</p>
-        <a class="pill pill-soft" href="index.html" style="margin-top:18px">Back to the site</a>
-      </div>`;
+    drawBlocked(r.session);
     return;
   }
 
-  ME = r.session; ADV = r.advisor;
+  ME = r.session;
+  ADV = r.advisor;
+
+  P = {
+    name:        ADV.name || ME.name || '',
+    title:       ADV.title || 'Privacy Advisor',
+    years:       ADV.years ?? '',
+    rate:        ADV.rate ?? '',
+    bio:         ADV.bio || '',
+    photo_url:   ADV.photo_url || '',
+    personality: ADV.personality || '',
+    specs:       arr(ADV.specs),
+    futures:     arr(ADV.futures),
+    platforms:   arr(ADV.platforms),
+    onsite:      ADV.onsite !== false,
+    remote:      ADV.remote !== false,
+  };
+
   await loadData();
 
   const saved = (ME.layout && Array.isArray(ME.layout.sections)) ? ME.layout.sections : null;
   LAYOUT = (saved && saved.length) ? saved.filter(k => SECTIONS[k]) : DEFAULT_LAYOUT.slice();
 
   render();
+
   if(!(ME.layout && ME.layout.tour === 'done')) drawTour();
+
+  window.addEventListener('beforeunload', e => {
+    if(DIRTY){ e.preventDefault(); e.returnValue = ''; }
+  });
 })();
+
+async function drawBlocked(session){
+  /* Signed in, but no advisors row. Say why, based on their application. */
+  let msg = `You're signed in as <b>${esc(session.email)}</b>, but there's no advisor
+    profile attached to this account yet.`;
+
+  try{
+    const { data: app } = await GT_AUTH.SB
+      .from('advisor_applications').select('status')
+      .eq('user_id', session.id)
+      .order('created_at', { ascending:false }).limit(1).maybeSingle();
+
+    if(app && (app.status === 'new' || app.status === 'reviewing')){
+      msg = `Your application is with us now. We read every one personally and
+        reply within three business days — you'll get an email either way.
+        Nothing more for you to do until then.`;
+    }else if(app && app.status === 'declined'){
+      msg = `We're not able to bring you on at the moment. If you'd like to talk
+        it through, email <b>team@greylocktrust.com</b> — we're happy to explain
+        and to look again later.`;
+    }else if(!app){
+      msg = `You're signed in as <b>${esc(session.email)}</b>, but you haven't
+        applied to advise with us yet.`;
+    }
+  }catch(e){ /* fall back to the generic message */ }
+
+  $('dash').innerHTML = `
+    <div class="card" style="max-width:560px;margin:40px auto 0;text-align:center">
+      <h2 style="font-family:var(--serif);font-weight:400;font-size:23px;color:var(--ink);
+                 margin-bottom:12px">Nothing here yet</h2>
+      <p style="font-size:14.5px;color:var(--muted);line-height:1.75">${msg}</p>
+      <div style="display:flex;gap:9px;justify-content:center;margin-top:20px;flex-wrap:wrap">
+        <a class="pill pill-soft" href="index.html">Back to the site</a>
+        <a class="pill pill-gold" href="join.html">Apply to join</a>
+      </div>
+    </div>`;
+}
 
 async function loadData(){
   const { data, error } = await GT_AUTH.SB.from('bookings')
@@ -304,7 +447,9 @@ async function saveLayout(tour){
   if(error) console.warn('[GT] layout not saved:', error.message);
 }
 
-/* ---------------- render ---------------- */
+/* ============================================================
+   RENDER
+   ============================================================ */
 function split(){
   const today = ymdLocal(new Date());
   return {
@@ -315,19 +460,19 @@ function split(){
 
 function render(){
   const { upcoming, past } = split();
-  const first = (ADV.name || '').split(' ')[0];
+  const first = (ADV.name || '').split(' ')[0] || 'there';
   const hour  = new Date().getHours();
   const part  = hour<12 ? 'Good morning' : hour<18 ? 'Good afternoon' : 'Good evening';
 
   $('dash').innerHTML = `
     <div class="greet">
       <div class="who">
-        ${ADV.photo_url ? `<img src="${esc(ADV.photo_url)}" alt="">`
-                        : `<div class="fb">${GT_AUTH.initials(ADV.name)}</div>`}
+        ${ADV.photo_url ? `<img class="av" src="${esc(ADV.photo_url)}" alt="">`
+                        : `<div class="fb">${GT_AUTH.initials(ADV.name || ME.email)}</div>`}
         <div>
           <h1>${part}, <em>${esc(first)}.</em></h1>
           <p class="sub">${esc(ADV.title||'Privacy Advisor')}${ADV.rate?' · $'+ADV.rate+'/hour':''} ·
-            ${ADV.published ? 'Profile live and accepting bookings' : 'Profile not published yet'}</p>
+            ${ADV.published ? 'Live and accepting bookings' : 'Not published yet'}</p>
         </div>
       </div>
       <div class="act" id="editAnchor">
@@ -340,14 +485,14 @@ function render(){
     ${ADV.published ? '' : `<div class="banner">
       <i>!</i>
       <div><b>Your profile isn't published yet</b>
-        <p>We're writing your page from your application. Clients can't find or
-           book you until it goes live — we'll email you when it does. Everything
-           else here works now.</p></div>
+        <p>Clients can't find or book you until you publish it. Fill in your
+           profile below and the publish button switches on — it's entirely
+           your call when that happens.</p></div>
     </div>`}
     <div class="strip" id="strip"></div>
     <div id="editbar"></div>
     <div class="cols"><div id="colMain"></div><aside id="colRail"></aside></div>
-    <p class="foot-note">Payouts and client matching aren't automated yet — we settle up directly.</p>`;
+    <p class="foot-note">Payouts aren't automated yet — we settle up with you directly.</p>`;
 
   drawStrip(upcoming, past);
   drawColumns(upcoming, past);
@@ -392,25 +537,48 @@ function secbar(key){
 function drawColumns(upcoming, past){
   const main = $('colMain'), rail = $('colRail');
   main.innerHTML = ''; rail.innerHTML = '';
+
   LAYOUT.forEach(key => {
     const def = SECTIONS[key];
     if(!def) return;
     (def.col === 'rail' ? rail : main)
       .insertAdjacentHTML('beforeend', sectionHTML(key, upcoming, past));
   });
+
+  if(!LAYOUT.length){
+    main.innerHTML = `<div class="card"><div class="empty">
+      <div class="ic">+</div><h4>Nothing on your dashboard</h4>
+      <p>You've removed every section. Use <b>Edit layout</b> above to put some back.</p>
+    </div></div>`;
+  }
+
   wireControls();
   drawAppts();
+  if(LAYOUT.includes('profile_edit')) drawEditor();
 }
 
 function sectionHTML(key, upcoming, past){
   const bar = secbar(key);
 
+  /* ---------------- profile editor shell ---------------- */
+  if(key === 'profile_edit'){
+    return `<section class="card" id="sec-profile_edit">${bar}
+      <div class="ch"><h2>Your public profile</h2>
+        ${ADV.published
+          ? `<a class="more" href="advisor.html?id=${ADV.id}#a=${ADV.id}">View it live</a>`
+          : '<span class="more" style="color:var(--faint)">Not published</span>'}</div>
+      <div id="editorHost"></div></section>`;
+  }
+
+  /* ---------------- appointments shell ---------------- */
   if(key === 'appts'){
     return `<section class="card" id="sec-appts">${bar}
+      <div class="ch"><h2>Appointments</h2></div>
       <div class="tabs" id="tabs"></div>
       <div id="apptList"></div></section>`;
   }
 
+  /* ---------------- your week ---------------- */
   if(key === 'week'){
     const WK = [['Mon','9–5'],['Tue','9–5'],['Wed','9–5'],
                 ['Thu', ADV.evenings?'9–7':'9–5'],['Fri','9–3'],
@@ -433,6 +601,7 @@ function sectionHTML(key, upcoming, past){
     </section>`;
   }
 
+  /* ---------------- earnings ---------------- */
   if(key === 'earn'){
     const billable = past.filter(b => b.kind !== 'intro' && b.status !== 'cancelled').length;
     const rate = Number(ADV.rate || 0);
@@ -448,26 +617,21 @@ function sectionHTML(key, upcoming, past){
       </div></div>`;
   }
 
-  if(key === 'profile'){
-    const checks = [
-      ['Headshot', !!ADV.photo_url],
-      ['Biography', !!(ADV.bio && ADV.bio.length > 60)],
-      ['Specialties', (ADV.specs||[]).length > 0],
-      ['Hourly rate', !!ADV.rate],
-      ['Published', ADV.published === true],
-    ];
-    const pct = Math.round(checks.filter(c=>c[1]).length / checks.length * 100);
-    return `<div class="mini" id="sec-profile">${bar}
+  /* ---------------- profile strength ---------------- */
+  if(key === 'strength'){
+    const c = checks();
+    const pct = Math.round(c.filter(x=>x[1]).length / c.length * 100);
+    return `<div class="mini" id="sec-strength">${bar}
       <h3>Profile strength</h3>
       <div style="font-size:24px;font-weight:700;color:var(--ink)">${pct}%</div>
       <div class="bar"><i style="width:${pct}%"></i></div>
-      ${checks.map(([t,ok])=>`<div class="prof-row"${ok?'':' style="color:var(--gold-deep)"'}>${t}
-        <b${ok?'':' style="color:var(--gold-deep)"'}>${ok?'Added':'To do'}</b></div>`).join('')}
-      <p style="font-size:12px;color:var(--faint);margin-top:14px;line-height:1.6">
-        We write and verify profile copy. Email <b>team@greylocktrust.com</b> to change anything.</p>
+      <p style="font-size:12.5px;color:var(--muted);margin-bottom:12px;line-height:1.6">
+        Fuller profiles get chosen more often — people book the person they can picture.</p>
+      ${c.map(([t,ok])=>`<div class="chk ${ok?'ok':'no'}"><i>${ok?'✓':''}</i><span>${t}</span></div>`).join('')}
     </div>`;
   }
 
+  /* ---------------- needs you ---------------- */
   if(key === 'todo'){
     const soon = upcoming.slice(0,3);
     const unwritten = past.filter(b => b.status !== 'cancelled' && !NOTES[b.id]).slice(0,3);
@@ -482,10 +646,355 @@ function sectionHTML(key, upcoming, past){
         : `<div class="task"><span class="dot"></span><span>Nothing outstanding.</span></div>`}
     </div>`;
   }
+
   return '';
 }
 
-/* ---------------- appointments ---------------- */
+/* ============================================================
+   PROFILE EDITOR
+   ============================================================ */
+function checks(){
+  return [
+    ['A headshot',                    !!P.photo_url],
+    ['Your name',                     (P.name||'').trim().length >= 2],
+    ['Years of experience',           P.years !== '' && Number(P.years) >= 0],
+    ['An hourly rate',                Number(P.rate) >= 20],
+    ['A biography (120+ characters)', (P.bio||'').trim().length >= 120],
+    ['At least one specialty',        P.specs.length > 0],
+    ['How you meet clients',          P.onsite || P.remote],
+  ];
+}
+
+function drawEditor(){
+  const host = $('editorHost');
+  if(!host) return;
+
+  host.innerHTML = `
+    <p class="ed-intro">This is what someone reads before deciding whether to book
+      you. Write it in your own voice — the advisors people choose sound like
+      people, not CVs.</p>
+
+    <div class="ed-sec">Your headshot</div>
+    <div class="shot">
+      <div id="pvWrap"></div>
+      <div class="side">
+        <label class="upbtn" for="photoFile">Choose a photo</label>
+        <input type="file" id="photoFile" accept="image/jpeg,image/png,image/webp">
+        <p>A clear photo of your face, looking at the camera. JPG, PNG or WebP,
+           up to 5 MB. Avoid group shots and sunglasses — this does more work
+           than anything else on the page.</p>
+        <p class="note" id="photoNote"></p>
+      </div>
+    </div>
+
+    <div class="ed-sec">The basics</div>
+    <div class="fld">
+      <label>Full name<input id="fName" type="text" value="${esc(P.name)}"></label>
+    </div>
+    <div class="fld">
+      <label>Title<input id="fTitle" type="text" value="${esc(P.title)}"></label>
+      <p class="hint">Most advisors keep "Privacy Advisor". Change it only if
+        something else describes you better.</p>
+    </div>
+    <div class="two">
+      <div class="fld">
+        <label>Years of experience<input id="fYears" type="number" min="0" max="60"
+          value="${esc(P.years)}"></label>
+      </div>
+      <div class="fld">
+        <label>Hourly rate ($)<input id="fRate" type="number" min="20" max="300"
+          value="${esc(P.rate)}"></label>
+        <p class="hint">You set this. Most sit between $50 and $100.</p>
+      </div>
+    </div>
+
+    <div class="ed-sec">About you</div>
+    <div class="fld">
+      <label><span class="count" id="bioCount"></span>Biography
+        <textarea id="fBio" rows="7"
+          placeholder="I help people feel calm about the technology they use every day. Most of my work is home networks and account security — the things that quietly stop working, or quietly stop being safe. I explain what I'm doing as I go, and I write it down so you don't have to remember it.">${esc(P.bio)}</textarea></label>
+      <p class="hint">At least 120 characters. Write it the way you'd say it out
+        loud to someone nervous about asking.</p>
+    </div>
+    <div class="fld">
+      <label>How would you describe your working style?</label>
+      <div class="chips" id="persChips"></div>
+    </div>
+
+    <div class="ed-sec">What you do</div>
+    <div class="fld">
+      <label>Specialties</label>
+      <div class="chips" id="specChips"></div>
+      <p class="hint">These decide who we show you to. Pick what you're genuinely
+        strong at, not everything you can manage.</p>
+    </div>
+    <div class="fld">
+      <label>You can help clients plan for</label>
+      <div class="chips" id="futChips"></div>
+    </div>
+    <div class="fld">
+      <label>Platforms you work with</label>
+      <div class="chips" id="platChips"></div>
+    </div>
+    <div class="fld">
+      <label>How do you meet clients?</label>
+      <div class="chips" id="modeChips"></div>
+    </div>
+
+    <div class="savebar">
+      <span class="msg" id="saveMsg">${DIRTY ? 'Unsaved changes' : 'All changes saved'}</span>
+      <div class="sp"><button class="pill pill-gold" id="saveBtn">Save changes</button></div>
+    </div>
+
+    <div class="mini pub" id="pubCard" style="margin-top:20px;margin-bottom:0"></div>`;
+
+  drawPreview();
+  drawChips();
+  drawPublish();
+  bioCount();
+  wireEditor();
+}
+
+function drawPreview(){
+  const w = $('pvWrap');
+  if(!w) return;
+  w.innerHTML = P.photo_url
+    ? `<img class="pv" src="${esc(P.photo_url)}" alt="Your headshot">`
+    : `<div class="pv-fb">${GT_AUTH.initials(P.name || ME.email)}</div>`;
+}
+
+function chipRow(hostId, opts, selected, onToggle){
+  const host = $(hostId);
+  if(!host) return;
+  host.innerHTML = opts.map(o =>
+    `<button type="button" class="chip-b ${selected.includes(o)?'on':''}" data-v="${esc(o)}">${esc(o)}</button>`
+  ).join('');
+  host.querySelectorAll('[data-v]').forEach(b => b.addEventListener('click', () => {
+    onToggle(b.dataset.v);
+    touch();
+    drawChips();
+    drawPublish();
+    refreshStrength();
+  }));
+}
+
+function drawChips(){
+  chipRow('persChips', PERSONALITY_OPTS, P.personality ? [P.personality] : [], v => {
+    P.personality = (P.personality === v) ? '' : v;
+  });
+  chipRow('specChips', SPEC_OPTS, P.specs, v => {
+    const i = P.specs.indexOf(v); i > -1 ? P.specs.splice(i,1) : P.specs.push(v);
+  });
+  chipRow('futChips', FUTURE_OPTS, P.futures, v => {
+    const i = P.futures.indexOf(v); i > -1 ? P.futures.splice(i,1) : P.futures.push(v);
+  });
+  chipRow('platChips', PLATFORM_OPTS, P.platforms, v => {
+    const i = P.platforms.indexOf(v); i > -1 ? P.platforms.splice(i,1) : P.platforms.push(v);
+  });
+
+  const modes = [];
+  if(P.onsite) modes.push('In person');
+  if(P.remote) modes.push('Virtually');
+  chipRow('modeChips', ['In person','Virtually'], modes, v => {
+    if(v === 'In person') P.onsite = !P.onsite; else P.remote = !P.remote;
+  });
+}
+
+function drawPublish(){
+  const card = $('pubCard');
+  if(!card) return;
+  const ready = checks().every(x => x[1]);
+
+  card.innerHTML = ADV.published
+    ? `<h3>You're live</h3>
+       <p>Clients can find you in the marketplace and book straight into your
+          calendar. Unpublishing hides your page — it doesn't cancel anything
+          already booked.</p>
+       <button class="pill pill-ghost" id="unpubBtn">Unpublish my profile</button>
+       <p class="note" id="pubNote"></p>`
+    : `<h3>Not published yet</h3>
+       <p>${ready
+            ? 'Everything\u2019s filled in. Publish and you\u2019ll appear in the marketplace straight away.'
+            : 'Finish the checklist in the sidebar and this switches on. Nobody can see your page until then.'}</p>
+       <button class="pill pill-gold" id="pubBtn" ${ready?'':'disabled'}>Publish my profile</button>
+       <p class="note" id="pubNote"></p>`;
+
+  const pub = $('pubBtn');
+  if(pub) pub.addEventListener('click', () => setPublished(true));
+  const un = $('unpubBtn');
+  if(un) un.addEventListener('click', () => {
+    if(confirm('Hide your profile from the marketplace? Bookings you already have are unaffected.'))
+      setPublished(false);
+  });
+}
+
+function refreshStrength(){
+  if(!LAYOUT.includes('strength')) return;
+  const host = $('sec-strength');
+  if(!host) return;
+  const c = checks();
+  const pct = Math.round(c.filter(x=>x[1]).length / c.length * 100);
+  const bar = host.querySelector('.bar i');
+  const num = host.querySelector('div[style*="font-size:24px"]');
+  if(bar) bar.style.width = pct + '%';
+  if(num) num.textContent = pct + '%';
+  host.querySelectorAll('.chk').forEach((el,i) => {
+    const ok = c[i] && c[i][1];
+    el.className = 'chk ' + (ok ? 'ok' : 'no');
+    el.querySelector('i').textContent = ok ? '✓' : '';
+  });
+}
+
+function touch(){
+  DIRTY = true;
+  const m = $('saveMsg');
+  if(m){ m.textContent = 'Unsaved changes'; m.style.color = 'var(--gold-deep)'; }
+}
+
+function bioCount(){
+  const el = $('bioCount');
+  if(!el) return;
+  const n = ($('fBio') ? $('fBio').value : P.bio || '').trim().length;
+  el.textContent = n + ' / 120';
+  el.style.color = n >= 120 ? 'var(--gold-deep)' : 'var(--faint)';
+}
+
+function wireEditor(){
+  const bind = (id, key) => {
+    const el = $(id);
+    if(!el) return;
+    el.addEventListener('input', () => {
+      P[key] = el.value;
+      touch();
+      drawPublish();
+      refreshStrength();
+      if(key === 'name') drawPreview();
+      if(key === 'bio') bioCount();
+    });
+  };
+  bind('fName','name'); bind('fTitle','title');
+  bind('fYears','years'); bind('fRate','rate'); bind('fBio','bio');
+
+  const save = $('saveBtn');
+  if(save) save.addEventListener('click', saveProfile);
+
+  const file = $('photoFile');
+  if(file) file.addEventListener('change', uploadPhoto);
+}
+
+async function uploadPhoto(e){
+  const f = e.target.files && e.target.files[0];
+  if(!f) return;
+  const note = $('photoNote');
+  note.className = 'note';
+
+  if(f.size > 5 * 1024 * 1024){
+    note.className = 'note err';
+    note.textContent = 'That file is over 5 MB. Try a smaller one.';
+    return;
+  }
+
+  note.textContent = 'Uploading…';
+
+  const ext  = (f.name.split('.').pop() || 'jpg').toLowerCase();
+  const path = `${ME.id}/headshot-${Date.now()}.${ext}`;
+
+  const { error: upErr } = await GT_AUTH.SB.storage
+    .from('headshots').upload(path, f, { upsert:true, contentType:f.type });
+
+  if(upErr){
+    console.error('[GT] headshot upload failed:', upErr);
+    note.className = 'note err';
+    note.textContent = 'That didn\u2019t upload. Try again, or email team@greylocktrust.com.';
+    return;
+  }
+
+  const { data } = GT_AUTH.SB.storage.from('headshots').getPublicUrl(path);
+  P.photo_url = data.publicUrl;
+
+  const { error: saveErr } = await GT_AUTH.SB.from('advisors')
+    .update({ photo_url: P.photo_url }).eq('id', ADV.id);
+
+  if(saveErr){
+    note.className = 'note err';
+    note.textContent = 'Uploaded, but we couldn\u2019t attach it: ' + saveErr.message;
+    return;
+  }
+
+  ADV.photo_url = P.photo_url;
+  note.className = 'note ok';
+  note.textContent = 'Headshot saved.';
+  drawPreview(); drawPublish(); refreshStrength();
+}
+
+async function saveProfile(){
+  const btn = $('saveBtn');
+  btn.disabled = true; btn.textContent = 'Saving…';
+
+  const patch = {
+    name:        (P.name||'').trim(),
+    title:       (P.title||'Privacy Advisor').trim(),
+    years:       P.years === '' ? null : parseInt(P.years,10),
+    rate:        P.rate  === '' ? null : parseInt(P.rate,10),
+    bio:         (P.bio||'').trim(),
+    personality: P.personality || null,
+    specs:       P.specs,
+    futures:     P.futures,
+    platforms:   P.platforms,
+    onsite:      !!P.onsite,
+    remote:      !!P.remote,
+  };
+
+  const { error } = await GT_AUTH.SB.from('advisors').update(patch).eq('id', ADV.id);
+
+  btn.disabled = false; btn.textContent = 'Save changes';
+  const m = $('saveMsg');
+
+  if(error){
+    console.error('[GT] profile not saved:', error);
+    m.textContent = 'Couldn\u2019t save: ' + error.message;
+    m.style.color = '#B4452F';
+    return false;
+  }
+
+  Object.assign(ADV, patch);
+  DIRTY = false;
+  m.textContent = 'All changes saved';
+  m.style.color = 'var(--muted)';
+  drawPublish(); refreshStrength();
+  return true;
+}
+
+async function setPublished(on){
+  /* Save first — the database refuses to publish an incomplete profile, and
+     it can only judge what it already has. */
+  if(on){
+    const ok = await saveProfile();
+    if(!ok) return;
+  }
+
+  const { error } = await GT_AUTH.SB.from('advisors')
+    .update({ published: on }).eq('id', ADV.id);
+
+  if(error){
+    console.error('[GT] publish failed:', error);
+    const n = $('pubNote');
+    if(n){
+      n.className = 'note err';
+      n.style.color = '#FFD9CF';
+      n.textContent = error.message.replace(/^.*?:\s*/, '');
+    }
+    return;
+  }
+
+  ADV.published = on;
+  render();
+  if(on) window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+/* ============================================================
+   APPOINTMENTS
+   ============================================================ */
 function drawAppts(){
   const tabs = $('tabs'), list = $('apptList');
   if(!tabs || !list) return;
@@ -499,6 +1008,7 @@ function drawAppts(){
   }));
 
   const rows = TAB === 'upcoming' ? upcoming : past;
+
   if(!rows.length){
     list.innerHTML = `<div class="empty">
       <div class="ic">◷</div>
@@ -506,7 +1016,7 @@ function drawAppts(){
       <p>${TAB==='upcoming'
         ? (ADV.published
             ? 'New bookings land here the moment a client confirms. Nothing for you to do until then.'
-            : 'Clients can\u2019t book you until your profile is published. We\u2019ll email you when it is.')
+            : 'Clients can\u2019t book you until you publish your profile.')
         : 'Once you\u2019ve seen a client, the visit moves here so you can write it up.'}</p>
     </div>`;
     return;
@@ -554,7 +1064,7 @@ function drawAppts(){
     b.addEventListener('click', () => openNote(b.dataset.note)));
 }
 
-/* ---------------- note writer ---------------- */
+/* ---------- note writer ---------- */
 function openNote(bookingId){
   const b = ROWS.find(x => String(x.id) === String(bookingId));
   if(!b) return;
@@ -568,11 +1078,11 @@ function openNote(bookingId){
       <h3>${existing ? 'Edit your notes' : 'Write up this visit'}</h3>
       <p class="sub">${esc(b.name||'Client')} · ${esc(longDate(b.day))}. This goes
         straight to their dashboard and stays there.</p>
-      <label>What was this visit about?
+      <div class="fld"><label>What was this visit about?
         <input id="nTitle" type="text" value="${esc(existing?existing.title:'')}"
-          placeholder="Wi-Fi dead zones upstairs"></label>
-      <label>What you did, and what you agreed
-        <textarea id="nBody" rows="9" placeholder="Write it the way you'd explain it to them — plain words, no jargon. Anything they need to remember, and anything you agreed to do next.">${esc(existing?existing.body:'')}</textarea></label>
+          placeholder="Wi-Fi dead zones upstairs"></label></div>
+      <div class="fld"><label>What you did, and what you agreed
+        <textarea id="nBody" rows="9" placeholder="Write it the way you'd explain it to them — plain words, no jargon. Anything they need to remember, and anything you agreed to do next.">${esc(existing?existing.body:'')}</textarea></label></div>
       <p style="font-size:12px;color:var(--faint);line-height:1.6">
         They can read this any time. Don't put passwords or recovery codes here.</p>
       <div class="row">
@@ -614,7 +1124,9 @@ function openNote(bookingId){
   });
 }
 
-/* ---------------- controls ---------------- */
+/* ============================================================
+   LAYOUT CONTROLS
+   ============================================================ */
 function wireControls(){
   document.querySelectorAll('[data-rm]').forEach(b => b.addEventListener('click', () => {
     LAYOUT = LAYOUT.filter(k => k !== b.dataset.rm); saveLayout(); render(); reopenEdit();
@@ -642,7 +1154,8 @@ function wireControls(){
 function reopenEdit(){
   if(!EDITING) return;
   document.body.classList.add('editing');
-  $('editBtn').textContent = 'Done editing';
+  const b = $('editBtn');
+  if(b) b.textContent = 'Done editing';
 }
 
 function drawEditBar(){
@@ -671,7 +1184,9 @@ function drawEditBar(){
   }));
 }
 
-/* ---------------- tour ---------------- */
+/* ============================================================
+   TOUR
+   ============================================================ */
 function drawTour(){
   document.querySelectorAll('.spot').forEach(el => el.classList.remove('spot'));
   const s = TOUR[TOUR_STEP];
@@ -688,6 +1203,8 @@ function drawTour(){
     veil.className = 'tour-veil'; veil.id = 'tourVeil';
     document.body.appendChild(veil);
   }
+  document.body.classList.add('tour-open');
+
   veil.innerHTML = `
     <div class="tour" role="dialog" aria-modal="true" aria-label="Getting started">
       <div class="k">${esc(s.k)}</div>
@@ -712,6 +1229,7 @@ function endTour(){
   document.querySelectorAll('.spot').forEach(el => el.classList.remove('spot'));
   const veil = $('tourVeil');
   if(veil) veil.remove();
+  document.body.classList.remove('tour-open');
   saveLayout('done');
 }
 </script>

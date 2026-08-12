@@ -123,7 +123,7 @@ const GT_DATA = (function(){
   async function load(){
     if(loaded) return A;
     if(typeof GT_AUTH === 'undefined' || !GT_AUTH.SB){
-      console.warn('[GT] no Supabase client — using built-in advisors');
+console.info('[GT] no published advisors yet — showing the built-in list');
       loaded = true;
       return A;
     }
@@ -146,7 +146,17 @@ const GT_DATA = (function(){
     return A;
   }
 
-  return { load, ready: load(), rowToAdvisor };
+/* Wait for every <script> on the page before looking for GT_AUTH.SB —
+     data.js is loaded before auth.js on several pages. */
+  const ready = new Promise(resolve => {
+    if(document.readyState === 'loading'){
+      document.addEventListener('DOMContentLoaded', () => resolve(load()));
+    }else{
+      resolve(load());
+    }
+  });
+
+  return { load, ready, rowToAdvisor };
 })();
 
 

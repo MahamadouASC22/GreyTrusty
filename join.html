@@ -672,7 +672,10 @@ document.getElementById('certGrid').innerHTML=CERTS.map(c=>`
 
 /* ================= application questionnaire ================= */
 const APP={name:'',email:'',phone:'',area:'',yrs:'',rate:'',
-           specs:[],certs:[], certOther:'',modes:[],pitch:'',step:0,done:false};
+           specs:[],certs:[], certOther:'',modes:[],pitch:'',
+           pw:'',step:0,done:false,already:false};
+
+let GT_ME=null;
 const SPEC_OPTS=[
 'Wi-Fi & Internet',
 'Data Protection',
@@ -685,26 +688,43 @@ const SPEC_OPTS=[
 
 const MODE_OPTS=[['onsite','In person'],['remote','Virtual'],['evenings','Evenings'],
   ['weekends','Weekends']];
-const STEPS=4;
+const STEPS=5;
 
 
 function drawApp(){
   const c=document.getElementById('fcard');
-  if(APP.done){
+ if(APP.done){
+    if(APP.already){
+      c.innerHTML=`<div class="done">
+        <div class="tick">✓</div>
+        <h3>You've already applied</h3>
+        <p>There's an application from this account still under review. We'll
+           email you either way — usually within three business days.</p>
+        <p style="margin-top:12px"><a href="provider-portal.html"
+          style="color:var(--gold-deep);font-weight:600">Check the advisor portal</a></p>
+      </div>`;
+      return;
+    }
     c.innerHTML=`<div class="done">
       <div class="tick">✓</div>
       <h3>Thanks, ${APP.name.split(' ')[0]}</h3>
-      <p>Your application is in. We read every one personally and reply within three business
-         days — usually sooner.</p>
-      <p style="margin-top:12px">If you've advised with us before, the portal is where
-         everything happens next.</p>
+      <p>Your application is in, and your account is ready. We read every
+         application personally and reply within three business days.</p>
+      <p style="margin-top:12px"><b>What happens next:</b> if we bring you on,
+         sign in at the advisor portal with the password you just chose. You'll
+         write your public profile there and publish it yourself when you're
+         happy with it. There's nothing else to set up.</p>
+      <p style="margin-top:14px"><a href="provider-portal.html"
+        style="color:var(--gold-deep);font-weight:600">Go to the advisor portal ›</a></p>
     </div>`;
     return;
   }
+
+  
   const bars=Array.from({length:STEPS},(_,i)=>`<i class="${i<=APP.step?'on':''}"></i>`).join('');
   let inner='';
   if(APP.step===0){
-    inner=`<div class="fstep-lbl">Step 1 of 4 · About you</div>
+    inner=`<div class="fstep-lbl">Step 1 of 5 · About you</div>
       <h2>Let's start with the basics</h2>
       <div class="fld" id="f-name"><label>Full name<input id="i-name" type="text" value="${APP.name}" autocomplete="name"></label>
         <span class="msg">Please enter your name.</span></div>
@@ -721,7 +741,7 @@ function drawApp(){
       <p class="fine">We'll never share your details or add you to a mailing list.</p>`;
   }
   if(APP.step===1){
-    inner=`<div class="fstep-lbl">Step 2 of 4 · Your work</div>
+    inner=`<div class="fstep-lbl">Step 2 of 5 · Your work</div>
       <h2>What are you strongest at?</h2>
       <p class="sub">Pick everything that genuinely applies — this shapes who we match you with.</p>
       <div class="fld" id="f-specs"><label>Specialties</label>
@@ -744,7 +764,7 @@ function drawApp(){
   const OPTS=['CompTIA A+','CompTIA Network+','CompTIA Security+','CISSP',
     'Apple Certified (ACSP)','Microsoft Certified','Certified Ethical Hacker',
     'IAPP Privacy','Google IT Support','Cisco CCNA'];
-  inner=`<div class="fstep-lbl">Step 3 of 4 · Credentials</div>
+  inner=`<div class="fstep-lbl">Step 3 of 5 · Credentials</div>
     <h2>Which certifications do you hold?</h2>
     <p class="sub">Select any you currently hold. We verify each one with the issuing body —
       and we sponsor advisors to earn more.</p>
@@ -762,7 +782,7 @@ function drawApp(){
       <button class="pill pill-gold" id="next">Continue</button></div>`;
 }
   if(APP.step===3){
-    inner=`<div class="fstep-lbl">Step 4 of 4 · In your words</div>
+    inner=`<div class="fstep-lbl">Step 4 of 5 · In your words</div>
       <h2>How you help matters</h2>
       <p class="sub">The way you explain things counts as much as what you know.</p>
       <div class="fld" id="f-pitch">
@@ -771,8 +791,36 @@ function drawApp(){
           <textarea id="i-pitch" rows="6" placeholder="A few sentences is plenty.">${APP.pitch}</textarea></label>
         <span class="msg">Please write a couple of sentences.</span></div>
       <div class="fnav"><button class="pill pill-soft" id="back">Back</button>
-        <button class="pill pill-gold" id="next">Submit application</button></div>
-      <p class="fine">We read every application ourselves and reply within three business days.</p>`;
+<button class="pill pill-gold" id="next">Continue</button>`;
+  }if(APP.step===4){
+    if(GT_ME){
+      inner=`<div class="fstep-lbl">Step 5 of 5 · Your account</div>
+        <h2>You're signed in as ${GT_ME.name}</h2>
+        <p class="sub">We'll attach this application to your account. If we bring
+          you on, you sign in with the password you already have — there's no
+          second setup step and no invitation email to wait for.</p>
+        <div class="fnav"><button class="pill pill-soft" id="back">Back</button>
+          <button class="pill pill-gold" id="next">Submit application</button></div>
+        <p class="fine">We read every application ourselves and reply within three business days.</p>`;
+    }else{
+      inner=`<div class="fstep-lbl">Step 5 of 5 · Your account</div>
+        <h2>Create your advisor account</h2>
+        <p class="sub">This is the account you'll use to manage your calendar and
+          write your profile. Creating it now means that if we bring you on,
+          you're ready to work immediately.</p>
+        <div class="fld" id="f-aemail"><label>Email
+          <input id="i-aemail" type="email" value="${APP.email}" autocomplete="email"></label>
+          <span class="msg">Enter a valid email.</span></div>
+        <div class="fld" id="f-apw"><label>Choose a password
+          <input id="i-apw" type="password" autocomplete="new-password"
+            placeholder="At least 8 characters"></label>
+          <span class="msg">Use at least 8 characters.</span></div>
+        <div class="fnav"><button class="pill pill-soft" id="back">Back</button>
+          <button class="pill pill-gold" id="next">Create account &amp; submit</button></div>
+        <p class="fine">Already have a Greylock account?
+          <a href="login.html?next=join.html" style="color:var(--gold-deep);font-weight:600">Sign in first</a>,
+          then come back here.</p>`;
+    }
   }
   c.innerHTML=`<div class="fbar">${bars}</div>${inner}`;
 
@@ -795,65 +843,7 @@ document.getElementById('next').addEventListener('click', async ()=>{    stash()
     if(!validate())return;
     if(APP.step<STEPS-1){APP.step++;drawApp();}
 
-   else {
-  stash();
-
-  const submitBtn = document.getElementById('next');
-
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Submitting…';
-
- const { error } = await GT_AUTH.SB
-  .from('advisor_applications')
-  .insert({
-    full_name: APP.name,
-    email: APP.email,
-    phone: APP.phone,
-    area: APP.area,
-    yrs: parseInt(APP.yrs, 10) || null,
-    rate: parseInt(APP.rate, 10) || null,
-    specs: APP.specs,
-    certs: APP.certs,
-    cert_other: APP.certOther,
-    modes: APP.modes,
-    pitch: APP.pitch,
-    status: 'new'
   });
-  
-if (error) {
-  console.error('[GT] application not saved:', error);
-
-  submitBtn.disabled = false;
-  submitBtn.textContent = 'Submit application';
-
-  const c = document.getElementById('fcard');
-
-  if (c) {
-    c.insertAdjacentHTML(
-      'beforeend',
-      `<p style="font-size:13px;color:#B4452F;text-align:center;margin-top:14px">
-        We couldn't submit your application. Please try again or email
-        <b>team@greylocktrust.com</b>.
-      </p>`
-    );
-  }
-
-  return;
-}
-
-console.log('[GT] application saved');
-
-APP.done = true;
-drawApp();
-
- 
-
-  document.querySelector('.apply-in').scrollIntoView({
-    behavior: 'smooth',
-    block: 'center'
-  });
-}
-    });
 }
 function v(id){const el=document.getElementById(id);return el?el.value.trim():'';}
 function stash(){
@@ -862,6 +852,7 @@ function stash(){
   if(document.getElementById('i-yrs')){APP.yrs=v('i-yrs');APP.rate=v('i-rate');}
   if(document.getElementById('i-pitch'))APP.pitch=v('i-pitch');
   if(document.getElementById('i-certother'))APP.certOther=v('i-certother');
+  if(document.getElementById('i-aemail')){APP.email=v('i-aemail');APP.pw=v('i-apw');}
 }
 function bad(id,cond){
   const f=document.getElementById(id);
@@ -886,9 +877,27 @@ function validate(){
   }
 if(APP.step===3)ok=bad('f-pitch',APP.pitch.length>=25)&&ok;
   return ok;
+  if(APP.step===3)ok=bad('f-pitch',APP.pitch.length>=25)&&ok;
+  if(APP.step===4 && !GT_ME){
+    ok=bad('f-aemail',/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(APP.email))&&ok;
+    ok=bad('f-apw',APP.pw.length>=8)&&ok;
+  }
+  return ok;
 }
-drawApp();
+function showAppError(msg){
+  const c=document.getElementById('fcard');
+  if(!c) return;
+  const old=c.querySelector('.app-err');
+  if(old) old.remove();
+  c.insertAdjacentHTML('beforeend',
+    `<p class="app-err" style="font-size:13px;color:#B4452F;text-align:center;margin-top:14px">${msg}</p>`);
+}
 
+(async function bootApp(){
+  try{ GT_ME = await GT_AUTH.session(); }catch(e){ GT_ME = null; }
+  if(GT_ME) APP.email = GT_ME.email;
+  drawApp();
+})();
 
 /* ================= FAQ ================= */
 const FAQ=[
