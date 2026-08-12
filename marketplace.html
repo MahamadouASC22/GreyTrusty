@@ -14,6 +14,217 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/site.css">
 <style>
+/* ============================================================
+   MARKETPLACE QUIZ — FINAL MOBILE / LAYOUT FIXES
+   ============================================================ */
+
+/* Keep the quiz completely inside the viewport */
+.quiz{
+  position:fixed;
+  left:0;
+  right:0;
+  top:76px;
+  bottom:0;
+  height:calc(100dvh - 76px);
+  min-height:0;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+/* Quiz content gets its own scroll area */
+.q-mid{
+  flex:1 1 auto;
+  min-height:0;
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px 24px;
+  overflow-y:auto;
+  overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+}
+
+/* Bottom navigation always stays inside the quiz */
+.q-bot{
+  flex:0 0 auto;
+  position:relative;
+  z-index:2;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  min-height:76px;
+  padding:14px 28px;
+  border-top:1px solid var(--line);
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+
+/* Back button */
+.q-back{
+  justify-self:end;
+  border:1px solid var(--line-2);
+  background:#fff;
+  color:var(--body-c);
+  border-radius:999px;
+  font-weight:600;
+  font-size:14px;
+  padding:12px 26px;
+  white-space:nowrap;
+}
+
+/* Next / Let's begin button */
+.q-next{
+  justify-self:start;
+  margin-left:12px;
+  background:var(--gold);
+  color:#fff;
+  border-radius:999px;
+  font-weight:700;
+  font-size:14px;
+  padding:12px 36px;
+  white-space:nowrap;
+}
+
+.q-next:hover{
+  background:var(--gold-deep);
+}
+
+/* Keep welcome content centered */
+.wel{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  width:100%;
+  max-width:760px;
+  margin:auto;
+}
+
+/* Make the two welcome rows line up consistently */
+.wel .rows{
+  width:100%;
+  max-width:620px;
+  margin:35px auto 0;
+}
+
+.wel .row{
+  display:block;
+  width:100%;
+  padding:18px 0;
+  border-top:1px solid var(--line);
+  text-align:left;
+}
+
+.wel .row:last-child{
+  border-bottom:1px solid var(--line);
+}
+
+/* Same text width and alignment for both rows */
+.wel .row > div{
+  width:100%;
+  text-align:left;
+}
+
+.rt2{
+  font-size:18px;
+  font-weight:700;
+  color:var(--ink);
+  margin-bottom:6px;
+  text-align:left;
+}
+
+.rs{
+  font-size:15px;
+  line-height:1.6;
+  color:var(--muted);
+  text-align:left;
+}
+
+
+/* ------------------------------------------------------------
+   MOBILE
+   ------------------------------------------------------------ */
+
+@media(max-width:640px){
+
+  .quiz{
+    top:64px;
+    height:calc(100dvh - 64px);
+    bottom:0;
+  }
+
+  .q-mid{
+    padding:14px 16px;
+    align-items:center;
+  }
+
+  .q-inner{
+    width:100%;
+    max-width:100%;
+  }
+
+  .q-inner h2{
+    font-size:clamp(23px,6.4vw,31px);
+  }
+
+  .wel{
+    width:100%;
+    max-width:100%;
+  }
+
+  .wel h2{
+    font-size:clamp(26px,7vw,34px);
+  }
+
+  .wel .q-sub{
+    font-size:15px;
+    line-height:1.6;
+    max-width:100%;
+  }
+
+  .wel .rows{
+    width:100%;
+    max-width:100%;
+    margin-top:22px;
+  }
+
+  .wel .row{
+    padding:13px 0;
+  }
+
+  .rt2{
+    font-size:17px;
+  }
+
+  .rs{
+    font-size:14px;
+  }
+
+  /* Stack Back + Next neatly */
+  .q-bot{
+    grid-template-columns:1fr;
+    gap:8px;
+    min-height:0;
+    padding:12px 16px;
+  }
+
+  .q-back,
+  .q-next{
+    width:100%;
+    justify-self:stretch;
+    margin-left:0;
+    padding:12px 20px;
+  }
+
+  .q-browse{
+    display:none;
+  }
+}
+
 .acct{display:grid;gap:12px;max-width:380px;margin:26px auto 0;text-align:left;}
 .acct label{font-size:12.5px;font-weight:700;color:var(--ink);display:block;}
 .acct input{width:100%;margin-top:6px;padding:12px 14px;font-size:15px;font-family:var(--f);
@@ -24,21 +235,6 @@
 .amsg.on{display:block;}
 .anote{font-size:12.5px;color:var(--faint);text-align:center;margin-top:6px;line-height:1.6;}
 .anote a{color:var(--gold-deep);font-weight:600;}
-
-.q-inner{
-  max-width:1100px;width:100%;text-align:center;
-  animation:qin .25s ease both;
-  transition:opacity .2s ease;
-  will-change:opacity;
-  -webkit-backface-visibility:hidden;
-  transform:translateZ(0);
-}
-@keyframes qin{from{opacity:0}to{opacity:1}}   /* opacity only, no translateY */
-
-
-.q-mid{flex:1;display:flex;align-items:center;justify-content:center;
-  padding:16px 24px;overflow-y:auto;overflow-x:hidden;
-  position:relative;isolation:isolate;-webkit-overflow-scrolling:touch;}
 
 
 .head{padding:calc(96px + 1.6vw) 26px 0;text-align:center;}
@@ -555,7 +751,6 @@ transition:opacity .2s ease;
 /* keep the button bar on screen */
 .q-mid{min-height:0;}
 .q-bot{position:relative;flex:none;}
-.quiz{height:auto;}
 @media(max-width:640px){
   .q-mid{padding:14px 16px;}
   .q-inner h2{font-size:clamp(23px,6.4vw,31px);}
@@ -1410,8 +1605,11 @@ function ymd(d){                    // local date, NOT toISOString (shifts a day
 }
 
 async function saveBooking(a) {
+  const { data:{ session } } = await GT_AUTH.SB.auth.getSession();
+  const uid = session ? session.user.id : null;
+
   const payload = {
-    client_id: GT_ME ? GT_ME.id : null,
+    client_id: uid,
     advisor_id: a.id,
     kind: B.mode === 'intro' ? 'intro' : 'session',
     mode: B.meet === 'onsite' ? 'In-person' : 'Video call',
@@ -1427,76 +1625,59 @@ async function saveBooking(a) {
 
   console.log('[GT] saving booking:', payload);
 
-  const { error } = await GT_AUTH.SB
-  .from('bookings')
-  .insert(payload);
-
-if (error) {
-  console.error('[GT] booking not saved:', error);
-
-  bookingWarning(
-    error.code === '23505'
-      ? 'Someone just took that slot. Pick another time and we’ll get you booked.'
-      : 'We couldn’t save that booking. Please try again or email team@greylocktrust.com.'
-  );
-
-  return false;
-}
+  const { error } = await GT_AUTH.SB.from('bookings').insert(payload);
 
   if (error) {
     console.error('[GT] booking not saved:', error);
 
-    bookingWarning(
-      error.code === '23505'
-        ? 'Someone just took that slot. Pick another time and we’ll get you booked.'
-        : 'We couldn’t save that booking. Please try again or email team@greylocktrust.com.'
-    );
+    if (error.code === '23505') {
+      bookingWarning('That time is no longer available — someone just booked it. Please choose another time.');
+      B.time = null;
+      renderBook(a);
+      return false;
+    }
 
+    bookingWarning('We couldn\u2019t save that booking. Please try again, or email team@greylocktrust.com and we\u2019ll sort it out.');
     return false;
   }
 
-  console.log('[GT] booking saved:', data);
+  console.log('[GT] booking saved');
 
   try {
-    const { error: emailError } =
-      await GT_AUTH.SB.functions.invoke(
-        'send-confirmation-email',
-        {
-          body: {
-            booking_id: data.id,
-            email: B.email,
-            name: B.name,
-            advisor: a.name,
-            day: dLabel(new Date(B.date)),
-            time: B.time,
-            mode: payload.mode,
-            kind: payload.kind
-          }
-        }
-      );
-
-    if (emailError) {
-      console.warn(
-        '[GT] confirmation email failed:',
-        emailError
-      );
-    }
-
+    await GT_AUTH.SB.functions.invoke('send-confirmation-email', {
+      body: {
+        email: B.email,
+        name: B.name,
+        advisor: a.name,
+        day: dLabel(new Date(B.date)),
+        time: B.time,
+        mode: payload.mode,
+        kind: payload.kind
+      }
+    });
   } catch (e) {
-    console.warn(
-      '[GT] confirmation email failed:',
-      e
-    );
+    console.warn('[GT] confirmation email failed:', e);
   }
 
   return true;
 }
 
-function bookingWarning(msg){
-  const el = document.querySelector('.bp-done p');
-  if(!el) return;
-  el.insertAdjacentHTML('afterend',
-    `<p style="margin-top:12px;font-size:13px;color:#B4452F">${msg}</p>`);
+function bookingWarning(msg, kind){
+  B.warn = { msg, kind: kind || 'error' };
+  paintWarning();
+}
+
+function paintWarning(){
+  if(!B.warn) return;
+  const body = document.querySelector('#bpIn .bp-body');
+  if(!body) return;
+  const err = B.warn.kind === 'error';
+  body.insertAdjacentHTML('afterbegin', `
+    <div style="margin-bottom:13px;padding:11px 13px;border-radius:11px;font-size:13px;
+      line-height:1.5;background:${err?'#FFF4F1':'var(--gold-wash)'};
+      border:1px solid ${err?'#E8B8AC':'var(--gold-line)'};
+      color:${err?'#B4452F':'var(--gold-deep)'}">${B.warn.msg}</div>`);
+  B.warn = null;
 }
 
 function toISO(date,time){

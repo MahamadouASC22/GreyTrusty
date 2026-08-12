@@ -465,9 +465,13 @@ document.getElementById('left').innerHTML=`
 
 
 /* ---------------- booking rail ---------------- */
-let B={mode:a.intro?'intro':'session',date:null,mView:null,time:null};
-function drawRail(){
+let B={mode:a.intro?'intro':'session',date:null,mView:null,time:null,
+       step:'when',meet:'',name:'',email:'',phone:'',address:'',notes:'',done:false};
+       
+       function drawRail(){
   const intro=B.mode==='intro';
+  if(B.done){ drawDone(); return; }
+  if(B.step==='details'){ drawDetails(); return; }
   if(!B.mView){const n=new Date();B.mView=new Date(n.getFullYear(),n.getMonth(),1);}
   if(!B.date){const p=new Date();p.setHours(0,0,0,0);
     for(let i=1;i<=40;i++){p.setDate(p.getDate()+1);
@@ -507,15 +511,14 @@ function drawRail(){
     <div class="times">${times.map(t=>
       `<button class="time ${t===B.time?'sel':''}" data-t="${t}">${t}</button>`).join('')||
       '<span style="font-size:13px;color:var(--faint)">Choose an available day above.</span>'}</div>
-    <a class="pill pill-gold bk-go" id="go" ${B.time?'':'disabled'}
-       href="${B.time?`marketplace.html?book=${a.id}&kind=${B.mode}&day=${encodeURIComponent(dLabel(new Date(B.date)))}&time=${encodeURIComponent(B.time)}`:'#'}">
-      ${B.time?'Continue — '+dLabel(new Date(B.date))+' at '+B.time:'Select a time to continue'}</a>
-    <p class="bk-fine">${intro?'Nothing is charged for an intro call.'
+<button class="pill pill-gold bk-go" id="go" ${B.time?'':'disabled'}>
+      ${B.time?'Continue — '+dLabel(new Date(B.date))+' at '+B.time:'Select a time to continue'}</button>
+          <p class="bk-fine">${intro?'Nothing is charged for an intro call.'
       :'Nothing is charged until after the session.'} You'll enter your details on the next step.</p>`;
 
 
   document.querySelectorAll('.bk-tab').forEach(b=>b.addEventListener('click',()=>{
-    B={mode:b.dataset.mode,date:null,mView:null,time:null};drawRail();}));
+Object.assign(B,{mode:b.dataset.mode,date:null,mView:null,time:null,step:'when',done:false});drawRail();}));
   const pv=document.getElementById('mcPrev');
   if(pv&&prevOk)pv.addEventListener('click',()=>{B.mView=new Date(y,mo-1,1);drawRail();});
   document.getElementById('mcNext').addEventListener('click',()=>{B.mView=new Date(y,mo+1,1);drawRail();});
@@ -523,8 +526,151 @@ function drawRail(){
     B.date=new Date(b.dataset.d);B.time=null;drawRail();}));
   document.querySelectorAll('.time').forEach(b=>b.addEventListener('click',()=>{
     B.time=b.dataset.t;drawRail();}));
+    const go=document.getElementById('go');
+  if(go&&B.time)go.addEventListener('click',()=>{
+    B.meet = B.mode==='intro' ? 'remote' : (a.onsite ? (a.remote ? '' : 'onsite') : 'remote');
+    B.step='details'; drawRail();
+  });
 }
+
 drawRail();
+
+function needsAddress(){ return B.meet==='onsite'||B.meet==='both'; }
+function v2(id){ const el=document.getElementById(id); return el?el.value.trim():''; }
+function mark(id,msg,pass){
+  const el=document.getElementById(id), m=document.getElementById(msg);
+  if(el)el.classList.toggle('err',!pass);
+  if(m)m.classList.toggle('on',!pass);
+  return pass;
+}
+function ymd(d){
+  const x=new Date(d);
+  return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');
+}
+
+function drawDetails(){
+  const intro=B.mode==='intro';
+  const modeSeg = intro
+    ? `<p style="font-size:13px;color:var(--muted)">Intro calls are
+        <b style="color:var(--ink)">virtual</b> — we'll email you a link.</p>`
+    : (a.onsite&&a.remote)
+    ? `<div><label>How would you like to meet?</label>
+        <div class="bk-tabs" style="margin-top:6px">
+          <button type="button" class="bk-tab ${B.meet==='onsite'?'on':''}" data-m="onsite">In person</button>
+          <button type="button" class="bk-tab ${B.meet==='remote'?'on':''}" data-m="remote">Virtual</button>
+        </div></div>`
+    : `<p style="font-size:13px;color:var(--muted)">This advisor meets
+        <b style="color:var(--ink)">${a.onsite?'in person':'virtually'}</b>.</p>`;
+
+  document.getElementById('rail').innerHTML=`
+    <div class="bk-sec">Your details</div>
+    <div style="background:var(--bg);border:1px solid var(--line);border-radius:12px;
+                padding:11px 13px;font-size:13px;margin-bottom:14px">
+      <b style="color:var(--ink)">${dLabel(new Date(B.date))} at ${B.time}</b>
+      <button id="changeWhen" style="float:right;font-size:12px;color:var(--gold-deep);
+        font-weight:700">Change</button>
+    </div>
+    <div id="railWarn"></div>
+    <form class="rf" id="bkForm" style="border-top:none;margin-top:0;padding-top:0" novalidate>
+      ${modeSeg}
+      <div><label>Full name<input id="bName" type="text" value="${B.name}" autocomplete="name"></label>
+        <span class="rf-msg" id="mBName">Please enter your name.</span></div>
+      <div><label>Email<input id="bEmail" type="email" value="${B.email}" autocomplete="email"></label>
+        <span class="rf-msg" id="mBEmail">Please enter a valid email.</span></div>
+      <div><label>Phone<input id="bPhone" type="tel" value="${B.phone}" autocomplete="tel"></label>
+        <span class="rf-msg" id="mBPhone">Please enter a phone number.</span></div>
+      ${needsAddress()?`<div><label>Address<input id="bAddr" type="text" value="${B.address}"
+        autocomplete="street-address"></label>
+        <span class="rf-msg" id="mBAddr">We need an address for in-person visits.</span></div>`:''}
+      <div><label>Anything we should know? <span style="font-weight:500;color:var(--muted)">(optional)</span>
+        <textarea id="bNotes" rows="3">${B.notes}</textarea></label></div>
+      <button class="pill pill-gold" type="submit" style="padding:14px;width:100%">
+        ${intro?'Confirm free intro call':'Confirm booking'}</button>
+    </form>
+    <p class="bk-fine">${intro?'Nothing is charged for an intro call.'
+      :'Nothing is charged until after the session.'}</p>`;
+
+  document.getElementById('changeWhen').addEventListener('click',()=>{B.step='when';drawRail();});
+  document.querySelectorAll('[data-m]').forEach(b=>b.addEventListener('click',()=>{
+    B.meet=b.dataset.m;
+    B.name=v2('bName');B.email=v2('bEmail');B.phone=v2('bPhone');
+    B.address=v2('bAddr');B.notes=v2('bNotes');
+    drawDetails();
+  }));
+
+  document.getElementById('bkForm').addEventListener('submit', async e=>{
+    e.preventDefault();
+    B.name=v2('bName');B.email=v2('bEmail');B.phone=v2('bPhone');
+    B.address=v2('bAddr');B.notes=v2('bNotes');
+    let ok=true;
+    ok=mark('bName','mBName',B.name.length>=2)&&ok;
+    ok=mark('bEmail','mBEmail',/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(B.email))&&ok;
+    ok=mark('bPhone','mBPhone',B.phone.replace(/[^0-9]/g,'').length>=7)&&ok;
+    if(needsAddress())ok=mark('bAddr','mBAddr',B.address.length>=6)&&ok;
+    if(!ok)return;
+
+    const btn=e.target.querySelector('button[type=submit]');
+    btn.disabled=true; btn.textContent='Saving…';
+
+    const { data:{ session } } = await GT_AUTH.SB.auth.getSession();
+    const { error } = await GT_AUTH.SB.from('bookings').insert({
+      client_id: session ? session.user.id : null,
+      advisor_id: a.id,
+      kind: B.mode==='intro'?'intro':'session',
+      mode: B.meet==='onsite'?'In-person':'Video call',
+      day: ymd(B.date),
+      slot: B.time,
+      name:B.name, email:B.email, phone:B.phone,
+      address: B.meet==='onsite'?B.address:null,
+      notes:B.notes, status:'confirmed'
+    });
+
+    if(error){
+      console.error('[GT] booking not saved:', error);
+      const w=document.getElementById('railWarn');
+      const taken = error.code==='23505';
+      if(w) w.innerHTML=`<div style="margin-bottom:13px;padding:11px 13px;border-radius:11px;
+        font-size:13px;line-height:1.5;background:#FFF4F1;border:1px solid #E8B8AC;color:#B4452F">
+        ${taken?"That time was just taken. Pick another and we'll get you booked."
+               :"We couldn't save that booking. Please email team@greylocktrust.com."}</div>`;
+      if(taken){ B.time=null; B.step='when'; drawRail(); return; }
+      btn.disabled=false;
+      btn.textContent = B.mode==='intro'?'Confirm free intro call':'Confirm booking';
+      return;
+    }
+
+    try{
+      await GT_AUTH.SB.functions.invoke('send-confirmation-email',{
+        body:{ email:B.email, name:B.name, advisor:a.name,
+               day:dLabel(new Date(B.date)), time:B.time,
+               mode:B.meet==='onsite'?'In-person':'Video call',
+               kind:B.mode==='intro'?'intro':'session' }
+      });
+    }catch(err){ console.warn('[GT] confirmation email failed:', err); }
+
+    B.done=true; drawRail();
+  });
+}
+
+function drawDone(){
+  document.getElementById('rail').innerHTML=`
+    <div style="text-align:center;padding:10px 4px">
+      <div class="tick" style="width:54px;height:54px;border-radius:50%;
+        background:var(--gold-wash);border:1px solid var(--gold-line);color:var(--gold-deep);
+        font-size:24px;display:flex;align-items:center;justify-content:center;
+        margin:0 auto 14px">✓</div>
+      <h4 style="font-size:19px;font-weight:700;color:var(--ink);margin-bottom:7px">
+        You're booked with ${a.name.split(' ')[0]}</h4>
+      <p style="font-size:14px;color:var(--muted);line-height:1.7">
+        ${dLabel(new Date(B.date))} at ${B.time}<br>
+        ${B.meet==='onsite'?'In person, at your address':'Virtual — link sent by email'}</p>
+      <p style="margin-top:12px;font-size:13px;color:var(--muted)">
+        A confirmation is on its way to ${B.email}.</p>
+      <a class="pill pill-soft" href="marketplace.html#returning"
+        style="margin-top:16px;width:100%;padding:12px">Back to advisors</a>
+    </div>`;
+}
+
 /* ---------------- reviews ---------------- */
 const RKEY='greylockReviews:'+a.id;
 let myRating=0;

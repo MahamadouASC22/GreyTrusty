@@ -1124,16 +1124,17 @@ document.querySelectorAll('.fq-q').forEach(b=>b.addEventListener('click',()=>
 
 /* ---------------- scroll-following CTA ---------------- */
 const scta=document.getElementById('scta');
-let sctaClosed=false;
-document.getElementById('sctaX').addEventListener('click',()=>{
-  sctaClosed=true;scta.classList.remove('on');});
-addEventListener('scroll',()=>{
-  if(sctaClosed)return;
-  const past=window.scrollY>window.innerHeight*.85;
-  const atEnd=window.scrollY+window.innerHeight>document.body.scrollHeight-160;
-  scta.classList.toggle('on',past&&!atEnd);
-},{passive:true});
-
+const sctaX=document.getElementById('sctaX');
+if(scta&&sctaX){
+  let sctaClosed=false;
+  sctaX.addEventListener('click',()=>{sctaClosed=true;scta.classList.remove('on');});
+  addEventListener('scroll',()=>{
+    if(sctaClosed)return;
+    const past=window.scrollY>window.innerHeight*.85;
+    const atEnd=window.scrollY+window.innerHeight>document.body.scrollHeight-160;
+    scta.classList.toggle('on',past&&!atEnd);
+  },{passive:true});
+}
 
 /* ---------------- reveals ---------------- */
 const io=new IntersectionObserver(es=>es.forEach(e=>{

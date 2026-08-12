@@ -5,12 +5,13 @@
    ============================================================ */
 'use strict';
 
-/* A recovery or invite link can land on any page (Supabase falls back to
-   Site URL when redirect_to isn't allow-listed). Forward it to reset.html
-   with the hash intact, before supabase-js consumes the token. */
+
+/* An invite or recovery link can land on any page: Supabase falls back to
+   Site URL when it has no allow-listed redirect. Forward the token to
+   reset.html with the hash intact, before supabase-js consumes it. */
 (function routeAuthLinks(){
   const h = location.hash || '';
-  if(!/type=(recovery|invite)/.test(h)) return;
+  if(!/type=(recovery|invite|signup)/.test(h)) return;
   const page = location.pathname.split('/').pop() || 'index.html';
   if(page === 'reset.html') return;
   location.replace('reset.html' + h);
@@ -18,7 +19,8 @@
 
 const SB = supabase.createClient(
   'https://yltwbacfsktbtgqovnnm.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlsdHdiYWNmc2t0YnRncW92bm5tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxMjA0NTksImV4cCI6MjEwMTY5NjQ1OX0.Wmt8et2kJGbMgGXZs98TvyEjf7yQIhA0laeYHGxZb0c'
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlsdHdiYWNmc2t0YnRncW92bm5tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxMjA0NTksImV4cCI6MjEwMTY5NjQ1OX0.Wmt8et2kJGbMgGXZs98TvyEjf7yQIhA0laeYHGxZb0c',
+  { auth: { flowType: 'implicit', detectSessionInUrl: true, persistSession: true, autoRefreshToken: true } }
 );
 
 /* Every origin used here MUST be listed in
