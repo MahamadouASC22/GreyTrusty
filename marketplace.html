@@ -823,7 +823,7 @@ let GT_ME=null;
 
 const QKEY='greylockQuiz';
 
-const QSTORE = window.sessionStorage;
+const QSTORE = window.localStorage;      // was sessionStorage
 function saveQuiz(){  try{QSTORE.setItem(QKEY,JSON.stringify({P,F}));}catch(e){} }
 const saveDraft = saveQuiz;
 function loadQuiz(){
@@ -1133,7 +1133,7 @@ if(bud){
                 P[s.id] = value;
             }
 
-
+saveQuiz();
             renderStep();
 
 
@@ -1417,8 +1417,9 @@ function update(){
 /* ---------- booking, inline beside the list ---------- */
 let B={id:null,mode:'session',date:null,mView:null,time:null,step:'when',
        meet:'',name:'',email:'',phone:'',address:'',notes:'',done:false};
-function openBook(id,mode){
-  const a=A.find(x=>x.id===id);if(!a)return;
+async function openBook(id, mode){
+  const a = A.find(x => x.id === id); if(!a) return;
+  await loadTaken(id);
   const isIntro=(mode||'session')==='intro';
   const meet=isIntro?'remote':(a.onsite?(a.remote?'':'onsite'):'remote');
   B={id,mode:mode||'session',date:null,mView:null,time:null,step:'when',
@@ -1486,8 +1487,12 @@ function renderBook(a){
       <div class="mc-grid">${DOW.map(d=>`<div class="mc-dow">${d[0]}</div>`).join('')}${cells}</div>
     </div>
     <div class="bp-sec">2 \u00b7 ${intro?'Pick an intro time':'Pick a time'}${B.date?' \u2014 '+dLabel(new Date(B.date)):''}</div>
-    <div class="bp-times">${times.map(t=>
-      `<button class="bp-time ${t===B.time?'sel':''}" data-t="${t}">${t}</button>`).join('')||
+    <div class="bp-times">${times.map(t => {
+        const gone = TAKEN.has(ymd(B.date) + '|' + t);
+        return `<button class="bp-time ${t===B.time?'sel':''}" data-t="${t}"
+          ${gone?'disabled style="opacity:.35;text-decoration:line-through;cursor:not-allowed"':''}
+          >${t}</button>`;
+      }).join('')||
       '<span style="font-size:13px;color:var(--faint)">Choose an available day above.</span>'}</div>
     <button class="pill pill-gold bp-cta" id="toDetails" ${B.time?'':'disabled'}>
       ${B.time?'Continue to your details':'Select a time to continue'}</button>
@@ -1605,61 +1610,12 @@ function ymd(d){                    // local date, NOT toISOString (shifts a day
 }
 
 async function saveBooking(a) {
-  const { data:{ session } } = await GT_AUTH.SB.auth.getSession();
-  const uid = session ? session.user.id : null;
-
-  const payload = {
-    client_id: uid,
-    advisor_id: a.id,
-    kind: B.mode === 'intro' ? 'intro' : 'session',
-    mode: B.meet === 'onsite' ? 'In-person' : 'Video call',
-    day: ymd(B.date),
-    slot: B.time,
-    name: B.name,
-    email: B.email,
-    phone: B.phone,
-    address: B.meet === 'onsite' ? B.address : null,
-    notes: B.notes,
-    status: 'confirmed'
-  };
-
-  console.log('[GT] saving booking:', payload);
-
-  const { error } = await GT_AUTH.SB.from('bookings').insert(payload);
-
-  if (error) {
-    console.error('[GT] booking not saved:', error);
-
-    if (error.code === '23505') {
-      bookingWarning('That time is no longer available — someone just booked it. Please choose another time.');
-      B.time = null;
-      renderBook(a);
-      return false;
-    }
-
-    bookingWarning('We couldn\u2019t save that booking. Please try again, or email team@greylocktrust.com and we\u2019ll sort it out.');
+  if(!B.date || !B.time){
+    bookingWarning('Pick a day and a time first.');
+    B.step = 'when';
+    renderBook(a);
     return false;
   }
-
-  console.log('[GT] booking saved');
-
-  try {
-    await GT_AUTH.SB.functions.invoke('send-confirmation-email', {
-      body: {
-        email: B.email,
-        name: B.name,
-        advisor: a.name,
-        day: dLabel(new Date(B.date)),
-        time: B.time,
-        mode: payload.mode,
-        kind: payload.kind
-      }
-    });
-  } catch (e) {
-    console.warn('[GT] confirmation email failed:', e);
-  }
-
-  return true;
 }
 
 function bookingWarning(msg, kind){
@@ -1706,7 +1662,16 @@ function amark(id,msg,pass){
   return pass;
 }
 
+let TAKEN = new Set();
 
+async function loadTaken(advisorId){
+  TAKEN = new Set();
+  try{
+    const { data, error } = await GT_AUTH.SB.rpc('taken_slots', { p_advisor: advisorId });
+    if(error) throw error;
+    (data||[]).forEach(r => TAKEN.add(r.day + '|' + r.slot));
+  }catch(e){ console.warn('[GT] taken slots unavailable:', e.message || e); }
+}
 function hideQuiz(){ document.getElementById('quiz').style.display='none'; }
 function showQuiz(){ step=0; document.getElementById('quiz').style.display='flex'; renderStep(); }
 

@@ -50,13 +50,13 @@ const GT_AUTH = (function(){
         .select('*').eq('user_id', user.id).maybeSingle();
       advisor = a || null;
     }
-
-    return { id:user.id, email:user.email, role:data.role,
+return { id:user.id, email:user.email, role:data.role,
              name: data.full_name || fallback,
              photo: (advisor && advisor.photo_url) || data.photo_url,
              advisorId: advisor ? advisor.id : data.advisor_id,
              advisor,
-             quiz:data.quiz, availability:data.availability };
+             quiz:data.quiz, availability:data.availability,
+             layout:data.layout };
   }
 
   async function signIn(email, password){
