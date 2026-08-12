@@ -9,7 +9,7 @@
 
 const SB = supabase.createClient(
   'https://yltwbacfsktbtgqovnnm.supabase.co',
-  'YOUR_KEY',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlsdHdiYWNmc2t0YnRncW92bm5tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxMjA0NTksImV4cCI6MjEwMTY5NjQ1OX0.Wmt8et2kJGbMgGXZs98TvyEjf7yQIhA0laeYHGxZb0c',
   {
     auth: {
       flowType: 'implicit',
@@ -50,13 +50,20 @@ const GT_AUTH = (function(){
 
     /* An advisor is whoever owns a row in `advisors`. profiles.role is a
        convenience mirror — the advisors row is the source of truth. */
-    let advisor = null;
-    if(data.role === 'advisor'){
-      const { data: a } = await SB.from('advisors')
-        .select('*').eq('user_id', user.id).maybeSingle();
-      advisor = a || null;
+    /* Whoever owns a row in `advisors` IS an advisor. profiles.role is only a
+       mirror of that, and it can lag behind — so never gate on it. */
+    const { data: a } = await SB.from('advisors')
+      .select('*').eq('user_id', user.id).maybeSingle();
+    const advisor = a || null;
+    const role = advisor ? 'advisor' : (data.role || 'client');
+
+    /* Heal a stale mirror quietly. Fails harmlessly if the lock trigger
+       blocks it — nothing depends on it succeeding. */
+    if(advisor && data.role !== 'advisor'){
+      SB.from('profiles').update({ role:'advisor' }).eq('id', user.id);
     }
-return { id:user.id, email:user.email, role:data.role,
+
+    return { id:user.id, email:user.email, role,
              name: data.full_name || fallback,
              photo: (advisor && advisor.photo_url) || data.photo_url,
              advisorId: advisor ? advisor.id : data.advisor_id,

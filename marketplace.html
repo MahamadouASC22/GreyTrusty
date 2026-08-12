@@ -1752,7 +1752,7 @@ await GT_AUTH.flushPendingQuiz();
   try{ localStorage.removeItem(QKEY); }catch(e){}
   showQuiz();
 })();
-
+GT_DATA.ready.then(() => console.log(A.length, A.map(x => x.id)))
 </script>
 </body>
 </html>

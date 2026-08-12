@@ -839,12 +839,69 @@ function drawApp(){
   stash();drawApp();}));
   const back=document.getElementById('back');
   if(back)back.addEventListener('click',()=>{stash();APP.step--;drawApp();});
-document.getElementById('next').addEventListener('click', async ()=>{    stash();
-    if(!validate())return;
-    if(APP.step<STEPS-1){APP.step++;drawApp();}
 
+  document.getElementById('next').addEventListener('click', async ()=>{
+  stash();
+  if(!validate())return;
+
+  if(APP.step < STEPS-1){ APP.step++; drawApp(); return; }
+
+  /* last step — create the account if needed, then file the application */
+  const submitBtn = document.getElementById('next');
+  submitBtn.disabled = true;
+
+  let userId = GT_ME ? GT_ME.id : null;
+
+  if(!userId){
+    submitBtn.textContent = 'Creating your account…';
+    const r = await GT_AUTH.signUp(APP.email, APP.pw, APP.name);
+    if(!r.ok){
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Create account & submit';
+      showAppError(r.error);
+      return;
+    }
+    userId = r.user ? r.user.id : null;
+    GT_ME = await GT_AUTH.session();
+    if(!userId && GT_ME) userId = GT_ME.id;
+  }
+
+  submitBtn.textContent = 'Submitting…';
+
+  const { error } = await GT_AUTH.SB.from('advisor_applications').insert({
+    user_id: userId,
+    full_name: APP.name,
+    email: APP.email,
+    phone: APP.phone,
+    area: APP.area,
+    yrs: parseInt(APP.yrs, 10) || null,
+    rate: parseInt(APP.rate, 10) || null,
+    specs: APP.specs,
+    certs: APP.certs,
+    cert_other: APP.certOther,
+    modes: APP.modes,
+    pitch: APP.pitch,
+    status: 'new'
   });
+
+  if(error){
+    console.error('[GT] application not saved:', error);
+    if(error.code === '23505'){ APP.already = true; APP.done = true; drawApp(); return; }
+    submitBtn.disabled = false;
+    submitBtn.textContent = GT_ME ? 'Submit application' : 'Create account & submit';
+    showAppError('We couldn\u2019t submit your application. Please try again, or email team@greylocktrust.com.');
+    return;
+  }
+
+  console.log('[GT] application saved, user_id:', userId);
+  APP.done = true;
+  drawApp();
+
+  const anchor = document.querySelector('.apply-in');
+  if(anchor) anchor.scrollIntoView({ behavior:'smooth', block:'center' });
+});
 }
+
 function v(id){const el=document.getElementById(id);return el?el.value.trim():'';}
 function stash(){
   if(document.getElementById('i-name')){APP.name=v('i-name');APP.email=v('i-email');
@@ -876,8 +933,6 @@ function validate(){
     ok=bad('f-rate',APP.rate!=='')&&ok;
   }
 if(APP.step===3)ok=bad('f-pitch',APP.pitch.length>=25)&&ok;
-  return ok;
-  if(APP.step===3)ok=bad('f-pitch',APP.pitch.length>=25)&&ok;
   if(APP.step===4 && !GT_ME){
     ok=bad('f-aemail',/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(APP.email))&&ok;
     ok=bad('f-apw',APP.pw.length>=8)&&ok;

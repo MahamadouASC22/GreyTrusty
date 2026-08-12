@@ -16,7 +16,7 @@
 :root{ --serif:'Fraunces',Georgia,serif; }
 .dash{max-width:1300px;margin:0 auto;padding:calc(88px + 1vw) 24px 80px;}
 
-/* ---------- greeting ---------- */
+/* greeting */
 .greet{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:22px;}
 .greet .who{display:flex;align-items:center;gap:16px;}
 .greet .av,.greet .fb{width:62px;height:62px;border-radius:16px;object-fit:cover;flex:none;}
@@ -38,7 +38,6 @@
 .pill-ghost:hover{background:rgba(255,255,255,.12);}
 .pill[disabled]{opacity:.45;cursor:not-allowed;}
 
-/* ---------- banner ---------- */
 .banner{background:var(--gold-wash);border:1px solid var(--gold-line);border-radius:16px;
   padding:16px 20px;margin-bottom:22px;display:flex;gap:14px;align-items:flex-start;}
 .banner i{width:24px;height:24px;border-radius:50%;background:#fff;border:1px solid var(--gold-line);
@@ -47,7 +46,6 @@
 .banner b{display:block;font-size:14.5px;color:var(--ink);margin-bottom:3px;}
 .banner p{font-size:13.5px;color:var(--body-c);line-height:1.65;}
 
-/* ---------- stats ---------- */
 .strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px;}
 @media(max-width:900px){.strip{grid-template-columns:1fr 1fr;}}
 @media(max-width:520px){.strip{grid-template-columns:1fr;}}
@@ -58,7 +56,6 @@
 .stat.gold{background:var(--gold-wash);border-color:var(--gold-line);}
 .stat.gold .v{color:var(--gold-deep);}
 
-/* ---------- columns & cards ---------- */
 .cols{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:20px;align-items:start;}
 @media(max-width:1040px){.cols{grid-template-columns:1fr;}}
 .card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;
@@ -68,11 +65,10 @@
 .ch .more{margin-left:auto;font-size:13px;font-weight:600;color:var(--gold-deep);}
 .ch .more:hover{text-decoration:underline;text-underline-offset:3px;}
 
-/* ---------- appointments ---------- */
+/* appointments */
 .tabs{display:flex;gap:4px;background:var(--chipbg);border-radius:999px;padding:4px;
   margin-bottom:18px;overflow-x:auto;}
-.tab{border-radius:999px;padding:10px 16px;font-size:13.5px;font-weight:700;color:var(--muted);
-  white-space:nowrap;}
+.tab{border-radius:999px;padding:10px 16px;font-size:13.5px;font-weight:700;color:var(--muted);white-space:nowrap;}
 .tab.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(30,49,69,.09);}
 .tab .badge{display:inline-block;margin-left:6px;background:var(--gold);color:#fff;
   border-radius:999px;font-size:10.5px;padding:1px 7px;}
@@ -95,53 +91,68 @@
 .appt .go .pill{padding:9px 14px;font-size:12.5px;}
 @media(max-width:640px){.appt{flex-wrap:wrap;}.appt .go{margin-left:0;width:100%;}}
 
-/* ---------- week ---------- */
-.avail{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;}
-.day{border:1px solid var(--line);border-radius:12px;padding:11px 6px;text-align:center;background:#fff;}
-.day .dw{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);}
-.day .hrs{font-size:12.5px;font-weight:700;color:var(--ink);margin-top:6px;line-height:1.35;}
-.day.off{background:var(--bg);} .day.off .hrs{color:var(--faint);font-weight:600;}
-.day.on{border-color:var(--gold);background:var(--gold-wash);}
-.day.on .hrs{color:var(--gold-deep);}
-@media(max-width:640px){.avail{grid-template-columns:repeat(4,1fr);}}
-.togs{display:grid;gap:11px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line);}
-.tog{display:flex;align-items:center;gap:12px;}
-.tog .lab{font-size:14px;font-weight:600;color:var(--ink);}
-.tog .lab small{display:block;font-size:12px;font-weight:400;color:var(--muted);margin-top:1px;}
-.sw{margin-left:auto;width:44px;height:25px;border-radius:99px;background:var(--line-2);
+/* schedule editor */
+.sched-note{font-size:13.5px;color:var(--muted);line-height:1.7;margin-bottom:18px;max-width:56ch;}
+.sday{border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;}
+.sday.off{background:var(--bg);}
+.sday-h{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.sday-h b{font-size:14.5px;color:var(--ink);min-width:96px;}
+.sday-h .cnt{font-size:12.5px;color:var(--muted);}
+.sday-h .sw{margin-left:auto;}
+.slots{display:flex;flex-wrap:wrap;gap:6px;}
+.slot{border:1px solid var(--line-2);background:#fff;border-radius:999px;padding:8px 13px;
+  font-size:12.5px;font-weight:600;color:var(--ink);}
+.slot:hover{border-color:var(--gold);}
+.slot.on{background:var(--gold);border-color:var(--gold);color:#fff;}
+.sday.off .slots{display:none;}
+.copyrow{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px;padding-top:14px;
+  border-top:1px solid var(--line);}
+.copyrow button{font-size:12.5px;font-weight:600;color:var(--gold-deep);
+  border:1px solid var(--gold-line);background:var(--gold-wash);border-radius:999px;padding:8px 14px;}
+.copyrow button:hover{background:var(--gold);color:#fff;border-color:var(--gold);}
+.blocked{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);}
+.blocked .bl{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;}
+.blchip{display:inline-flex;align-items:center;gap:8px;background:var(--chipbg);
+  border-radius:999px;padding:7px 12px;font-size:12.5px;font-weight:600;color:var(--body-c);}
+.blchip button{color:#B4452F;font-size:14px;line-height:1;}
+.dateadd{display:flex;gap:9px;align-items:center;margin-top:10px;flex-wrap:wrap;}
+.dateadd input{padding:10px 13px;font-size:14px;font-family:var(--f);border:1px solid var(--line-2);
+  border-radius:11px;background:var(--bg);color:var(--body-c);}
+
+.sw{width:44px;height:25px;border-radius:99px;background:var(--line-2);
   position:relative;flex:none;transition:background .22s ease;}
 .sw::after{content:"";position:absolute;top:3px;left:3px;width:19px;height:19px;border-radius:50%;
   background:#fff;transition:transform .22s ease;box-shadow:0 2px 6px rgba(30,49,69,.2);}
 .sw.on{background:var(--gold);} .sw.on::after{transform:translateX(19px);}
+.togs{display:grid;gap:11px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line);}
+.tog{display:flex;align-items:center;gap:12px;}
+.tog .lab{font-size:14px;font-weight:600;color:var(--ink);}
+.tog .lab small{display:block;font-size:12px;font-weight:400;color:var(--muted);margin-top:1px;}
+.tog .sw{margin-left:auto;}
 
-/* ---------- rail ---------- */
+/* rail */
 .mini{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;
   margin-bottom:18px;position:relative;}
 .mini h3{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
   color:var(--faint);margin-bottom:14px;}
-.pay{background:linear-gradient(155deg,var(--ink-deep),var(--ink));color:#fff;position:relative;
-  overflow:hidden;border:none;}
-.pay::after{content:"";position:absolute;right:-70px;top:-70px;width:220px;height:220px;
-  border-radius:50%;background:radial-gradient(circle,rgba(195,144,60,.28),transparent 66%);}
-.pay>*{position:relative;z-index:1;}
-.pay h3{color:var(--gold-line);}
-.pay .amt{font-size:34px;font-weight:700;line-height:1;}
-.pay .sub{font-size:12.5px;color:rgba(255,255,255,.6);margin-top:5px;}
-.pay .rows{margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.16);}
-.pay .r{display:flex;justify-content:space-between;font-size:13.5px;padding:5px 0;
-  color:rgba(255,255,255,.78);} .pay .r b{color:#fff;}
-.prof-row{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--line);
-  font-size:14px;color:var(--body-c);}
-.prof-row:last-child{border-bottom:none;}
-.prof-row b{color:var(--ink);margin-left:auto;font-weight:700;}
 .bar{height:7px;background:var(--chipbg);border-radius:99px;overflow:hidden;margin:12px 0 8px;}
 .bar i{display:block;height:100%;background:var(--gold);border-radius:99px;}
 .task{display:flex;gap:11px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line);
   font-size:14px;color:var(--body-c);line-height:1.55;}
 .task:last-child{border-bottom:none;}
 .task .dot{width:8px;height:8px;transform:rotate(45deg);background:var(--gold);flex:none;margin-top:6px;}
+.note-item{border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;
+  background:var(--bg);}
+.note-item:last-child{margin-bottom:0;}
+.note-item .top{display:flex;align-items:center;gap:10px;margin-bottom:7px;}
+.note-item .dt{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--gold-deep);}
+.note-item .who3{margin-left:auto;font-size:12px;color:var(--faint);}
+.note-item h4{font-size:14.5px;font-weight:700;color:var(--ink);margin-bottom:5px;}
+.note-item p{font-size:13.5px;color:var(--body-c);line-height:1.65;white-space:pre-wrap;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
 
-/* ---------- profile editor ---------- */
+/* profile editor */
 .ed-intro{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:20px;max-width:56ch;}
 .fld{margin-bottom:16px;}
 .fld label{font-size:12.5px;font-weight:700;color:var(--ink);display:block;}
@@ -176,8 +187,7 @@ input[type=file]{display:none;}
 .savebar .msg{font-size:13px;color:var(--muted);}
 .savebar .sp{margin-left:auto;display:flex;gap:9px;}
 .note{font-size:13px;line-height:1.6;margin-top:10px;}
-.note.err{color:#B4452F;}
-.note.ok{color:var(--gold-deep);}
+.note.err{color:#B4452F;} .note.ok{color:var(--gold-deep);}
 .chk{display:flex;align-items:flex-start;gap:10px;padding:9px 0;font-size:13.5px;
   color:var(--body-c);line-height:1.5;border-bottom:1px solid var(--line);}
 .chk:last-of-type{border-bottom:none;}
@@ -195,7 +205,6 @@ input[type=file]{display:none;}
 .pub p{font-size:13.5px;color:rgba(255,255,255,.78);line-height:1.7;}
 .pub .pill{width:100%;margin-top:14px;padding:13px;}
 
-/* ---------- empty ---------- */
 .empty{text-align:center;padding:30px 16px;}
 .empty .ic{width:52px;height:52px;border-radius:50%;background:var(--gold-wash);
   border:1px solid var(--gold-line);color:var(--gold-deep);font-size:22px;display:flex;
@@ -203,7 +212,7 @@ input[type=file]{display:none;}
 .empty h4{font-family:var(--serif);font-weight:400;font-size:19px;color:var(--ink);margin-bottom:8px;}
 .empty p{font-size:14px;color:var(--muted);line-height:1.7;max-width:38ch;margin:0 auto;}
 
-/* ---------- note writer sheet ---------- */
+/* note sheet */
 .sheet{position:fixed;inset:0;z-index:880;background:rgba(18,34,51,.5);
   display:flex;align-items:center;justify-content:center;padding:24px;}
 .sheet-in{background:#fff;border-radius:22px;max-width:520px;width:100%;padding:clamp(22px,3vw,30px);
@@ -213,7 +222,7 @@ input[type=file]{display:none;}
 .sheet-in .row{display:flex;gap:9px;margin-top:8px;}
 .sheet-in .row .pill{flex:1;padding:13px;}
 
-/* ---------- layout editing ---------- */
+/* layout editing */
 .editbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--gold-wash);
   border:1px solid var(--gold-line);border-radius:16px;padding:14px 18px;margin-bottom:20px;}
 .editbar b{font-size:14px;color:var(--gold-deep);}
@@ -233,12 +242,16 @@ body.editing .secbar{display:flex;}
 .addbtn b{display:block;font-size:14px;color:var(--ink);}
 .addbtn span{font-size:12.5px;color:var(--muted);line-height:1.5;}
 
-/* ---------- tour ---------- */
+/* ---------- tour ----------
+   The veil and the card are SIBLINGS. A z-index on the veil creates a
+   stacking context, so a card nested inside it can never rise above the
+   highlighted section — which is why the card kept ending up behind. */
 .tour-veil{position:fixed;inset:0;z-index:900;background:rgba(18,34,51,.55);
-  backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:24px;}
-.tour{background:#fff;border-radius:22px;max-width:460px;width:100%;
-  box-shadow:0 30px 80px rgba(30,49,69,.3);padding:clamp(24px,3vw,32px);
-  position:relative;z-index:920;}
+  backdrop-filter:blur(2px);}
+.tour-wrap{position:fixed;inset:0;z-index:950;display:flex;align-items:center;
+  justify-content:center;padding:24px;pointer-events:none;}
+.tour{background:#fff;border-radius:22px;max-width:460px;width:100%;pointer-events:auto;
+  box-shadow:0 30px 80px rgba(30,49,69,.34);padding:clamp(24px,3vw,32px);}
 body.tour-open{overflow:hidden;}
 .tour .k{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep);}
 .tour h3{font-family:var(--serif);font-weight:300;font-size:clamp(24px,3vw,30px);color:var(--ink);
@@ -253,7 +266,8 @@ body.tour-open{overflow:hidden;}
 .tour .skip{display:block;width:100%;text-align:center;margin-top:12px;font-size:12.5px;
   color:var(--faint);text-decoration:underline;text-underline-offset:3px;}
 .tour .skip:hover{color:var(--muted);}
-.spot{position:relative;z-index:901;box-shadow:0 0 0 4px var(--gold),0 24px 60px rgba(30,49,69,.3);
+/* 910 sits above the veil (900) and below the card wrapper (950) */
+.spot{position:relative;z-index:910;box-shadow:0 0 0 4px var(--gold),0 24px 60px rgba(30,49,69,.3);
   border-radius:20px;}
 
 .load{text-align:center;padding:60px 20px;color:var(--muted);font-size:14.5px;}
@@ -275,37 +289,33 @@ body.tour-open{overflow:hidden;}
 <script>
 'use strict';
 
-/* ============================================================
-   Sections an advisor can arrange on their dashboard
-   ============================================================ */
 const SECTIONS = {
   profile_edit: { name:'Your public profile', col:'main',
                   blurb:'Headshot, bio, specialties and rate — and the publish button.' },
   appts:        { name:'Appointments',        col:'main',
                   blurb:'Everything booked with you, upcoming and past.' },
-  week:         { name:'Your week',           col:'main',
-                  blurb:'The hours you work and the switches that control them.' },
-  earn:         { name:'Earnings',            col:'rail',
-                  blurb:'What you have billed through Greylock so far.' },
+  schedule:     { name:'Your schedule',       col:'main',
+                  blurb:'The exact hours clients can book, day by day.' },
   strength:     { name:'Profile strength',    col:'rail',
                   blurb:'What is filled in on your public page and what is missing.' },
   todo:         { name:'Needs you',           col:'rail',
                   blurb:'Clients to prepare for and notes still to write.' },
+  notes:        { name:'Your recent notes',   col:'rail',
+                  blurb:'The write-ups you have sent to clients.' },
 };
-const DEFAULT_LAYOUT = ['profile_edit','appts','week','earn','strength','todo'];
+const DEFAULT_LAYOUT = ['profile_edit','appts','schedule','strength','todo','notes'];
 
 const TOUR = [
   { k:'Welcome',     h:'Your practice, <em>in one place</em>.',
     p:'This is where your Greylock work lives. Four quick things and it\u2019s yours.' },
   { k:'Step 1 of 3', h:'Write your <em>own profile</em>.',
     p:'Your headshot, your words, your rate. Nobody can see it until you press publish — and you can change it any time after.', spot:'sec-profile_edit' },
-  { k:'Step 2 of 3', h:'Bookings arrive <em>here</em>.',
-    p:'The moment a client confirms, they appear in Appointments. Afterwards, hit <b>Write notes</b> — what you write lands on their dashboard and stays there for good.', spot:'sec-appts' },
-  { k:'Step 3 of 3', h:'Arrange it <em>how you like</em>.',
-    p:'Use <b>Edit layout</b> to move sections around or hide the ones you don\u2019t need. Nothing is permanent.', spot:'editAnchor' },
+  { k:'Step 2 of 3', h:'Set your <em>own hours</em>.',
+    p:'Pick the exact times you\u2019re willing to work, day by day. Only those slots appear on your booking calendar, and you can block off individual dates.', spot:'sec-schedule' },
+  { k:'Step 3 of 3', h:'Notes the client <em>keeps</em>.',
+    p:'After any visit, hit <b>Write notes</b>. What you write lands on their dashboard permanently — so a second visit never starts from zero.', spot:'sec-appts' },
 ];
 
-/* ---------- profile editor options ---------- */
 const PERSONALITY_OPTS = ['Patient teacher','Friendly conversationalist',
   'Efficient problem solver','Highly technical expert','Calm and reassuring'];
 const PLATFORM_OPTS = ['Windows','Mac','iPhone / iPad','Android'];
@@ -315,16 +325,15 @@ const FUTURE_OPTS = ['Home networking','Smart home security','Account security',
   'New computers','Phone setup','Family technology support','Data backup',
   'Cloud storage','Privacy improvements','Technology education','Digital organization'];
 
-/* ---------- state ---------- */
-let ME = null;        // session profile
-let ADV = null;       // advisors row
-let P = null;         // working copy of the profile being edited
-let LAYOUT = [];
-let ROWS = [];        // bookings
-let NOTES = {};       // booking_id -> visit_note
-let EDITING = false, DIRTY = false, TAB = 'upcoming', TOUR_STEP = 0;
+/* every slot an advisor can offer */
+const SLOT_PALETTE = ['8:00 AM','8:30 AM','9:00 AM','9:30 AM','10:00 AM','10:30 AM',
+  '11:00 AM','11:30 AM','12:00 PM','12:30 PM','1:00 PM','1:30 PM','2:00 PM','2:30 PM',
+  '3:00 PM','3:30 PM','4:00 PM','4:30 PM','5:00 PM','5:30 PM','6:00 PM','6:30 PM','7:00 PM'];
+const DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
-/* ---------- helpers ---------- */
+let ME=null, ADV=null, P=null, AV=null, LAYOUT=[], ROWS=[], NOTES={}, NOTE_LIST=[];
+let EDITING=false, DIRTY=false, SCHED_DIRTY=false, TAB='upcoming', TOUR_STEP=0;
+
 const $ = id => document.getElementById(id);
 function esc(s){
   return String(s ?? '').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -346,35 +355,29 @@ function longDate(iso){
   return DOW[dt.getDay()]+' '+d+' '+MONTHS[m-1];
 }
 
-/* ============================================================
-   BOOT
-   ============================================================ */
+/* ============================================================ BOOT */
 (async function boot(){
   const r = await GT_AUTH.requireAdvisor();
-  if(!r) return;                       // already redirecting to the portal
+  if(!r) return;
+  if(r.blocked){ drawBlocked(r.session); return; }
 
-  if(r.blocked){
-    drawBlocked(r.session);
-    return;
-  }
-
-  ME = r.session;
-  ADV = r.advisor;
+  ME = r.session; ADV = r.advisor;
 
   P = {
-    name:        ADV.name || ME.name || '',
-    title:       ADV.title || 'Privacy Advisor',
-    years:       ADV.years ?? '',
-    rate:        ADV.rate ?? '',
-    bio:         ADV.bio || '',
-    photo_url:   ADV.photo_url || '',
-    personality: ADV.personality || '',
-    specs:       arr(ADV.specs),
-    futures:     arr(ADV.futures),
-    platforms:   arr(ADV.platforms),
-    onsite:      ADV.onsite !== false,
-    remote:      ADV.remote !== false,
+    name: ADV.name || ME.name || '', title: ADV.title || 'Privacy Advisor',
+    years: ADV.years ?? '', rate: ADV.rate ?? '', bio: ADV.bio || '',
+    photo_url: ADV.photo_url || '', personality: ADV.personality || '',
+    specs: arr(ADV.specs), futures: arr(ADV.futures), platforms: arr(ADV.platforms),
+    onsite: ADV.onsite !== false, remote: ADV.remote !== false,
   };
+
+  const raw = ADV.availability || {};
+  AV = {
+    days: raw.days || {'0':[],'1':[],'2':[],'3':[],'4':[],'5':[],'6':[]},
+    blocked: arr(raw.blocked),
+    lead: Number.isFinite(raw.lead) ? raw.lead : 1,
+  };
+  for(let d=0; d<7; d++) if(!Array.isArray(AV.days[String(d)])) AV.days[String(d)] = [];
 
   await loadData();
 
@@ -382,39 +385,31 @@ function longDate(iso){
   LAYOUT = (saved && saved.length) ? saved.filter(k => SECTIONS[k]) : DEFAULT_LAYOUT.slice();
 
   render();
-
   if(!(ME.layout && ME.layout.tour === 'done')) drawTour();
 
   window.addEventListener('beforeunload', e => {
-    if(DIRTY){ e.preventDefault(); e.returnValue = ''; }
+    if(DIRTY || SCHED_DIRTY){ e.preventDefault(); e.returnValue = ''; }
   });
 })();
 
 async function drawBlocked(session){
-  /* Signed in, but no advisors row. Say why, based on their application. */
   let msg = `You're signed in as <b>${esc(session.email)}</b>, but there's no advisor
     profile attached to this account yet.`;
-
   try{
-    const { data: app } = await GT_AUTH.SB
-      .from('advisor_applications').select('status')
-      .eq('user_id', session.id)
-      .order('created_at', { ascending:false }).limit(1).maybeSingle();
-
-    if(app && (app.status === 'new' || app.status === 'reviewing')){
-      msg = `Your application is with us now. We read every one personally and
-        reply within three business days — you'll get an email either way.
-        Nothing more for you to do until then.`;
-    }else if(app && app.status === 'declined'){
-      msg = `We're not able to bring you on at the moment. If you'd like to talk
-        it through, email <b>team@greylocktrust.com</b> — we're happy to explain
-        and to look again later.`;
+    const { data: app } = await GT_AUTH.SB.from('advisor_applications')
+      .select('status').eq('user_id', session.id)
+      .order('created_at',{ascending:false}).limit(1).maybeSingle();
+    if(app && (app.status==='new' || app.status==='reviewing')){
+      msg = `Your application is with us now. We read every one personally and reply
+        within three business days — you'll get an email either way.`;
+    }else if(app && app.status==='declined'){
+      msg = `We're not able to bring you on at the moment. If you'd like to talk it
+        through, email <b>team@greylocktrust.com</b>.`;
     }else if(!app){
-      msg = `You're signed in as <b>${esc(session.email)}</b>, but you haven't
-        applied to advise with us yet.`;
+      msg = `You're signed in as <b>${esc(session.email)}</b>, but you haven't applied
+        to advise with us yet.`;
     }
-  }catch(e){ /* fall back to the generic message */ }
-
+  }catch(e){}
   $('dash').innerHTML = `
     <div class="card" style="max-width:560px;margin:40px auto 0;text-align:center">
       <h2 style="font-family:var(--serif);font-weight:400;font-size:23px;color:var(--ink);
@@ -429,27 +424,25 @@ async function drawBlocked(session){
 
 async function loadData(){
   const { data, error } = await GT_AUTH.SB.from('bookings')
-    .select('*').eq('advisor_id', ADV.id).order('day', { ascending:true });
+    .select('*').eq('advisor_id', ADV.id).order('day',{ascending:true});
   if(error) console.warn('[GT] bookings load failed:', error.message);
   ROWS = data || [];
 
   const { data: nt } = await GT_AUTH.SB.from('visit_notes')
-    .select('*').eq('advisor_id', ADV.id);
+    .select('*').eq('advisor_id', ADV.id).order('created_at',{ascending:false});
+  NOTE_LIST = nt || [];
   NOTES = {};
-  (nt || []).forEach(n => { if(n.booking_id) NOTES[n.booking_id] = n; });
+  NOTE_LIST.forEach(n => { if(n.booking_id) NOTES[n.booking_id] = n; });
 }
 
 async function saveLayout(tour){
   const patch = { sections: LAYOUT, tour: tour || (ME.layout && ME.layout.tour) || 'done' };
   ME.layout = patch;
-  const { error } = await GT_AUTH.SB.from('profiles')
-    .update({ layout: patch }).eq('id', ME.id);
+  const { error } = await GT_AUTH.SB.from('profiles').update({ layout: patch }).eq('id', ME.id);
   if(error) console.warn('[GT] layout not saved:', error.message);
 }
 
-/* ============================================================
-   RENDER
-   ============================================================ */
+/* ============================================================ RENDER */
 function split(){
   const today = ymdLocal(new Date());
   return {
@@ -461,8 +454,8 @@ function split(){
 function render(){
   const { upcoming, past } = split();
   const first = (ADV.name || '').split(' ')[0] || 'there';
-  const hour  = new Date().getHours();
-  const part  = hour<12 ? 'Good morning' : hour<18 ? 'Good afternoon' : 'Good evening';
+  const hour = new Date().getHours();
+  const part = hour<12 ? 'Good morning' : hour<18 ? 'Good afternoon' : 'Good evening';
 
   $('dash').innerHTML = `
     <div class="greet">
@@ -482,12 +475,10 @@ function render(){
           : ''}
       </div>
     </div>
-    ${ADV.published ? '' : `<div class="banner">
-      <i>!</i>
+    ${ADV.published ? '' : `<div class="banner"><i>!</i>
       <div><b>Your profile isn't published yet</b>
-        <p>Clients can't find or book you until you publish it. Fill in your
-           profile below and the publish button switches on — it's entirely
-           your call when that happens.</p></div>
+        <p>Clients can't find or book you until you publish it. Fill in your profile
+           below and the publish button switches on — it's entirely your call when.</p></div>
     </div>`}
     <div class="strip" id="strip"></div>
     <div id="editbar"></div>
@@ -502,8 +493,7 @@ function render(){
     EDITING = !EDITING;
     document.body.classList.toggle('editing', EDITING);
     $('editBtn').textContent = EDITING ? 'Done editing' : 'Edit layout';
-    drawColumns(upcoming, past);
-    drawEditBar();
+    drawColumns(upcoming, past); drawEditBar();
     if(!EDITING) saveLayout();
   });
 }
@@ -511,7 +501,8 @@ function render(){
 function drawStrip(upcoming, past){
   const weekEnd = ymdLocal(new Date(Date.now() + 7*864e5));
   const wk = upcoming.filter(b => b.day <= weekEnd);
-  const unwritten = past.filter(b => b.status !== 'cancelled' && !NOTES[b.id]).length;
+  const unwritten = past.filter(b => b.status!=='cancelled' && !NOTES[b.id]).length;
+  const openSlots = Object.values(AV.days).reduce((n,s)=>n+s.length,0);
   $('strip').innerHTML = `
     <div class="stat"><div class="k">Next 7 days</div>
       <div class="v">${wk.filter(b=>b.kind!=='intro').length}</div>
@@ -522,7 +513,8 @@ function drawStrip(upcoming, past){
     <div class="stat gold"><div class="k">All upcoming</div>
       <div class="v">${upcoming.length}</div><div class="n">on your calendar</div></div>
     <div class="stat"><div class="k">Notes to write</div>
-      <div class="v">${unwritten}</div><div class="n">visits without a write-up</div></div>`;
+      <div class="v">${unwritten}</div>
+      <div class="n">${openSlots} slots open each week</div></div>`;
 }
 
 function secbar(key){
@@ -530,37 +522,32 @@ function secbar(key){
   return `<div class="secbar">
     <button data-up="${key}" ${i<=0?'disabled':''} aria-label="Move up">↑</button>
     <button data-down="${key}" ${i>=LAYOUT.length-1?'disabled':''} aria-label="Move down">↓</button>
-    <button class="rm" data-rm="${key}" aria-label="Remove">×</button>
-  </div>`;
+    <button class="rm" data-rm="${key}" aria-label="Remove">×</button></div>`;
 }
 
 function drawColumns(upcoming, past){
   const main = $('colMain'), rail = $('colRail');
   main.innerHTML = ''; rail.innerHTML = '';
-
   LAYOUT.forEach(key => {
     const def = SECTIONS[key];
     if(!def) return;
-    (def.col === 'rail' ? rail : main)
-      .insertAdjacentHTML('beforeend', sectionHTML(key, upcoming, past));
+    (def.col==='rail' ? rail : main).insertAdjacentHTML('beforeend', sectionHTML(key, upcoming, past));
   });
-
   if(!LAYOUT.length){
-    main.innerHTML = `<div class="card"><div class="empty">
-      <div class="ic">+</div><h4>Nothing on your dashboard</h4>
+    main.innerHTML = `<div class="card"><div class="empty"><div class="ic">+</div>
+      <h4>Nothing on your dashboard</h4>
       <p>You've removed every section. Use <b>Edit layout</b> above to put some back.</p>
     </div></div>`;
   }
-
   wireControls();
   drawAppts();
   if(LAYOUT.includes('profile_edit')) drawEditor();
+  if(LAYOUT.includes('schedule')) drawSchedule();
 }
 
 function sectionHTML(key, upcoming, past){
   const bar = secbar(key);
 
-  /* ---------------- profile editor shell ---------------- */
   if(key === 'profile_edit'){
     return `<section class="card" id="sec-profile_edit">${bar}
       <div class="ch"><h2>Your public profile</h2>
@@ -570,54 +557,19 @@ function sectionHTML(key, upcoming, past){
       <div id="editorHost"></div></section>`;
   }
 
-  /* ---------------- appointments shell ---------------- */
   if(key === 'appts'){
     return `<section class="card" id="sec-appts">${bar}
       <div class="ch"><h2>Appointments</h2></div>
-      <div class="tabs" id="tabs"></div>
-      <div id="apptList"></div></section>`;
+      <div class="tabs" id="tabs"></div><div id="apptList"></div></section>`;
   }
 
-  /* ---------------- your week ---------------- */
-  if(key === 'week'){
-    const WK = [['Mon','9–5'],['Tue','9–5'],['Wed','9–5'],
-                ['Thu', ADV.evenings?'9–7':'9–5'],['Fri','9–3'],
-                ['Sat', ADV.weekends?'10–2':'Off'],['Sun','Off']];
-    const TOGS = [
-      ['intro','Offer free 20-minute intro calls','Shown as a gold badge on your profile',ADV.intro],
-      ['evenings','Available evenings','Adds later slots on weekdays',ADV.evenings],
-      ['weekends','Available weekends','Opens Saturday bookings',ADV.weekends],
-      ['checkins','Offer recurring check-ins','Clients can book you quarterly',ADV.checkins],
-      ['business','Take small-business work','Appears in the business support filter',ADV.business],
-    ];
-    return `<section class="card" id="sec-week">${bar}
-      <div class="ch"><h2>Your week</h2></div>
-      <div class="avail">${WK.map(([d,h])=>`
-        <div class="day ${h==='Off'?'off':'on'}"><div class="dw">${d}</div>
-          <div class="hrs">${h}</div></div>`).join('')}</div>
-      <div class="togs">${TOGS.map(([k,t,s,on])=>`
-        <div class="tog"><div class="lab">${t}<small>${s}</small></div>
-          <button class="sw ${on?'on':''}" data-k="${k}" aria-label="${t}"></button></div>`).join('')}</div>
-    </section>`;
+  if(key === 'schedule'){
+    return `<section class="card" id="sec-schedule">${bar}
+      <div class="ch"><h2>Your schedule</h2>
+        <span class="more" id="schedMsg" style="color:var(--faint)">Saved</span></div>
+      <div id="schedHost"></div></section>`;
   }
 
-  /* ---------------- earnings ---------------- */
-  if(key === 'earn'){
-    const billable = past.filter(b => b.kind !== 'intro' && b.status !== 'cancelled').length;
-    const rate = Number(ADV.rate || 0);
-    const gross = billable * rate, fee = gross*.15, net = gross - fee;
-    return `<div class="mini pay" id="sec-earn">${bar}
-      <h3>Earned so far</h3>
-      <div class="amt">$${net.toFixed(0)}</div>
-      <div class="sub">${billable} completed session${billable===1?'':'s'}</div>
-      <div class="rows">
-        <div class="r"><span>Billed to clients</span><b>$${gross.toFixed(0)}</b></div>
-        <div class="r"><span>Platform fee (15%)</span><b>−$${fee.toFixed(0)}</b></div>
-        <div class="r"><span>Your rate</span><b>$${rate}/hr</b></div>
-      </div></div>`;
-  }
-
-  /* ---------------- profile strength ---------------- */
   if(key === 'strength'){
     const c = checks();
     const pct = Math.round(c.filter(x=>x[1]).length / c.length * 100);
@@ -631,28 +583,183 @@ function sectionHTML(key, upcoming, past){
     </div>`;
   }
 
-  /* ---------------- needs you ---------------- */
   if(key === 'todo'){
     const soon = upcoming.slice(0,3);
-    const unwritten = past.filter(b => b.status !== 'cancelled' && !NOTES[b.id]).slice(0,3);
+    const unwritten = past.filter(b => b.status!=='cancelled' && !NOTES[b.id]).slice(0,3);
+    const noHours = Object.values(AV.days).every(s => !s.length);
     const items = [
+      ...(noHours ? ['<b>Set your hours</b> — nobody can book you until you do'] : []),
       ...unwritten.map(b => `Write up <b>${esc(b.name||'a visit')}</b> — ${esc(longDate(b.day))}`),
       ...soon.map(b => `Prepare for <b>${esc(b.name||'your client')}</b> — ${esc(longDate(b.day))}`),
     ];
-    return `<div class="mini" id="sec-todo">${bar}
-      <h3>Needs you</h3>
+    return `<div class="mini" id="sec-todo">${bar}<h3>Needs you</h3>
       ${items.length
-        ? items.map(t => `<div class="task"><span class="dot"></span><span>${t}</span></div>`).join('')
+        ? items.map(t=>`<div class="task"><span class="dot"></span><span>${t}</span></div>`).join('')
         : `<div class="task"><span class="dot"></span><span>Nothing outstanding.</span></div>`}
+    </div>`;
+  }
+
+  if(key === 'notes'){
+    const recent = NOTE_LIST.slice(0,3);
+    return `<div class="mini" id="sec-notes">${bar}<h3>Your recent notes</h3>
+      ${recent.length ? recent.map(n => {
+        const b = ROWS.find(x => String(x.id) === String(n.booking_id));
+        return `<div class="note-item">
+          <div class="top">
+            <span class="dt">${esc(longDate((n.created_at||'').slice(0,10)))}</span>
+            <span class="who3">${esc(b ? (b.name||'Client') : 'Client')}</span></div>
+          ${n.title?`<h4>${esc(n.title)}</h4>`:''}
+          <p>${esc(n.body||'')}</p></div>`;
+      }).join('') : `<p style="font-size:13.5px;color:var(--muted);line-height:1.7">
+        Nothing written yet. After a visit, use <b>Write notes</b> on the booking —
+        it goes straight to the client and stays on their dashboard.</p>`}
     </div>`;
   }
 
   return '';
 }
 
-/* ============================================================
-   PROFILE EDITOR
-   ============================================================ */
+/* ============================================================ SCHEDULE */
+function drawSchedule(){
+  const host = $('schedHost');
+  if(!host) return;
+
+  const order = [1,2,3,4,5,6,0];      // Monday first
+
+  host.innerHTML = `
+    <p class="sched-note">Pick the times you're willing to work. Only these appear on
+      your booking calendar — clients can't ask for anything else. Change it whenever
+      you like; existing bookings are never affected.</p>
+
+    ${order.map(d => {
+      const slots = AV.days[String(d)] || [];
+      const on = slots.length > 0;
+      return `<div class="sday ${on?'':'off'}" data-day="${d}">
+        <div class="sday-h">
+          <b>${DAY_NAMES[d]}</b>
+          <span class="cnt">${on ? slots.length + ' slot' + (slots.length===1?'':'s') : 'Not working'}</span>
+          <button class="sw ${on?'on':''}" data-dayon="${d}" aria-label="${DAY_NAMES[d]} on or off"></button>
+        </div>
+        <div class="slots">
+          ${SLOT_PALETTE.map(t =>
+            `<button class="slot ${slots.includes(t)?'on':''}" data-slot="${d}|${t}">${t}</button>`).join('')}
+        </div>
+      </div>`;
+    }).join('')}
+
+    <div class="copyrow">
+      <button id="copyMon">Copy Monday to all weekdays</button>
+      <button id="clearAll">Clear every day</button>
+    </div>
+
+    <div class="blocked">
+      <label style="font-size:12.5px;font-weight:700;color:var(--ink)">Days off</label>
+      <p style="font-size:12.5px;color:var(--muted);line-height:1.6;margin-top:4px">
+        Holidays, appointments, anything. These override your weekly hours.</p>
+      <div class="dateadd">
+        <input type="date" id="blockDate" min="${ymdLocal(new Date())}">
+        <button class="pill pill-soft" id="addBlock">Block this day</button>
+      </div>
+      <div class="bl">${AV.blocked.length
+        ? AV.blocked.slice().sort().map(d =>
+            `<span class="blchip">${esc(longDate(d))}
+              <button data-unblock="${d}" aria-label="Remove">×</button></span>`).join('')
+        : '<span style="font-size:12.5px;color:var(--faint)">None</span>'}</div>
+    </div>
+
+    <div class="fld" style="margin-top:20px">
+      <label>How much notice do you need?
+        <input type="number" id="leadDays" min="0" max="14" value="${AV.lead}"></label>
+      <p class="hint">Days. Clients can't book anything sooner than this — 1 means
+        tomorrow at the earliest.</p>
+    </div>
+
+    <div class="savebar">
+      <span class="msg" id="schedSaveMsg">${SCHED_DIRTY ? 'Unsaved changes' : 'All changes saved'}</span>
+      <div class="sp"><button class="pill pill-gold" id="schedSave">Save my hours</button></div>
+    </div>`;
+
+  host.querySelectorAll('[data-slot]').forEach(b => b.addEventListener('click', () => {
+    const [d,t] = b.dataset.slot.split('|');
+    const list = AV.days[d];
+    const i = list.indexOf(t);
+    if(i > -1) list.splice(i,1); else list.push(t);
+    list.sort((x,y) => SLOT_PALETTE.indexOf(x) - SLOT_PALETTE.indexOf(y));
+    schedTouch(); drawSchedule();
+  }));
+
+  host.querySelectorAll('[data-dayon]').forEach(b => b.addEventListener('click', () => {
+    const d = b.dataset.dayon;
+    if(AV.days[d].length){
+      AV.days[d] = [];
+    }else{
+      AV.days[d] = ['9:30 AM','11:00 AM','1:00 PM','3:00 PM'];
+    }
+    schedTouch(); drawSchedule();
+  }));
+
+  $('copyMon').addEventListener('click', () => {
+    const mon = AV.days['1'].slice();
+    ['2','3','4','5'].forEach(d => { AV.days[d] = mon.slice(); });
+    schedTouch(); drawSchedule();
+  });
+
+  $('clearAll').addEventListener('click', () => {
+    if(!confirm('Clear every day? Nobody will be able to book you until you set hours again.')) return;
+    for(let d=0; d<7; d++) AV.days[String(d)] = [];
+    schedTouch(); drawSchedule();
+  });
+
+  $('addBlock').addEventListener('click', () => {
+    const v = $('blockDate').value;
+    if(!v) return;
+    if(!AV.blocked.includes(v)) AV.blocked.push(v);
+    schedTouch(); drawSchedule();
+  });
+
+  host.querySelectorAll('[data-unblock]').forEach(b => b.addEventListener('click', () => {
+    AV.blocked = AV.blocked.filter(d => d !== b.dataset.unblock);
+    schedTouch(); drawSchedule();
+  }));
+
+  $('leadDays').addEventListener('input', e => {
+    AV.lead = Math.max(0, Math.min(14, parseInt(e.target.value,10) || 0));
+    schedTouch();
+  });
+
+  $('schedSave').addEventListener('click', saveSchedule);
+}
+
+function schedTouch(){
+  SCHED_DIRTY = true;
+  const m = $('schedSaveMsg'); if(m){ m.textContent='Unsaved changes'; m.style.color='var(--gold-deep)'; }
+  const h = $('schedMsg'); if(h){ h.textContent='Unsaved'; h.style.color='var(--gold-deep)'; }
+}
+
+async function saveSchedule(){
+  const btn = $('schedSave');
+  btn.disabled = true; btn.textContent = 'Saving…';
+
+  const { error } = await GT_AUTH.SB.from('advisors')
+    .update({ availability: AV }).eq('id', ADV.id);
+
+  btn.disabled = false; btn.textContent = 'Save my hours';
+  const m = $('schedSaveMsg'), h = $('schedMsg');
+
+  if(error){
+    console.error('[GT] schedule not saved:', error);
+    if(m){ m.textContent = 'Couldn\u2019t save: ' + error.message; m.style.color = '#B4452F'; }
+    return;
+  }
+
+  ADV.availability = JSON.parse(JSON.stringify(AV));
+  SCHED_DIRTY = false;
+  if(m){ m.textContent = 'All changes saved'; m.style.color = 'var(--muted)'; }
+  if(h){ h.textContent = 'Saved'; h.style.color = 'var(--faint)'; }
+  drawStrip(split().upcoming, split().past);
+}
+
+/* ============================================================ PROFILE EDITOR */
 function checks(){
   return [
     ['A headshot',                    !!P.photo_url],
@@ -662,17 +769,16 @@ function checks(){
     ['A biography (120+ characters)', (P.bio||'').trim().length >= 120],
     ['At least one specialty',        P.specs.length > 0],
     ['How you meet clients',          P.onsite || P.remote],
+    ['Hours you can be booked',       Object.values(AV.days).some(s => s.length > 0)],
   ];
 }
 
 function drawEditor(){
   const host = $('editorHost');
   if(!host) return;
-
   host.innerHTML = `
-    <p class="ed-intro">This is what someone reads before deciding whether to book
-      you. Write it in your own voice — the advisors people choose sound like
-      people, not CVs.</p>
+    <p class="ed-intro">This is what someone reads before deciding whether to book you.
+      Write it in your own voice — the advisors people choose sound like people, not CVs.</p>
 
     <div class="ed-sec">Your headshot</div>
     <div class="shot">
@@ -680,66 +786,43 @@ function drawEditor(){
       <div class="side">
         <label class="upbtn" for="photoFile">Choose a photo</label>
         <input type="file" id="photoFile" accept="image/jpeg,image/png,image/webp">
-        <p>A clear photo of your face, looking at the camera. JPG, PNG or WebP,
-           up to 5 MB. Avoid group shots and sunglasses — this does more work
-           than anything else on the page.</p>
+        <p>A clear photo of your face, looking at the camera. JPG, PNG or WebP, up to
+           5 MB. This does more work than anything else on the page.</p>
         <p class="note" id="photoNote"></p>
       </div>
     </div>
 
     <div class="ed-sec">The basics</div>
-    <div class="fld">
-      <label>Full name<input id="fName" type="text" value="${esc(P.name)}"></label>
-    </div>
-    <div class="fld">
-      <label>Title<input id="fTitle" type="text" value="${esc(P.title)}"></label>
-      <p class="hint">Most advisors keep "Privacy Advisor". Change it only if
-        something else describes you better.</p>
-    </div>
+    <div class="fld"><label>Full name<input id="fName" type="text" value="${esc(P.name)}"></label></div>
+    <div class="fld"><label>Title<input id="fTitle" type="text" value="${esc(P.title)}"></label>
+      <p class="hint">Most advisors keep "Privacy Advisor".</p></div>
     <div class="two">
-      <div class="fld">
-        <label>Years of experience<input id="fYears" type="number" min="0" max="60"
-          value="${esc(P.years)}"></label>
-      </div>
-      <div class="fld">
-        <label>Hourly rate ($)<input id="fRate" type="number" min="20" max="300"
-          value="${esc(P.rate)}"></label>
-        <p class="hint">You set this. Most sit between $50 and $100.</p>
-      </div>
+      <div class="fld"><label>Years of experience<input id="fYears" type="number" min="0" max="60"
+        value="${esc(P.years)}"></label></div>
+      <div class="fld"><label>Hourly rate ($)<input id="fRate" type="number" min="20" max="300"
+        value="${esc(P.rate)}"></label>
+        <p class="hint">You set this. Most sit between $50 and $100.</p></div>
     </div>
 
     <div class="ed-sec">About you</div>
-    <div class="fld">
-      <label><span class="count" id="bioCount"></span>Biography
-        <textarea id="fBio" rows="7"
-          placeholder="I help people feel calm about the technology they use every day. Most of my work is home networks and account security — the things that quietly stop working, or quietly stop being safe. I explain what I'm doing as I go, and I write it down so you don't have to remember it.">${esc(P.bio)}</textarea></label>
-      <p class="hint">At least 120 characters. Write it the way you'd say it out
-        loud to someone nervous about asking.</p>
-    </div>
-    <div class="fld">
-      <label>How would you describe your working style?</label>
-      <div class="chips" id="persChips"></div>
-    </div>
+    <div class="fld"><label><span class="count" id="bioCount"></span>Biography
+      <textarea id="fBio" rows="7" placeholder="I help people feel calm about the technology they use every day. Most of my work is home networks and account security — the things that quietly stop working, or quietly stop being safe. I explain what I'm doing as I go, and I write it down so you don't have to remember it.">${esc(P.bio)}</textarea></label>
+      <p class="hint">At least 120 characters. Write it the way you'd say it out loud.</p></div>
+    <div class="fld"><label>How would you describe your working style?</label>
+      <div class="chips" id="persChips"></div></div>
 
     <div class="ed-sec">What you do</div>
-    <div class="fld">
-      <label>Specialties</label>
-      <div class="chips" id="specChips"></div>
-      <p class="hint">These decide who we show you to. Pick what you're genuinely
-        strong at, not everything you can manage.</p>
-    </div>
-    <div class="fld">
-      <label>You can help clients plan for</label>
-      <div class="chips" id="futChips"></div>
-    </div>
-    <div class="fld">
-      <label>Platforms you work with</label>
-      <div class="chips" id="platChips"></div>
-    </div>
-    <div class="fld">
-      <label>How do you meet clients?</label>
-      <div class="chips" id="modeChips"></div>
-    </div>
+    <div class="fld"><label>Specialties</label><div class="chips" id="specChips"></div>
+      <p class="hint">These decide who we show you to. Pick what you're genuinely strong at.</p></div>
+    <div class="fld"><label>You can help clients plan for</label>
+      <div class="chips" id="futChips"></div></div>
+    <div class="fld"><label>Platforms you work with</label>
+      <div class="chips" id="platChips"></div></div>
+    <div class="fld"><label>How do you meet clients?</label>
+      <div class="chips" id="modeChips"></div></div>
+
+    <div class="ed-sec">Also offer</div>
+    <div class="togs" style="margin-top:0;padding-top:0;border-top:none" id="extraTogs"></div>
 
     <div class="savebar">
       <span class="msg" id="saveMsg">${DIRTY ? 'Unsaved changes' : 'All changes saved'}</span>
@@ -748,68 +831,68 @@ function drawEditor(){
 
     <div class="mini pub" id="pubCard" style="margin-top:20px;margin-bottom:0"></div>`;
 
-  drawPreview();
-  drawChips();
-  drawPublish();
-  bioCount();
-  wireEditor();
+  drawPreview(); drawChips(); drawExtraTogs(); drawPublish(); bioCount(); wireEditor();
 }
 
 function drawPreview(){
-  const w = $('pvWrap');
-  if(!w) return;
+  const w = $('pvWrap'); if(!w) return;
   w.innerHTML = P.photo_url
     ? `<img class="pv" src="${esc(P.photo_url)}" alt="Your headshot">`
     : `<div class="pv-fb">${GT_AUTH.initials(P.name || ME.email)}</div>`;
 }
 
 function chipRow(hostId, opts, selected, onToggle){
-  const host = $(hostId);
-  if(!host) return;
+  const host = $(hostId); if(!host) return;
   host.innerHTML = opts.map(o =>
-    `<button type="button" class="chip-b ${selected.includes(o)?'on':''}" data-v="${esc(o)}">${esc(o)}</button>`
-  ).join('');
+    `<button type="button" class="chip-b ${selected.includes(o)?'on':''}" data-v="${esc(o)}">${esc(o)}</button>`).join('');
   host.querySelectorAll('[data-v]').forEach(b => b.addEventListener('click', () => {
-    onToggle(b.dataset.v);
-    touch();
-    drawChips();
-    drawPublish();
-    refreshStrength();
+    onToggle(b.dataset.v); touch(); drawChips(); drawPublish(); refreshStrength();
   }));
 }
 
 function drawChips(){
   chipRow('persChips', PERSONALITY_OPTS, P.personality ? [P.personality] : [], v => {
-    P.personality = (P.personality === v) ? '' : v;
-  });
+    P.personality = (P.personality === v) ? '' : v; });
   chipRow('specChips', SPEC_OPTS, P.specs, v => {
-    const i = P.specs.indexOf(v); i > -1 ? P.specs.splice(i,1) : P.specs.push(v);
-  });
+    const i=P.specs.indexOf(v); i>-1?P.specs.splice(i,1):P.specs.push(v); });
   chipRow('futChips', FUTURE_OPTS, P.futures, v => {
-    const i = P.futures.indexOf(v); i > -1 ? P.futures.splice(i,1) : P.futures.push(v);
-  });
+    const i=P.futures.indexOf(v); i>-1?P.futures.splice(i,1):P.futures.push(v); });
   chipRow('platChips', PLATFORM_OPTS, P.platforms, v => {
-    const i = P.platforms.indexOf(v); i > -1 ? P.platforms.splice(i,1) : P.platforms.push(v);
-  });
-
+    const i=P.platforms.indexOf(v); i>-1?P.platforms.splice(i,1):P.platforms.push(v); });
   const modes = [];
   if(P.onsite) modes.push('In person');
   if(P.remote) modes.push('Virtually');
   chipRow('modeChips', ['In person','Virtually'], modes, v => {
-    if(v === 'In person') P.onsite = !P.onsite; else P.remote = !P.remote;
-  });
+    if(v==='In person') P.onsite = !P.onsite; else P.remote = !P.remote; });
+}
+
+function drawExtraTogs(){
+  const host = $('extraTogs'); if(!host) return;
+  const T = [
+    ['intro','Free 20-minute intro calls','Shown as a gold badge on your profile',ADV.intro],
+    ['checkins','Recurring check-ins','Clients can book you quarterly',ADV.checkins],
+    ['business','Small-business work','Appears in the business support filter',ADV.business],
+  ];
+  host.innerHTML = T.map(([k,t,s,on]) => `
+    <div class="tog"><div class="lab">${t}<small>${s}</small></div>
+      <button class="sw ${on?'on':''}" data-x="${k}" aria-label="${t}"></button></div>`).join('');
+  host.querySelectorAll('[data-x]').forEach(b => b.addEventListener('click', async () => {
+    const on = !b.classList.contains('on');
+    b.classList.toggle('on', on);
+    const { error } = await GT_AUTH.SB.from('advisors')
+      .update({ [b.dataset.x]: on }).eq('id', ADV.id);
+    if(error){ b.classList.toggle('on', !on); alert('Could not save: ' + error.message); return; }
+    ADV[b.dataset.x] = on;
+  }));
 }
 
 function drawPublish(){
-  const card = $('pubCard');
-  if(!card) return;
+  const card = $('pubCard'); if(!card) return;
   const ready = checks().every(x => x[1]);
-
   card.innerHTML = ADV.published
     ? `<h3>You're live</h3>
-       <p>Clients can find you in the marketplace and book straight into your
-          calendar. Unpublishing hides your page — it doesn't cancel anything
-          already booked.</p>
+       <p>Clients can find you in the marketplace and book straight into your calendar.
+          Unpublishing hides your page — it doesn't cancel anything already booked.</p>
        <button class="pill pill-ghost" id="unpubBtn">Unpublish my profile</button>
        <p class="note" id="pubNote"></p>`
     : `<h3>Not published yet</h3>
@@ -818,20 +901,15 @@ function drawPublish(){
             : 'Finish the checklist in the sidebar and this switches on. Nobody can see your page until then.'}</p>
        <button class="pill pill-gold" id="pubBtn" ${ready?'':'disabled'}>Publish my profile</button>
        <p class="note" id="pubNote"></p>`;
-
-  const pub = $('pubBtn');
-  if(pub) pub.addEventListener('click', () => setPublished(true));
-  const un = $('unpubBtn');
-  if(un) un.addEventListener('click', () => {
+  const pub = $('pubBtn'); if(pub) pub.addEventListener('click', () => setPublished(true));
+  const un = $('unpubBtn'); if(un) un.addEventListener('click', () => {
     if(confirm('Hide your profile from the marketplace? Bookings you already have are unaffected.'))
       setPublished(false);
   });
 }
 
 function refreshStrength(){
-  if(!LAYOUT.includes('strength')) return;
-  const host = $('sec-strength');
-  if(!host) return;
+  const host = $('sec-strength'); if(!host) return;
   const c = checks();
   const pct = Math.round(c.filter(x=>x[1]).length / c.length * 100);
   const bar = host.querySelector('.bar i');
@@ -852,149 +930,104 @@ function touch(){
 }
 
 function bioCount(){
-  const el = $('bioCount');
-  if(!el) return;
+  const el = $('bioCount'); if(!el) return;
   const n = ($('fBio') ? $('fBio').value : P.bio || '').trim().length;
   el.textContent = n + ' / 120';
   el.style.color = n >= 120 ? 'var(--gold-deep)' : 'var(--faint)';
 }
 
 function wireEditor(){
-  const bind = (id, key) => {
-    const el = $(id);
-    if(!el) return;
+  const bind = (id,key) => {
+    const el = $(id); if(!el) return;
     el.addEventListener('input', () => {
-      P[key] = el.value;
-      touch();
-      drawPublish();
-      refreshStrength();
-      if(key === 'name') drawPreview();
-      if(key === 'bio') bioCount();
+      P[key] = el.value; touch(); drawPublish(); refreshStrength();
+      if(key==='name') drawPreview();
+      if(key==='bio') bioCount();
     });
   };
   bind('fName','name'); bind('fTitle','title');
   bind('fYears','years'); bind('fRate','rate'); bind('fBio','bio');
-
-  const save = $('saveBtn');
-  if(save) save.addEventListener('click', saveProfile);
-
-  const file = $('photoFile');
-  if(file) file.addEventListener('change', uploadPhoto);
+  const s = $('saveBtn'); if(s) s.addEventListener('click', saveProfile);
+  const f = $('photoFile'); if(f) f.addEventListener('change', uploadPhoto);
 }
 
 async function uploadPhoto(e){
-  const f = e.target.files && e.target.files[0];
-  if(!f) return;
-  const note = $('photoNote');
-  note.className = 'note';
-
-  if(f.size > 5 * 1024 * 1024){
-    note.className = 'note err';
-    note.textContent = 'That file is over 5 MB. Try a smaller one.';
-    return;
+  const f = e.target.files && e.target.files[0]; if(!f) return;
+  const note = $('photoNote'); note.className = 'note';
+  if(f.size > 5*1024*1024){
+    note.className='note err'; note.textContent='That file is over 5 MB. Try a smaller one.'; return;
   }
-
   note.textContent = 'Uploading…';
-
-  const ext  = (f.name.split('.').pop() || 'jpg').toLowerCase();
+  const ext = (f.name.split('.').pop() || 'jpg').toLowerCase();
   const path = `${ME.id}/headshot-${Date.now()}.${ext}`;
-
   const { error: upErr } = await GT_AUTH.SB.storage
     .from('headshots').upload(path, f, { upsert:true, contentType:f.type });
-
   if(upErr){
     console.error('[GT] headshot upload failed:', upErr);
-    note.className = 'note err';
-    note.textContent = 'That didn\u2019t upload. Try again, or email team@greylocktrust.com.';
+    note.className='note err';
+    note.textContent='That didn\u2019t upload. Try again, or email team@greylocktrust.com.';
     return;
   }
-
   const { data } = GT_AUTH.SB.storage.from('headshots').getPublicUrl(path);
   P.photo_url = data.publicUrl;
-
   const { error: saveErr } = await GT_AUTH.SB.from('advisors')
     .update({ photo_url: P.photo_url }).eq('id', ADV.id);
-
   if(saveErr){
-    note.className = 'note err';
-    note.textContent = 'Uploaded, but we couldn\u2019t attach it: ' + saveErr.message;
+    note.className='note err';
+    note.textContent='Uploaded, but we couldn\u2019t attach it: ' + saveErr.message;
     return;
   }
-
   ADV.photo_url = P.photo_url;
-  note.className = 'note ok';
-  note.textContent = 'Headshot saved.';
+  note.className='note ok'; note.textContent='Headshot saved.';
   drawPreview(); drawPublish(); refreshStrength();
 }
 
 async function saveProfile(){
   const btn = $('saveBtn');
   btn.disabled = true; btn.textContent = 'Saving…';
-
   const patch = {
-    name:        (P.name||'').trim(),
-    title:       (P.title||'Privacy Advisor').trim(),
-    years:       P.years === '' ? null : parseInt(P.years,10),
-    rate:        P.rate  === '' ? null : parseInt(P.rate,10),
-    bio:         (P.bio||'').trim(),
-    personality: P.personality || null,
-    specs:       P.specs,
-    futures:     P.futures,
-    platforms:   P.platforms,
-    onsite:      !!P.onsite,
-    remote:      !!P.remote,
+    name:(P.name||'').trim(), title:(P.title||'Privacy Advisor').trim(),
+    years: P.years==='' ? null : parseInt(P.years,10),
+    rate:  P.rate ==='' ? null : parseInt(P.rate,10),
+    bio:(P.bio||'').trim(), personality:P.personality||null,
+    specs:P.specs, futures:P.futures, platforms:P.platforms,
+    onsite:!!P.onsite, remote:!!P.remote,
   };
-
   const { error } = await GT_AUTH.SB.from('advisors').update(patch).eq('id', ADV.id);
-
   btn.disabled = false; btn.textContent = 'Save changes';
   const m = $('saveMsg');
-
   if(error){
     console.error('[GT] profile not saved:', error);
-    m.textContent = 'Couldn\u2019t save: ' + error.message;
-    m.style.color = '#B4452F';
+    m.textContent = 'Couldn\u2019t save: ' + error.message; m.style.color = '#B4452F';
     return false;
   }
-
   Object.assign(ADV, patch);
   DIRTY = false;
-  m.textContent = 'All changes saved';
-  m.style.color = 'var(--muted)';
+  m.textContent = 'All changes saved'; m.style.color = 'var(--muted)';
   drawPublish(); refreshStrength();
   return true;
 }
 
 async function setPublished(on){
-  /* Save first — the database refuses to publish an incomplete profile, and
-     it can only judge what it already has. */
   if(on){
+    if(SCHED_DIRTY) await saveSchedule();
     const ok = await saveProfile();
     if(!ok) return;
   }
-
-  const { error } = await GT_AUTH.SB.from('advisors')
-    .update({ published: on }).eq('id', ADV.id);
-
+  const { error } = await GT_AUTH.SB.from('advisors').update({ published: on }).eq('id', ADV.id);
   if(error){
     console.error('[GT] publish failed:', error);
     const n = $('pubNote');
-    if(n){
-      n.className = 'note err';
-      n.style.color = '#FFD9CF';
-      n.textContent = error.message.replace(/^.*?:\s*/, '');
-    }
+    if(n){ n.className='note err'; n.style.color='#FFD9CF';
+           n.textContent = error.message.replace(/^.*?:\s*/, ''); }
     return;
   }
-
   ADV.published = on;
   render();
   if(on) window.scrollTo({ top:0, behavior:'smooth' });
 }
 
-/* ============================================================
-   APPOINTMENTS
-   ============================================================ */
+/* ============================================================ APPOINTMENTS */
 function drawAppts(){
   const tabs = $('tabs'), list = $('apptList');
   if(!tabs || !list) return;
@@ -1004,18 +1037,16 @@ function drawAppts(){
     <button class="tab ${TAB==='upcoming'?'on':''}" data-t="upcoming">Upcoming<span class="badge">${upcoming.length}</span></button>
     <button class="tab ${TAB==='past'?'on':''}" data-t="past">Past</button>`;
   tabs.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => {
-    TAB = b.dataset.t; drawAppts();
-  }));
+    TAB = b.dataset.t; drawAppts(); }));
 
-  const rows = TAB === 'upcoming' ? upcoming : past;
+  const rows = TAB==='upcoming' ? upcoming : past;
 
   if(!rows.length){
-    list.innerHTML = `<div class="empty">
-      <div class="ic">◷</div>
+    list.innerHTML = `<div class="empty"><div class="ic">◷</div>
       <h4>${TAB==='upcoming'?'Nothing booked yet':'No past visits yet'}</h4>
       <p>${TAB==='upcoming'
         ? (ADV.published
-            ? 'New bookings land here the moment a client confirms. Nothing for you to do until then.'
+            ? 'New bookings land here the moment a client confirms.'
             : 'Clients can\u2019t book you until you publish your profile.')
         : 'Once you\u2019ve seen a client, the visit moves here so you can write it up.'}</p>
     </div>`;
@@ -1024,7 +1055,7 @@ function drawAppts(){
 
   list.innerHTML = rows.map(b => {
     const w = dayParts(b.day);
-    const up = TAB === 'upcoming';
+    const up = TAB==='upcoming';
     const note = NOTES[b.id];
     return `<div class="appt">
       <div class="when"><div class="d">${w[2]}</div><div class="n">${w[1]}</div>
@@ -1037,18 +1068,17 @@ function drawAppts(){
           <span class="tg">${esc(b.mode||'')}</span>
           ${b.address?`<span class="tg">${esc(b.address)}</span>`:''}
           ${b.status==='cancelled'?'<span class="tg ink">Cancelled</span>':''}
+          ${note?'<span class="tg gold">Notes written</span>':''}
           ${(!up && b.status!=='cancelled' && !note)?'<span class="tg gold">Notes to write</span>':''}
         </div>
       </div>
       <div class="go">
         <a class="pill pill-soft" href="mailto:${encodeURIComponent(b.email||'')}">Email</a>
-        ${up
-          ? `<button class="pill pill-ink" data-cancel="${b.id}">Cancel</button>`
-          : (b.status !== 'cancelled'
-              ? `<button class="pill pill-ink" data-note="${b.id}">${note?'Edit notes':'Write notes'}</button>`
-              : '')}
-      </div>
-    </div>`;
+        ${b.status!=='cancelled'
+          ? `<button class="pill pill-soft" data-note="${b.id}">${note?'Edit notes':'Write notes'}</button>`
+          : ''}
+        ${up ? `<button class="pill pill-ink" data-cancel="${b.id}">Cancel</button>` : ''}
+      </div></div>`;
   }).join('');
 
   list.querySelectorAll('[data-cancel]').forEach(b => b.addEventListener('click', async () => {
@@ -1064,20 +1094,21 @@ function drawAppts(){
     b.addEventListener('click', () => openNote(b.dataset.note)));
 }
 
-/* ---------- note writer ---------- */
 function openNote(bookingId){
   const b = ROWS.find(x => String(x.id) === String(bookingId));
   if(!b) return;
   const existing = NOTES[bookingId];
+  const future = b.day >= ymdLocal(new Date());
 
   const veil = document.createElement('div');
-  veil.className = 'sheet';
-  veil.id = 'noteSheet';
+  veil.className = 'sheet'; veil.id = 'noteSheet';
   veil.innerHTML = `
     <div class="sheet-in">
-      <h3>${existing ? 'Edit your notes' : 'Write up this visit'}</h3>
-      <p class="sub">${esc(b.name||'Client')} · ${esc(longDate(b.day))}. This goes
-        straight to their dashboard and stays there.</p>
+      <h3>${existing ? 'Edit your notes' : (future ? 'Notes for this visit' : 'Write up this visit')}</h3>
+      <p class="sub">${esc(b.name||'Client')} · ${esc(longDate(b.day))}.
+        ${future
+          ? 'You can start these before the visit — anything you write is visible to them straight away.'
+          : 'This goes straight to their dashboard and stays there.'}</p>
       <div class="fld"><label>What was this visit about?
         <input id="nTitle" type="text" value="${esc(existing?existing.title:'')}"
           placeholder="Wi-Fi dead zones upstairs"></label></div>
@@ -1088,8 +1119,7 @@ function openNote(bookingId){
       <div class="row">
         <button class="pill pill-soft" id="nCancel">Cancel</button>
         <button class="pill pill-gold" id="nSave">Save notes</button>
-      </div>
-    </div>`;
+      </div></div>`;
   document.body.appendChild(veil);
 
   $('nCancel').addEventListener('click', () => veil.remove());
@@ -1098,22 +1128,12 @@ function openNote(bookingId){
     const title = $('nTitle').value.trim();
     const body  = $('nBody').value.trim();
     if(body.length < 10){ alert('Add a little more detail before saving.'); return; }
-
-    const btn = $('nSave');
-    btn.disabled = true; btn.textContent = 'Saving…';
-
-    const row = {
-      booking_id: b.id,
-      advisor_id: ADV.id,
-      client_id:  b.client_id,
-      title, body,
-      updated_at: new Date().toISOString(),
-    };
-
+    const btn = $('nSave'); btn.disabled = true; btn.textContent = 'Saving…';
+    const row = { booking_id:b.id, advisor_id:ADV.id, client_id:b.client_id,
+                  title, body, updated_at:new Date().toISOString() };
     const { error } = existing
       ? await GT_AUTH.SB.from('visit_notes').update(row).eq('id', existing.id)
       : await GT_AUTH.SB.from('visit_notes').insert(row);
-
     if(error){
       alert('We couldn\u2019t save that: ' + error.message);
       btn.disabled = false; btn.textContent = 'Save notes';
@@ -1124,38 +1144,23 @@ function openNote(bookingId){
   });
 }
 
-/* ============================================================
-   LAYOUT CONTROLS
-   ============================================================ */
+/* ============================================================ LAYOUT */
 function wireControls(){
   document.querySelectorAll('[data-rm]').forEach(b => b.addEventListener('click', () => {
-    LAYOUT = LAYOUT.filter(k => k !== b.dataset.rm); saveLayout(); render(); reopenEdit();
-  }));
+    LAYOUT = LAYOUT.filter(k => k !== b.dataset.rm); saveLayout(); render(); reopenEdit(); }));
   document.querySelectorAll('[data-up]').forEach(b => b.addEventListener('click', () => {
     const i = LAYOUT.indexOf(b.dataset.up);
-    if(i > 0){ [LAYOUT[i-1],LAYOUT[i]] = [LAYOUT[i],LAYOUT[i-1]]; saveLayout(); render(); reopenEdit(); }
-  }));
+    if(i>0){ [LAYOUT[i-1],LAYOUT[i]]=[LAYOUT[i],LAYOUT[i-1]]; saveLayout(); render(); reopenEdit(); } }));
   document.querySelectorAll('[data-down]').forEach(b => b.addEventListener('click', () => {
     const i = LAYOUT.indexOf(b.dataset.down);
-    if(i > -1 && i < LAYOUT.length-1){
-      [LAYOUT[i+1],LAYOUT[i]] = [LAYOUT[i],LAYOUT[i+1]]; saveLayout(); render(); reopenEdit();
-    }
-  }));
-  document.querySelectorAll('.sw').forEach(b => b.addEventListener('click', async () => {
-    const on = !b.classList.contains('on');
-    b.classList.toggle('on', on);
-    const { error } = await GT_AUTH.SB.from('advisors')
-      .update({ [b.dataset.k]: on }).eq('id', ADV.id);
-    if(error){ b.classList.toggle('on', !on); alert('Could not save: ' + error.message); return; }
-    ADV[b.dataset.k] = on;
-  }));
+    if(i>-1 && i<LAYOUT.length-1){ [LAYOUT[i+1],LAYOUT[i]]=[LAYOUT[i],LAYOUT[i+1]];
+      saveLayout(); render(); reopenEdit(); } }));
 }
 
 function reopenEdit(){
   if(!EDITING) return;
   document.body.classList.add('editing');
-  const b = $('editBtn');
-  if(b) b.textContent = 'Done editing';
+  const b = $('editBtn'); if(b) b.textContent = 'Done editing';
 }
 
 function drawEditBar(){
@@ -1169,24 +1174,18 @@ function drawEditBar(){
           Everything saves as you go.</span></div>
       <div class="sp"><button class="pill pill-soft" id="resetLayout">Reset to default</button></div>
     </div>
-    ${missing.length ? `<section class="card">
-      <div class="ch"><h2>Add a section</h2></div>
-      <div class="addgrid">${missing.map(k => `<button class="addbtn" data-add="${k}">
+    ${missing.length ? `<section class="card"><div class="ch"><h2>Add a section</h2></div>
+      <div class="addgrid">${missing.map(k=>`<button class="addbtn" data-add="${k}">
         <b>${SECTIONS[k].name}</b><span>${SECTIONS[k].blurb}</span></button>`).join('')}</div>
     </section>` : ''}`;
-
   const reset = $('resetLayout');
   if(reset) reset.addEventListener('click', () => {
-    LAYOUT = DEFAULT_LAYOUT.slice(); saveLayout(); render(); reopenEdit();
-  });
+    LAYOUT = DEFAULT_LAYOUT.slice(); saveLayout(); render(); reopenEdit(); });
   document.querySelectorAll('[data-add]').forEach(b => b.addEventListener('click', () => {
-    LAYOUT.push(b.dataset.add); saveLayout(); render(); reopenEdit();
-  }));
+    LAYOUT.push(b.dataset.add); saveLayout(); render(); reopenEdit(); }));
 }
 
-/* ============================================================
-   TOUR
-   ============================================================ */
+/* ============================================================ TOUR */
 function drawTour(){
   document.querySelectorAll('.spot').forEach(el => el.classList.remove('spot'));
   const s = TOUR[TOUR_STEP];
@@ -1197,15 +1196,20 @@ function drawTour(){
     if(el){ el.classList.add('spot'); el.scrollIntoView({behavior:'smooth',block:'center'}); }
   }
 
-  let veil = $('tourVeil');
-  if(!veil){
-    veil = document.createElement('div');
-    veil.className = 'tour-veil'; veil.id = 'tourVeil';
-    document.body.appendChild(veil);
+  if(!$('tourVeil')){
+    const v = document.createElement('div');
+    v.className = 'tour-veil'; v.id = 'tourVeil';
+    document.body.appendChild(v);
+  }
+  let wrap = $('tourWrap');
+  if(!wrap){
+    wrap = document.createElement('div');
+    wrap.className = 'tour-wrap'; wrap.id = 'tourWrap';
+    document.body.appendChild(wrap);
   }
   document.body.classList.add('tour-open');
 
-  veil.innerHTML = `
+  wrap.innerHTML = `
     <div class="tour" role="dialog" aria-modal="true" aria-label="Getting started">
       <div class="k">${esc(s.k)}</div>
       <h3>${s.h}</h3>
@@ -1227,8 +1231,8 @@ function drawTour(){
 
 function endTour(){
   document.querySelectorAll('.spot').forEach(el => el.classList.remove('spot'));
-  const veil = $('tourVeil');
-  if(veil) veil.remove();
+  const v = $('tourVeil'); if(v) v.remove();
+  const w = $('tourWrap'); if(w) w.remove();
   document.body.classList.remove('tour-open');
   saveLayout('done');
 }

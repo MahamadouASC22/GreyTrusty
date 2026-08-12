@@ -114,6 +114,7 @@ function rowToAdvisor(r){
     futures: Array.isArray(r.futures) ? r.futures : [],
     bio: r.bio || '',
     slug: r.slug || null,
+    availability: r.availability || null,
   };
 }
 
@@ -132,6 +133,20 @@ console.info('[GT] no published advisors yet — showing the built-in list');
         .from('advisors').select('*').eq('published', true).order('id');
 
       if(error) throw error;
+
+      /* An advisor previewing their own unpublished page needs to find
+         themselves. RLS already limits this to their own row. */
+      let mine = null;
+      try{
+        const { data:{ session } } = await GT_AUTH.SB.auth.getSession();
+        if(session){
+          const { data: own } = await GT_AUTH.SB.from('advisors')
+            .select('*').eq('user_id', session.user.id).maybeSingle();
+          if(own && !own.published) mine = own;
+        }
+      }catch(e){}
+
+      if(mine) (data || []).push(mine);
 
       if(data && data.length){
         A.length = 0;                       // mutate, never reassign
@@ -197,23 +212,49 @@ function seedOf(a){
   return h;
 }
 
+/* Slots for one advisor on one date.
+   Uses their own schedule when they've set one; falls back to the generated
+   pattern so the demo advisors keep working. */
 function availFor(a, date, intro){
   const today = new Date(); today.setHours(0,0,0,0);
-  const horizon = new Date(today); horizon.setDate(horizon.getDate() + 60);
-  if(date <= today || date > horizon) return [];
+  const target = new Date(date); target.setHours(0,0,0,0);
 
-  const dow = date.getDay();
+  const av = a.availability;
+  const lead = av && Number.isFinite(av.lead) ? av.lead : 1;
+
+  const earliest = new Date(today);
+  earliest.setDate(earliest.getDate() + Math.max(0, lead));
+  if(target < earliest) return [];
+
+  const horizon = new Date(today); horizon.setDate(horizon.getDate() + 60);
+  if(target > horizon) return [];
+
+  /* ---- their own schedule ---- */
+  if(av && av.days){
+    const iso = target.getFullYear() + '-' +
+                String(target.getMonth()+1).padStart(2,'0') + '-' +
+                String(target.getDate()).padStart(2,'0');
+    if(Array.isArray(av.blocked) && av.blocked.includes(iso)) return [];
+
+    const slots = av.days[String(target.getDay())];
+    if(!Array.isArray(slots) || !slots.length) return [];
+
+    /* Intro calls are short, so offer the first two slots of the day only. */
+    return intro ? slots.slice(0, 2) : slots.slice();
+  }
+
+  /* ---- fallback: the old generated pattern ---- */
+  const dow = target.getDay();
   if(dow === 0) return [];
   if(dow === 6 && !a.weekends) return [];
 
   const seed = seedOf(a);
-  if((seed + date.getDate()) % 5 === 0) return [];
+  if((seed + target.getDate()) % 5 === 0) return [];
 
   const src = intro ? INTRO_TIMES : BASE;
-  let t = src.filter((x,i) => (seed + date.getDate() + i) % 3 !== 0);
-
-  if(!intro && a.evenings && date.getDate() % 2 === 1) t = t.concat('6:00 PM');
-  if(!t.length) t = [src[(seed + date.getDate()) % src.length]];
+  let t = src.filter((x,i) => (seed + target.getDate() + i) % 3 !== 0);
+  if(!intro && a.evenings && target.getDate() % 2 === 1) t = t.concat('6:00 PM');
+  if(!t.length) t = [src[(seed + target.getDate()) % src.length]];
   return t;
 }
 
