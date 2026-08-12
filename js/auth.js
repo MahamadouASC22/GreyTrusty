@@ -16,19 +16,7 @@ const SB = supabase.createClient(
 /* A recovery or invite link can land on any page. Let supabase-js exchange
    the token here, then go to reset.html with NO hash — so this can never
    re-trigger and loop. */
-(function routeAuthLinks(){
-  const h = location.hash || '';
-  if(!/type=(recovery|invite|signup)/.test(h)) return;
-  if(/reset(\.html)?\/?$/.test(location.pathname)) return;
 
-  const type = /type=invite/.test(h) ? 'invite' : 'recovery';
-
-  SB.auth.onAuthStateChange((event) => {
-    if(event === 'SIGNED_IN' || event === 'PASSWORD_RECOVERY'){
-      location.replace('/reset.html?setpw=' + type);
-    }
-  });
-})();
 
 /* Every origin used here MUST be listed in
    Supabase → Authentication → URL Configuration → Redirect URLs,
