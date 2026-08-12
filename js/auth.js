@@ -6,22 +6,29 @@
 'use strict';
 
 
-/* An invite or recovery link can land on any page: Supabase falls back to
-   Site URL when it has no allow-listed redirect. Forward the token to
-   reset.html with the hash intact, before supabase-js consumes it. */
-(function routeAuthLinks(){
-  const h = location.hash || '';
-  if(!/type=(recovery|invite|signup)/.test(h)) return;
-  const page = location.pathname.split('/').pop() || 'index.html';
-  if(page === 'reset.html') return;
-  location.replace('reset.html' + h);
-})();
 
 const SB = supabase.createClient(
   'https://yltwbacfsktbtgqovnnm.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlsdHdiYWNmc2t0YnRncW92bm5tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxMjA0NTksImV4cCI6MjEwMTY5NjQ1OX0.Wmt8et2kJGbMgGXZs98TvyEjf7yQIhA0laeYHGxZb0c',
+  'eyJhbGci...',   // leave your key as-is
   { auth: { flowType: 'implicit', detectSessionInUrl: true, persistSession: true, autoRefreshToken: true } }
 );
+
+/* A recovery or invite link can land on any page. Let supabase-js exchange
+   the token here, then go to reset.html with NO hash — so this can never
+   re-trigger and loop. */
+(function routeAuthLinks(){
+  const h = location.hash || '';
+  if(!/type=(recovery|invite|signup)/.test(h)) return;
+  if(/reset(\.html)?\/?$/.test(location.pathname)) return;
+
+  const type = /type=invite/.test(h) ? 'invite' : 'recovery';
+
+  SB.auth.onAuthStateChange((event) => {
+    if(event === 'SIGNED_IN' || event === 'PASSWORD_RECOVERY'){
+      location.replace('/reset.html?setpw=' + type);
+    }
+  });
+})();
 
 /* Every origin used here MUST be listed in
    Supabase → Authentication → URL Configuration → Redirect URLs,

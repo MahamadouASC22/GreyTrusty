@@ -75,15 +75,15 @@ const card = document.getElementById('card');
    already exchanged it by the time we check for a session. */
 
 function cameFromEmail(){
-  const h = location.hash || '';
-  const q = location.search || '';
-  return /type=(recovery|invite|signup|magiclink)/.test(h)
+  const h = location.hash || '', q = location.search || '';
+  return /setpw=/.test(q)
+      || /type=(recovery|invite|signup|magiclink)/.test(h)
       || /type=(recovery|invite|signup|magiclink)/.test(q)
       || /[?&]code=/.test(q);
 }
 function isInvite(){
-  return /type=invite/.test(location.hash || '') ||
-         /type=invite/.test(location.search || '');
+  return /setpw=invite/.test(location.search || '')
+      || /type=invite/.test(location.hash || '');
 }
 
 function note(msg, color){
